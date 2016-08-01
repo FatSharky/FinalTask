@@ -17,7 +17,7 @@ import by.training.hrsystem.service.exeption.WrongPasswordServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserLoginCommand implements Command {
-
+//Нормально написать
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter(CommandField.LOGIN);

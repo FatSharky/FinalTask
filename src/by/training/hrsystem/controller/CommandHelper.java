@@ -5,7 +5,7 @@ import by.training.hrsystem.command.impl.ChangeLanguageCommand;
 import by.training.hrsystem.command.impl.UserLoginCommand;
 
 public class CommandHelper {
-
+//лнкнрнй х цбнгдх
 	public static Command getCommand(CommandName commandName) {
 		switch (commandName) {
 		case USER_LOGIN: {
