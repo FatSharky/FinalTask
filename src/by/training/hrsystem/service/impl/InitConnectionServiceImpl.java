@@ -6,7 +6,7 @@ import by.training.hrsystem.service.InitConnectionService;
 import by.training.hrsystem.service.exeption.ServiceException;
 
 public class InitConnectionServiceImpl implements InitConnectionService {
-//Не  знает о ущестование DAO
+//Не  знает о ущестование connectionPoola, а знает о DAO
 	@Override
 	public void initConnection() throws ServiceException {
 		ConnectionPool conn = null;
