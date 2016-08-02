@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 
 public class DBUserDAO implements UserDAO {
 
-	private static final Logger LOGGER = Logger.getLogger(DBUserDAO.class);
+	private static final Logger logger = Logger.getLogger(DBUserDAO.class);
 	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date, role) "
 			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
@@ -51,9 +51,10 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -114,9 +115,11 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps, rs);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps or rs", e);
 			}
 		}
 		return user;
@@ -146,9 +149,11 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps, rs);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 		return user;

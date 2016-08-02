@@ -8,7 +8,6 @@ import by.training.hrsystem.service.InitConnectionService;
 import by.training.hrsystem.service.exeption.ServiceException;
 
 public class InitConnectionServiceImpl implements InitConnectionService {
-
 	@Override
 	public void initConnection() throws ServiceException {
 

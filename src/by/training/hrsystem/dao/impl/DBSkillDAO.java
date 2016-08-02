@@ -19,7 +19,7 @@ import by.training.hrsystem.domain.Skill;
 import by.training.hrsystem.domain.type.SkillType;
 
 public class DBSkillDAO implements SkillDAO {
-	private static final Logger LOGGER = Logger.getLogger(DBUserDAO.class);
+	private static final Logger logger = Logger.getLogger(DBSkillDAO.class);
 	private static final String SQL_ADD_SKILL = "INSERT INTO skill (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_SKILL = "UPDATE skill SET name=?, raiting=? WHERE id_skill=?;";
 	private static final String SQL_DELETE_SKILL = "DELETE FROM skill WHERE id_skill=?;";
@@ -49,9 +49,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -76,9 +77,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -101,9 +103,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -128,9 +131,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -155,9 +159,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -181,9 +186,10 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -220,9 +226,11 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps, rs);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps or rs", e);
 			}
 		}
 		return skill;

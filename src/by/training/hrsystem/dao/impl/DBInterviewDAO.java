@@ -7,7 +7,7 @@ import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.domain.Interview;
 
 public class DBInterviewDAO implements InterviewDAO{
-	private static final Logger LOGGER = Logger.getLogger(DBUserDAO.class);
+	private static final Logger logger = Logger.getLogger(DBInterviewDAO.class);
 	private static final String SQL_ADD_INTERVIEW="";
 
 	@Override

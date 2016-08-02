@@ -18,7 +18,7 @@ import by.training.hrsystem.domain.ResumeLanguage;
 import by.training.hrsystem.domain.type.LanguageLevelType;
 
 public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
-	private static final Logger LOGGER = Logger.getLogger(DBUserDAO.class);
+	private static final Logger logger = Logger.getLogger(DBResumeLanguageDAO.class);
 	private static final String SQL_ADD_RESEUME_LANGUAGE = "INSERT INTO resumelanguage (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME_LANGUAGE = "UPDATE resumelanguage SET name=?, raiting=? WHERE id_language=?;";
 	private static final String SQL_DELETE_RESUME_LANGUAGE = "DELETE FROM resumelanguage WHERE id_language=?;";
@@ -48,9 +48,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -75,9 +76,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -100,9 +102,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -127,9 +130,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -154,9 +158,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -180,9 +185,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
 			}
 		}
 
@@ -220,9 +226,11 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn, ps, rs);
-			} catch (ConnectionPoolException e) {
-				LOGGER.error("Faild to close connection", e);
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps or rs", e);
 			}
 		}
 		return language;
