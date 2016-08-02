@@ -13,7 +13,7 @@ import by.training.hrsystem.controller.constant.ControllerFields;
 public class Controller extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+//дсакхпнбюмхе йндю
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		CommandName commandName = CommandName.valueOf((request.getParameter(ControllerFields.COMMAND)));

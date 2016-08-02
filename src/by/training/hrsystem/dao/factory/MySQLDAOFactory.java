@@ -20,6 +20,8 @@ import by.training.hrsystem.dao.impl.DBUserDAO;
 import by.training.hrsystem.dao.impl.DBVacancyDAO;
 import by.training.hrsystem.dao.impl.DBVerifyDAO;
 import by.training.hrsystem.dao.impl.DBWorkPlaceDAO;
+import by.training.hrsystem.dao.pool.ConnectionPool;
+import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 
 public class MySQLDAOFactory extends DAOFactory {
 
@@ -82,6 +84,11 @@ public class MySQLDAOFactory extends DAOFactory {
 	@Override
 	public WorkPlaceDAO getWorkPlaceDAO() {
 		return dbWorkPlaceDAO;
+	}
+
+	@Override
+	public ConnectionPool getConnectionPool() throws ConnectionPoolException {
+		return ConnectionPool.getInstance();
 	}
 
 }

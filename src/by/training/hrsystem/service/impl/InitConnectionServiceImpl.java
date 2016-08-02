@@ -1,30 +1,33 @@
 package by.training.hrsystem.service.impl;
 
+import by.training.hrsystem.dao.exception.DAOException;
+import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.service.InitConnectionService;
 import by.training.hrsystem.service.exeption.ServiceException;
 
 public class InitConnectionServiceImpl implements InitConnectionService {
-//Не  знает о ущестование connectionPoola, а знает о DAO
+
 	@Override
 	public void initConnection() throws ServiceException {
-		ConnectionPool conn = null;
+
 		try {
-			conn = ConnectionPool.getInstance();
-			conn.initConnectionPool();
-		} catch (ConnectionPoolException e) {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ConnectionPool connectionPool = daoFactory.getConnectionPool();
+			connectionPool.initConnectionPool();
+		} catch (ConnectionPoolException | DAOException e) {
 			throw new ServiceException("Cannot init a pool", e);
 		}
 	}
 
 	@Override
 	public void destroyConnection() throws ServiceException {
-		ConnectionPool conn = null;
 		try {
-			conn = ConnectionPool.getInstance();
-			conn.dispose();
-		} catch (ConnectionPoolException e) {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ConnectionPool connectionPool = daoFactory.getConnectionPool();
+			connectionPool.dispose();
+		} catch (ConnectionPoolException | DAOException e) {
 			throw new ServiceException("Cannot destroy pool", e);
 		}
 

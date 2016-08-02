@@ -11,6 +11,8 @@ import by.training.hrsystem.dao.VacancyDAO;
 import by.training.hrsystem.dao.VerifyDAO;
 import by.training.hrsystem.dao.WorkPlaceDAO;
 import by.training.hrsystem.dao.exception.DAOException;
+import by.training.hrsystem.dao.pool.ConnectionPool;
+import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 
 public abstract class DAOFactory {
 	private static final int MY_SQL = 1;
@@ -36,6 +38,8 @@ public abstract class DAOFactory {
 	public abstract VerifyDAO getVerifyDAO();
 
 	public abstract WorkPlaceDAO getWorkPlaceDAO();
+
+	public abstract ConnectionPool getConnectionPool()throws ConnectionPoolException; 
 
 	public static DAOFactory getInstance() throws DAOException {
 		int factoryType = readConfig();
