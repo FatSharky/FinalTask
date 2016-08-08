@@ -29,17 +29,6 @@ public final class SQLField {
 	public static final String EDUCATION_POSTGRADUATE = "e.postdraduate";
 	public static final String EDUCATION_ID_RESUME = "e.id_resume";
 
-	// FOR HR
-	public static final String HR_EMAIL = "email";
-	public static final String HR_PASSWORD = "password";
-	public static final String HR_PHOTO = "photo";
-	public static final String HR_SURNAME = "surname";
-	public static final String HR_NAME = "name";
-	public static final String HR_SECOND_NAME = "secondname";
-	public static final String HR_PHONE = "phone";
-	public static final String HR_COMPANY_LOGIN = "company_login";
-	public static final String HR_ROLE = "role";
-
 	// FOR INTERVIEW MARK
 	public static final String IMARK_ID = "id_mark";
 	public static final String IMARK_SKILL = "skill";
@@ -73,9 +62,9 @@ public final class SQLField {
 	public static final String VACANCY_CURRENCY = "currency";
 	public static final String VACANCY_PUBLISH_DATE = "publish_date";
 	public static final String VACANCY_DESCRIPTION = "description";
-	public static final String VACANCY_REQUIREMENTS = "requirements";
 	public static final String VACANCY_CONDITIONS = "conditions";
 	public static final String VACANCY_EMPLOYMENT_TYPE = "employment_type";
+	public static final String VACANCY_ACTIVE_TYPE = "active";
 	public static final String VACANCY_HR_EMAIL = "email";
 
 	// FOR INTERVIEW MARK
