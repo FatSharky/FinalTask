@@ -17,10 +17,10 @@ import by.training.hrsystem.service.exeption.WrongPasswordServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserLoginCommand implements Command {
-//Нормально написать
+	// Нормально написать
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter(CommandField.LOGIN);
+		String email = request.getParameter(CommandField.EMAIL);
 		String password = request.getParameter(CommandField.PASSWORD);
 
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -33,7 +33,7 @@ public class UserLoginCommand implements Command {
 			return;
 		}
 		try {
-			user = userService.login(login, password);
+			user = userService.login(email, password);
 		} catch (WrongEmailServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
