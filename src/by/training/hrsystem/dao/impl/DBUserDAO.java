@@ -91,7 +91,7 @@ public class DBUserDAO implements UserDAO {
 	}
 
 	@Override
-	public User userAuthentication(String email, String password) throws DAOException, DataDoesNotExistException {
+	public User userAuthentication(String email, String password) throws DAOException {
 		User user = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -106,8 +106,6 @@ public class DBUserDAO implements UserDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = getUserFromResultSet(rs);
-			} else {
-				throw new DataDoesNotExistException("User not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find user: ", e);
@@ -126,7 +124,7 @@ public class DBUserDAO implements UserDAO {
 	}
 
 	@Override
-	public User getUserByEmail(String email) throws DAOException, DataDoesNotExistException {
+	public User getUserByEmail(String email) throws DAOException {
 		User user = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -140,9 +138,7 @@ public class DBUserDAO implements UserDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = getUserFromResultSet(rs);
-			} else {
-				throw new DataDoesNotExistException("User not found!");
-			}
+			} 
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find user: ", e);
 		} catch (ConnectionPoolException e) {

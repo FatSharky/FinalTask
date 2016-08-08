@@ -2,18 +2,20 @@ package by.training.hrsystem.service.impl;
 
 import by.training.hrsystem.dao.UserDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
+import by.training.hrsystem.service.exeption.userexception.PasswordNotEqualsServiceException;
 import by.training.hrsystem.service.exeption.userexception.UserServiceException;
+import by.training.hrsystem.service.exeption.userexception.UserWithThisEmailExistServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongBirthDateServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongNameServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongPhoneServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongSecondnameServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongSkypeServiceException;
 import by.training.hrsystem.service.exeption.userexception.WrongSurnameServiceException;
 import by.training.hrsystem.service.parser.Parser;
@@ -38,23 +40,25 @@ public class UserServiceImpl implements UserService {
 			return user;
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: cannot make a login operation", e);
-		} catch (DataDoesNotExistException e) {
-			throw new ServiceException("Service layer: cannot find user");
 		}
 	}
 
 	@Override
 	public User registration(String email, String password, String copyPass, String surname, String name,
 			String secondName, String skype, String contcactPhone, String birth_date, Role role)
-			throws WrongEmailServiceException, WrongPasswordServiceException, WrongSurnameServiceException,
-			WrongNameServiceException, WrongSkypeServiceException, WrongPhoneServiceException,
-			WrongBirthDateServiceException, UserServiceException, ServiceException {
+			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
+			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
+			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
+			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
 
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
 		}
-		if (!Validation.validatePassword(password, copyPass)) {
-			throw new WrongPasswordServiceException("Passwords do not match");
+		if (!Validation.validatePassword(password)) {
+			throw new WrongPasswordServiceException("Wrong password");
+		}
+		if (!password.equals(copyPass)) {
+			throw new PasswordNotEqualsServiceException("Password not equals");
 		}
 		if (!Validation.validateStringField(surname)) {
 			throw new WrongSurnameServiceException("Wrong surname");
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
 			throw new WrongNameServiceException("Wrong name");
 		}
 		if (!Validation.validateStringField(secondName)) {
-			throw new WrongSurnameServiceException("Wrong Surname");
+			throw new WrongSecondnameServiceException("Wrong Surname");
 		}
 		if (!Validation.validateStringField(skype)) {
 			throw new WrongSkypeServiceException("Wrong Skype");
@@ -78,6 +82,10 @@ public class UserServiceImpl implements UserService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
+			User userWithThisEmail = userDAO.getUserByEmail(email);
+			if (userWithThisEmail != null) {
+				throw new UserWithThisEmailExistServiceException("User with this email exist");
+			}
 
 			User newUser = new User();
 			newUser.setEmail(email);

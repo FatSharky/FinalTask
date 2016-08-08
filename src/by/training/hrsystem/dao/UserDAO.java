@@ -17,7 +17,7 @@ public interface UserDAO {
 
 	void updateTranslateUser(User user, String lang) throws DAOException;
 
-	User userAuthentication(String email, String password) throws DAOException, DataDoesNotExistException;
+	User userAuthentication(String email, String password) throws DAOException;
 
-	User getUserByEmail(String email) throws DAOException, DataDoesNotExistException;
+	User getUserByEmail(String email) throws DAOException;
 }

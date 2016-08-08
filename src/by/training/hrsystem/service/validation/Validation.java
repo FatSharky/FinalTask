@@ -27,11 +27,7 @@ public final class Validation {
 		return checkStringField(EMAIL_PATTERN, email);
 	}
 
-	public static boolean validatePassword(String password, String copyPass) {
-		if (!password.equals(copyPass)) {
-			return false;
-		}
-
+	public static boolean validatePassword(String password) {
 		return checkStringField(PASSWORD_PATTERN, password);
 	}
 

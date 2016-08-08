@@ -6,7 +6,7 @@ public final class CommandField {
 
 	public static final String WELCOME_PAGE = "/index.jsp";
 	public static final int ERROR_CODE_500 = 500;
-
+	public static final String REGISTRATION_PAGE = "WEB-INF/pages/applicantRegistration.jsp";
 	public static final String USER_ATTRIBUTE = "user";
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
