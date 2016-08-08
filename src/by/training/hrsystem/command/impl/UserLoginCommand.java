@@ -12,8 +12,8 @@ import by.training.hrsystem.command.constant.CommandField;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.WrongEmailServiceException;
-import by.training.hrsystem.service.exeption.WrongPasswordServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserLoginCommand implements Command {

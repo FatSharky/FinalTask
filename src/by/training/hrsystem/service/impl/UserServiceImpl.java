@@ -8,14 +8,14 @@ import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.UserServiceException;
-import by.training.hrsystem.service.exeption.WrongBirthDateServiceException;
-import by.training.hrsystem.service.exeption.WrongEmailServiceException;
-import by.training.hrsystem.service.exeption.WrongNameServiceException;
-import by.training.hrsystem.service.exeption.WrongPasswordServiceException;
-import by.training.hrsystem.service.exeption.WrongPhoneServiceException;
-import by.training.hrsystem.service.exeption.WrongSkypeServiceException;
-import by.training.hrsystem.service.exeption.WrongSurnameServiceException;
+import by.training.hrsystem.service.exeption.userexception.UserServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongBirthDateServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongNameServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongPhoneServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongSkypeServiceException;
+import by.training.hrsystem.service.exeption.userexception.WrongSurnameServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
@@ -46,7 +46,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registration(String email, String password, String copyPass, String surname, String name,
 			String secondName, String skype, String contcactPhone, String birth_date, Role role)
-			throws ServiceException {
+			throws WrongEmailServiceException, WrongPasswordServiceException, WrongSurnameServiceException,
+			WrongNameServiceException, WrongSkypeServiceException, WrongPhoneServiceException,
+			WrongBirthDateServiceException, UserServiceException, ServiceException {
 
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		if (!Validation.validatePhoneField(contcactPhone)) {
 			throw new WrongPhoneServiceException("Wrong contact phone");
 		}
-		if (!Validation.validateDateField(birth_date)) {
+		if (!Validation.validateFullDateField(birth_date)) {
 			throw new WrongBirthDateServiceException("Wrong birht date");
 		}
 
@@ -84,15 +86,14 @@ public class UserServiceImpl implements UserService {
 			newUser.setName(name);
 			newUser.setSkype(skype);
 			newUser.setContactPhone(Parser.parseStringtoInt(contcactPhone));
-			newUser.setBirthDate(Parser.parseStringtoDate(birth_date));
-			newUser.setRole(role.APPLICNAT);
+			newUser.setBirthDate(Parser.parseToFullDate(birth_date));
 			userDAO.addUser(newUser);
 
 			return newUser;
 		} catch (DAOException e) {
 			throw new UserServiceException("Service layer: cannot make a registration", e);
 		} catch (ParserException e) {
-			throw new ServiceException("Service layer: cannot parse");
+			throw new ServiceException("Service layer: can not parse date");
 		}
 	}
 

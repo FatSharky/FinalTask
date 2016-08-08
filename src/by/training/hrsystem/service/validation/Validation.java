@@ -13,7 +13,9 @@ public final class Validation {
 	private static final String PASSWORD_PATTERN = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
 	private static final String FIFTEEM_LETTERS_PATTERN = "^[a-zA-Z\\-]{2,15}$";
 	private static final String PHONE_PATTERN = "\\d{7}";
-	private static final String DATE_PATTERN = "dd.MM.yyyy";
+	private static final String COURSE_PATTER = "[0-5]{1}";
+	private static final String DATE_FULL_PATTERN = "dd.MM.yyyy";
+	private static final String DATE_SHORT = "yyyy";
 
 	private static boolean checkStringField(String patternStr, String field) {
 		Pattern pattern = Pattern.compile(patternStr);
@@ -41,10 +43,17 @@ public final class Validation {
 		return checkStringField(PHONE_PATTERN, value);
 	}
 
-	public static boolean validateDateField(String value) {
+	public static boolean validateFullDateField(String value) {
+		return checkStringField(DATE_FULL_PATTERN, value);
 
-		return checkStringField(DATE_PATTERN, value);
+	}
 
+	public static boolean validateShortDateField(String value) {
+		return checkStringField(DATE_SHORT, value);
+	}
+
+	public static boolean validateCourseField(String value) {
+		return checkStringField(COURSE_PATTER, value);
 	}
 
 	public static boolean validateDate(Date checkStartDate, Date checkTillDate) {
