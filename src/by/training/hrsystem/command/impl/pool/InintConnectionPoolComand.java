@@ -13,7 +13,7 @@ import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class InintConnectionPoolComand implements Command{
-
+//Ком посылаю ошибку?
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();

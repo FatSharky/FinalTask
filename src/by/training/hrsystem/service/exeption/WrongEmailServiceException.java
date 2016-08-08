@@ -1,6 +1,6 @@
 package by.training.hrsystem.service.exeption;
 
-public class WrongEmailServiceException extends ServiceException {
+public class WrongEmailServiceException extends UserServiceException {
 
 	private static final long serialVersionUID = 1L;
 

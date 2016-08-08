@@ -1,6 +1,6 @@
 package by.training.hrsystem.service.exeption;
 
-public class WrongPasswordServiceException extends ServiceException {
+public class WrongPasswordServiceException extends UserServiceException {
 
 	private static final long serialVersionUID = 1L;
 

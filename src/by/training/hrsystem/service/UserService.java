@@ -12,6 +12,7 @@ public interface UserService {
 	User login(String email, String password)
 			throws WrongEmailServiceException, WrongPasswordServiceException, ServiceException;
 
-	User registration(String email, String password, String surname, String name, String secondName, String skype,
-			int contcatPhone, Date birth_date, Role role) throws WrongEmailServiceException, ServiceException;
+	User registration(String email, String password, String copyPass, String surname, String name, String secondName,
+			String skype, String contcatPhone, String birth_date, Role role)
+			throws WrongEmailServiceException, ServiceException;
 }
