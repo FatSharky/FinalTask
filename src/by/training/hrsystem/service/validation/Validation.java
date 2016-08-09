@@ -11,7 +11,7 @@ public final class Validation {
 
 	private static final String EMAIL_PATTERN = "^[A-Za-z0-9\\-]+@[A-Za-z0-9]+\\.[A-Za-z]{2,4}$";
 	private static final String PASSWORD_PATTERN = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
-	private static final String FIFTEEM_LETTERS_PATTERN = "^[a-zA-Z\\-]{2,15}$";
+	private static final String FIFTEEM_LETTERS_PATTERN = "^[à-ÿÀ-ß¸¨a-zA-Z\\-]{2,15}$";
 	private static final String PHONE_PATTERN = "\\d{7}";
 	private static final String COURSE_PATTER = "[0-5]{1}";
 	private static final String DATE_FULL_PATTERN = "dd.MM.yyyy";
