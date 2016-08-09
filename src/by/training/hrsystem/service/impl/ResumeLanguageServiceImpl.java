@@ -69,8 +69,14 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public void deleteLanguage(String idLanguage) {
-		// TODO Auto-generated method stub
+	public void deleteLanguage(String idLanguage) throws ServiceException {
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeLangugaeDAO resumeLangugaeDAO = daoFactory.getResumeLanguageDAO();
+			resumeLangugaeDAO.deleteResumeLang(Parser.parseStringtoInt(idLanguage));
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: can not delete resumeLanguage");
+		}
 
 	}
 
