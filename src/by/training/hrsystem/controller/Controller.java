@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.training.hrsystem.command.Command;
+import by.training.hrsystem.command.constant.PageName;
+import by.training.hrsystem.command.exception.CommandException;
 
 public class Controller extends HttpServlet {
 
@@ -29,7 +31,11 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		String commandName = request.getParameter(COMMAND);
 		Command command = CommandHelper.getInstance().getCommand(commandName);
-		command.execute(request, response);
+		try {
+			command.execute(request, response);
+		} catch (CommandException ex) {
+			request.getRequestDispatcher(PageName.ERROR_PAGE).forward(request, response);
+		}
 	}
 
 }
