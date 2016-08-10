@@ -7,8 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.command.Command;
+import by.training.hrsystem.command.constant.Attribute;
 import by.training.hrsystem.command.constant.CommandField;
+import by.training.hrsystem.command.constant.PageName;
+import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
@@ -17,35 +23,51 @@ import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceE
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserLoginCommand implements Command {
-	// Нормально написать
+
+	private static final Logger logger = LogManager.getRootLogger();
+
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, CommandException {
+		logger.debug("UserLoginCommand:execute() start");
 		String email = request.getParameter(CommandField.EMAIL);
 		String password = request.getParameter(CommandField.PASSWORD);
 
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
-		UserService userService = serviceFactory.getUserService();
+		HttpSession session = request.getSession(true);
 
-		User user = null;
-		HttpSession httpSession = request.getSession(false);
-		if (httpSession != null && httpSession.getAttribute(CommandField.USER_ATTRIBUTE) != null) {
-			request.getRequestDispatcher(CommandField.WELCOME_PAGE).forward(request, response);
-			return;
-		}
 		try {
-			user = userService.login(email, password);
-		} catch (WrongEmailServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (WrongPasswordServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		httpSession = request.getSession(true);
-		httpSession.setAttribute(CommandField.USER_ATTRIBUTE, user);
+			UserService userService = serviceFactory.getUserService();
+			User user = userService.login(email, password);
+			session.setAttribute(Attribute.USER, user);
 
+			String prevQuery = (String) request.getSession(false).getAttribute(Attribute.PREV_QUERY);
+			if (prevQuery != null && !prevQuery.isEmpty()) {
+				response.sendRedirect(prevQuery);
+			} else {
+				request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+			}
+		} catch (WrongEmailServiceException e) {
+			request.setAttribute(Attribute.ERROR_EMAIL, true);
+			String prevQuery = (String) request.getSession(false).getAttribute(Attribute.PREV_QUERY);
+			if (prevQuery != null && !prevQuery.isEmpty()) {
+				response.sendRedirect(prevQuery);
+			} else {
+				request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+			}
+			logger.error("Wrong email");
+		} catch (WrongPasswordServiceException e) {
+			request.setAttribute(Attribute.ERROR_PASSWORD, true);
+			String prevQuery = (String) request.getSession(false).getAttribute(Attribute.PREV_QUERY);
+			if (prevQuery != null && !prevQuery.isEmpty()) {
+				response.sendRedirect(prevQuery);
+			} else {
+				request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+			}
+			logger.error("Wrong password");
+		} catch (ServiceException e) {
+			throw new CommandException(e);
+		}
+		logger.debug("UserLoginCommand:execute() end");
 	}
 }

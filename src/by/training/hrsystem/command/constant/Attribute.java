@@ -5,6 +5,7 @@ public final class Attribute {
 		// TODO Auto-generated constructor stub
 	}
 
+	public static final String REGISTRATION_SUCCESS = "regSuccess";
 	public static final String ERROR_EMAIL = "errorEmail";
 	public static final String ERROR_ALREDI_EXIST = "errorAlrediExist";
 	public static final String ERROR_PASSWORD = "errorPassword";
@@ -15,4 +16,7 @@ public final class Attribute {
 	public static final String ERROR_SKYPE = "errorSkype";
 	public static final String ERROR_PHONE = "errorPhone";
 	public static final String ERROR_DATE = "errorDate";
+
+	public static final String USER = "user";
+	public static final String PREV_QUERY = "prev-query";
 }

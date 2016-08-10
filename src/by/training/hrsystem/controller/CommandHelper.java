@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.training.hrsystem.command.Command;
-import by.training.hrsystem.command.impl.ChangeLanguageCommand;
+import by.training.hrsystem.command.impl.ChangeLocaleCommand;
 import by.training.hrsystem.command.impl.UserLoginCommand;
 import by.training.hrsystem.command.impl.UserRegistrationCommand;
 
@@ -15,7 +15,7 @@ public class CommandHelper {
 	private CommandHelper() {
 		commands.put(CommandName.USER_REGISTRARION, new UserRegistrationCommand());
 		commands.put(CommandName.USER_LOGIN, new UserLoginCommand());
-		commands.put(CommandName.SWITCH_LOCALE, new ChangeLanguageCommand());
+		commands.put(CommandName.SWITCH_LOCALE, new ChangeLocaleCommand());
 	}
 
 	public Command getCommand(String name) {

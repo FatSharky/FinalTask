@@ -1,7 +1,6 @@
 package by.training.hrsystem.dao;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.domain.User;
 
 public interface UserDAO {
