@@ -1,0 +1,19 @@
+<c:if test="${sessionScope.locale==null}">
+	<c:set var="locale" value="en" scope="session" />
+</c:if>
+<c:if test="${sessionScope.locale!=null}">
+	<fmt:setLocale value="${sessionScope.locale}" />
+</c:if>
+<fmt:setBundle basename="resource.locale" var="locale" />
+
+<fmt:message bundle="${locale}" key="locale.foot.rights" var="rights" />
+
+<footer class="panel-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<p>Copyright &copy; 2016. Hr.System. ${rights}</p>
+			</div>
+		</div>
+	</div>
+</footer>
