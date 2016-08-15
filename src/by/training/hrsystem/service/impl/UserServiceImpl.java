@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String email, String password)
 			throws WrongEmailServiceException, WrongPasswordServiceException, ServiceException {
+		logger.debug("UserServiceImpl : login() : user's data is valid (email = {}, password = {})", email, password);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();

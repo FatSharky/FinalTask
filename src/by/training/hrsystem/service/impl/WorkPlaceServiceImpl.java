@@ -2,6 +2,9 @@ package by.training.hrsystem.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.dao.WorkPlaceDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
@@ -21,11 +24,16 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class WorkPlaceServiceImpl implements WorkPlaceService {
+	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idResume)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException {
+		logger.debug(
+				"WorkPlaceServiceImpl: addWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
+						+ " dateEnd = {}, idResume={})",
+				companyName, position, dateBegin, dateEnd, idResume);
 
 		if (!Validation.validateStringField(companyName)) {
 			throw new WrongCompanyNameServiceException("Wrong companyName");
@@ -70,6 +78,10 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	public void updateWorplace(String companyName, String position, String dateBegin, String dateEnd,
 			String idWorkPlace) throws WrongCompanyNameServiceException, WrongPositionServiceException,
 			WrongDateBeginServiceException, WrongDateEndServiceException, WrongDateServiceException, ServiceException {
+		logger.debug(
+				"WorkPlaceServiceImpl: updateWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
+						+ " dateEnd = {}, idWorkPlace={})",
+				companyName, position, dateBegin, dateEnd, idWorkPlace);
 
 		if (!Validation.validateStringField(companyName)) {
 			throw new WrongCompanyNameServiceException("Wrong companyName");
@@ -113,6 +125,8 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 
 	@Override
 	public void deleteWorkplace(String idWorPlace) throws EducationServiceException {
+		logger.debug("WorkPlaceServiceImpl: deleteWorkPlace() : user's data is valid (idWorkPlace={})", idWorPlace);
+
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
@@ -125,7 +139,11 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public List<WorkPlace> selectWorkPlaceByIdResume(String idResume, String lang) throws ListWorkPlaceIsEmptyServiceException,ServiceException {
+	public List<WorkPlace> selectWorkPlaceByIdResume(String idResume, String lang)
+			throws ListWorkPlaceIsEmptyServiceException, ServiceException {
+		logger.debug("WorkPlaceServiceImpl: selectWorkPlaceByIdResume() : user's data is valid (idResume={}, lang={})",
+				idResume, lang);
+
 		List<WorkPlace> listWorkPlace = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
@@ -141,6 +159,4 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 		return listWorkPlace;
 	}
 
-	}
-
-
+}

@@ -2,6 +2,9 @@ package by.training.hrsystem.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.dao.EducationDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
@@ -23,6 +26,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class EducationServiceImpl implements EducationService {
+	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void addEducation(String institution, String faculty, String department, String education, String course,
@@ -30,7 +34,10 @@ public class EducationServiceImpl implements EducationService {
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
-
+		logger.debug(
+				"EducationServiceImpl: addEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
+						+ "education = {}, course={}, gradYear={}, postGraduate={}, idResume={})",
+				institution, faculty, department, education, course, gradYear, postgraduate, idResume);
 		if (!Validation.validateStringField(institution)) {
 			throw new WrongInstitutionServiceException("Wrong institution");
 		}
@@ -81,7 +88,10 @@ public class EducationServiceImpl implements EducationService {
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
-
+		logger.debug(
+				"EducationServiceImpl: updateEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
+						+ "education = {}, course={}, gradYear={}, postGraduate={}, idEducation={})",
+				institution, faculty, department, education, course, gradYear, postgraduate, idEducation);
 		if (!Validation.validateStringField(institution)) {
 			throw new WrongInstitutionServiceException("Wrong institution");
 		}
@@ -128,6 +138,7 @@ public class EducationServiceImpl implements EducationService {
 
 	@Override
 	public void deleteEducation(String idEducation) throws EducationServiceException {
+		logger.debug("EducationServiceImpl: deleteEducation() : user's data is valid (idEducation = {}", idEducation);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
@@ -141,6 +152,8 @@ public class EducationServiceImpl implements EducationService {
 	@Override
 	public List<Education> selectEducationbyIdResume(String idResume, String lang)
 			throws ListEducationIsEmptyServiceException, EducationServiceException {
+		logger.debug("EducationServiceImpl: selectEducationbyIdResume() : user's data is valid (idResume = {}, lang={}",
+				idResume, lang);
 		List<Education> listEducation = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();

@@ -2,6 +2,9 @@ package by.training.hrsystem.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.dao.SkillDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
@@ -18,10 +21,15 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class SkillServiceImpl implements SkillService {
+	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void addSkill(String name, String raiting, String idResume)
 			throws WrongSkillNameServiceException, WrongRaitingServiceException, ServiceException {
+
+		logger.debug("SkillServiceImpl: addSkill() : user's data is valid (name = {}, raiting={}, idResume={}", name,
+				raiting, idResume);
+
 		if (!Validation.validateStringField(name)) {
 			throw new WrongSkillNameServiceException("wrong skillName");
 		}
@@ -50,6 +58,8 @@ public class SkillServiceImpl implements SkillService {
 	public void updateSkill(String name, String raiting, String idSkill)
 			throws WrongSkillNameServiceException, WrongRaitingServiceException, ServiceException {
 		if (!Validation.validateStringField(name)) {
+			logger.debug("SkillServiceImpl: updateSkill() : user's data is valid (name = {}, raiting={}, idSkill={}",
+					name, raiting, idSkill);
 			throw new WrongSkillNameServiceException("wrong skillName");
 		}
 		if (raiting == null) {
@@ -76,6 +86,7 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	public void deleteSkill(String idSkill) throws ServiceException {
+		logger.debug("SkillServiceImpl: deleteSkill() : user's data is valid (idSkill={}", idSkill);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			SkillDAO skillDAO = daoFactory.getSkillDAO();
@@ -89,6 +100,8 @@ public class SkillServiceImpl implements SkillService {
 	@Override
 	public List<Skill> selectSkillByIdResume(String idResume, String lang)
 			throws ListSkillIsEmptyServiceException, SkillServiceException {
+		logger.debug("SkillServiceImpl: selectSkillByIdResume(): user's data is valid (idResume={}, lang={}", idResume,
+				lang);
 		List<Skill> listSkill = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
