@@ -7,20 +7,19 @@ import by.training.hrsystem.dao.UserDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.User;
-import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.userexception.PasswordNotEqualsServiceException;
-import by.training.hrsystem.service.exeption.userexception.UserServiceException;
-import by.training.hrsystem.service.exeption.userexception.UserWithThisEmailExistServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongBirthDateServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongNameServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongPhoneServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSecondnameServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSkypeServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSurnameServiceException;
+import by.training.hrsystem.service.exeption.user.PasswordNotEqualsServiceException;
+import by.training.hrsystem.service.exeption.user.UserServiceException;
+import by.training.hrsystem.service.exeption.user.UserWithThisEmailExistServiceException;
+import by.training.hrsystem.service.exeption.user.WrongBirthDateServiceException;
+import by.training.hrsystem.service.exeption.user.WrongEmailServiceException;
+import by.training.hrsystem.service.exeption.user.WrongNameServiceException;
+import by.training.hrsystem.service.exeption.user.WrongPasswordServiceException;
+import by.training.hrsystem.service.exeption.user.WrongPhoneServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSecondnameServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSkypeServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSurnameServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
@@ -49,15 +48,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User registration(String email, String password, String copyPass, String surname, String name,
-			String secondName, String skype, String contcactPhone, String birth_date)
+			String secondName, String skype, String contcactPhone, String birth_date, String role)
 			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
 			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
 			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
 			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
 		logger.debug(
 				"UserServiceImpl : registration() : user's data is valid (email = {}, password = {}, "
-						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={})",
-				email, password, surname, name, secondName, skype, contcactPhone, birth_date);
+						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={}, role={})",
+				email, password, surname, name, secondName, skype, contcactPhone, birth_date, role);
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
 		}
@@ -103,6 +102,7 @@ public class UserServiceImpl implements UserService {
 			newUser.setSkype(skype);
 			newUser.setContactPhone(Parser.parseStringtoInt(contcactPhone));
 			newUser.setBirthDate(Parser.parseToFullDate(birth_date));
+			newUser.setRole(Parser.fromStringToRole(role));
 			userDAO.addUser(newUser);
 
 			return newUser;

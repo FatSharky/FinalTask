@@ -7,19 +7,17 @@ import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Education;
-import by.training.hrsystem.domain.type.EducationType;
-import by.training.hrsystem.domain.type.PostgraduateType;
 import by.training.hrsystem.service.EducationService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.educationexception.EducationServiceException;
-import by.training.hrsystem.service.exeption.educationexception.ListEducationIsEmptyServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongCourseServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongDepartmentServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongEducationServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongFacultyServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongGradYearServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongInstitutionServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongPostGraduateServiceException;
+import by.training.hrsystem.service.exeption.education.EducationServiceException;
+import by.training.hrsystem.service.exeption.education.ListEducationIsEmptyServiceException;
+import by.training.hrsystem.service.exeption.education.WrongCourseServiceException;
+import by.training.hrsystem.service.exeption.education.WrongDepartmentServiceException;
+import by.training.hrsystem.service.exeption.education.WrongEducationServiceException;
+import by.training.hrsystem.service.exeption.education.WrongFacultyServiceException;
+import by.training.hrsystem.service.exeption.education.WrongGradYearServiceException;
+import by.training.hrsystem.service.exeption.education.WrongInstitutionServiceException;
+import by.training.hrsystem.service.exeption.education.WrongPostGraduateServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
@@ -27,8 +25,8 @@ import by.training.hrsystem.service.validation.Validation;
 public class EducationServiceImpl implements EducationService {
 
 	@Override
-	public void addEducation(String institution, String faculty, String department, EducationType education,
-			String course, String gradYear, PostgraduateType postgraduate, String idResume)
+	public void addEducation(String institution, String faculty, String department, String education, String course,
+			String gradYear, String postgraduate, String idResume)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
@@ -63,10 +61,10 @@ public class EducationServiceImpl implements EducationService {
 			newEducation.setInstitution(institution);
 			newEducation.setFaculty(faculty);
 			newEducation.setDepartment(department);
-			newEducation.setEducation(education);
+			newEducation.setEducation(Parser.fromStringToEducType(education));
 			newEducation.setCourse(Parser.parseStringtoInt(course));
 			newEducation.setGradYear(Parser.parseToShorterForm(gradYear));
-			newEducation.setPostGraduate(postgraduate);
+			newEducation.setPostGraduate(Parser.fromStringToPostGradType(postgraduate));
 			newEducation.setIdResume(Parser.parseStringtoInt(idResume));
 			educationDAO.addEducation(newEducation);
 
@@ -78,8 +76,8 @@ public class EducationServiceImpl implements EducationService {
 	}
 
 	@Override
-	public void updateEducation(String institution, String faculty, String department, EducationType education,
-			String course, String gradYear, PostgraduateType postgraduate, String idEducation)
+	public void updateEducation(String institution, String faculty, String department, String education, String course,
+			String gradYear, String postgraduate, String idEducation)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
@@ -114,10 +112,10 @@ public class EducationServiceImpl implements EducationService {
 			updateEducation.setInstitution(institution);
 			updateEducation.setFaculty(faculty);
 			updateEducation.setDepartment(department);
-			updateEducation.setEducation(education);
+			updateEducation.setEducation(Parser.fromStringToEducType(education));
 			updateEducation.setCourse(Parser.parseStringtoInt(course));
 			updateEducation.setGradYear(Parser.parseToShorterForm(gradYear));
-			updateEducation.setPostGraduate(postgraduate);
+			updateEducation.setPostGraduate(Parser.fromStringToPostGradType(postgraduate));
 			updateEducation.setIdResume(Parser.parseStringtoInt(idEducation));
 			educationDAO.updateEducation(updateEducation);
 

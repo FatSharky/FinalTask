@@ -20,8 +20,8 @@ import org.apache.logging.log4j.Logger;
 public class DBUserDAO implements UserDAO {
 
 	private static final Logger logger = LogManager.getRootLogger();
-	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date) "
-			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?);";
+	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date,role) "
+			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?,?);";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
@@ -44,6 +44,7 @@ public class DBUserDAO implements UserDAO {
 			ps.setString(6, user.getSkype());
 			ps.setInt(7, user.getContactPhone());
 			ps.setDate(8, new Date(user.getBirthDate().getTime()));
+			ps.setString(9, user.getRole().getRole());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild insert new User: ", e);

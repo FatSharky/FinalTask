@@ -16,12 +16,12 @@
 		<url-pattern>/Controller</url-pattern>
 	</servlet-mapping>
 	<listener>
-		<listener-class>by.training.hrsystem.controller.listener.HrSystemServletContextListener</listener-class>
+		<listener-class>by.training.hrsystem.listener.HrSystemServletContextListener</listener-class>
 	</listener>
 	<filter>
 		<display-name>CharsetFilter</display-name>
 		<filter-name>CharsetFilter</filter-name>
-		<filter-class>by.training.hrsystem.command.filter.CharsetFilter</filter-class>
+		<filter-class>by.training.hrsystem.filter.CharsetFilter</filter-class>
 		<init-param>
 			<param-name>character-encoding</param-name>
 			<param-value>UTF-8</param-value>

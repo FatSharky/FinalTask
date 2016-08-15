@@ -62,6 +62,10 @@
 	var="enterPhone" />
 <fmt:message bundle="${locale}" key="locale.reg.wrongPhone"
 	var="wrongPhone" />
+<fmt:message bundle="${locale}" key="locale.reg.role" var="role" />
+<fmt:message bundle="${locale}" key="locale.reg.roleApplicant"
+	var="roleApplicant" />
+<fmt:message bundle="${locale}" key="locale.reg.roleHr" var="roleHr" />
 <fmt:message bundle="${locale}" key="locale.reg.success" var="success" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -211,6 +215,15 @@
 						<p class="text-danger">${wrongBirthDate}</p>
 					</div>
 				</c:if>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2 col-md-1" for="role">${role}</label>
+				<div class="col-xs-6">
+					<select class="form-control" name="role">
+						<option value="applicant">${roleApplicant}</option>
+						<option value="hr">${roleHr}</option>
+					</select>
+				</div>
 			</div>
 
 			<br />

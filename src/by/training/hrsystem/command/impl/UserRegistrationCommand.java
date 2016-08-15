@@ -14,24 +14,22 @@ import by.training.hrsystem.command.constant.Attribute;
 import by.training.hrsystem.command.constant.CommandField;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
-import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.userexception.PasswordNotEqualsServiceException;
-import by.training.hrsystem.service.exeption.userexception.UserWithThisEmailExistServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongBirthDateServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongNameServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongPhoneServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSecondnameServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSkypeServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongSurnameServiceException;
+import by.training.hrsystem.service.exeption.user.PasswordNotEqualsServiceException;
+import by.training.hrsystem.service.exeption.user.UserWithThisEmailExistServiceException;
+import by.training.hrsystem.service.exeption.user.WrongBirthDateServiceException;
+import by.training.hrsystem.service.exeption.user.WrongEmailServiceException;
+import by.training.hrsystem.service.exeption.user.WrongNameServiceException;
+import by.training.hrsystem.service.exeption.user.WrongPasswordServiceException;
+import by.training.hrsystem.service.exeption.user.WrongPhoneServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSecondnameServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSkypeServiceException;
+import by.training.hrsystem.service.exeption.user.WrongSurnameServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserRegistrationCommand implements Command {
-	 private static final Logger logger = LogManager.getRootLogger();
-
+	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -47,11 +45,12 @@ public class UserRegistrationCommand implements Command {
 		String skype = request.getParameter(CommandField.SKYPE);
 		String contactPhone = request.getParameter(CommandField.CONTACT_PHONE);
 		String birthDate = request.getParameter(CommandField.BIRHT_DATE);
+		String role = request.getParameter(CommandField.ROLE);
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			UserService userService = serviceFactory.getUserService();
 			userService.registration(email, password, copyPassword, surname, name, secondName, skype, contactPhone,
-					birthDate);
+					birthDate, role);
 			request.setAttribute(Attribute.REGISTRATION_SUCCESS, true);
 			request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
 		} catch (WrongEmailServiceException e) {

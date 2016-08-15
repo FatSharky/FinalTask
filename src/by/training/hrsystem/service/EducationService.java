@@ -3,28 +3,26 @@ package by.training.hrsystem.service;
 import java.util.List;
 
 import by.training.hrsystem.domain.Education;
-import by.training.hrsystem.domain.type.EducationType;
-import by.training.hrsystem.domain.type.PostgraduateType;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.educationexception.EducationServiceException;
-import by.training.hrsystem.service.exeption.educationexception.ListEducationIsEmptyServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongCourseServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongDepartmentServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongEducationServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongFacultyServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongGradYearServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongInstitutionServiceException;
-import by.training.hrsystem.service.exeption.educationexception.WrongPostGraduateServiceException;
+import by.training.hrsystem.service.exeption.education.EducationServiceException;
+import by.training.hrsystem.service.exeption.education.ListEducationIsEmptyServiceException;
+import by.training.hrsystem.service.exeption.education.WrongCourseServiceException;
+import by.training.hrsystem.service.exeption.education.WrongDepartmentServiceException;
+import by.training.hrsystem.service.exeption.education.WrongEducationServiceException;
+import by.training.hrsystem.service.exeption.education.WrongFacultyServiceException;
+import by.training.hrsystem.service.exeption.education.WrongGradYearServiceException;
+import by.training.hrsystem.service.exeption.education.WrongInstitutionServiceException;
+import by.training.hrsystem.service.exeption.education.WrongPostGraduateServiceException;
 
 public interface EducationService {
-	void addEducation(String institution, String faculty, String department, EducationType education, String course,
-			String grandYer, PostgraduateType postgraduate, String idResume)
+	void addEducation(String institution, String faculty, String department, String education, String course,
+			String grandYer, String postgraduate, String idResume)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException;
 
-	void updateEducation(String institution, String faculty, String department, EducationType education, String course,
-			String gradYear, PostgraduateType postgraduate, String idEducation)
+	void updateEducation(String institution, String faculty, String department, String education, String course,
+			String gradYear, String postgraduate, String idEducation)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException;

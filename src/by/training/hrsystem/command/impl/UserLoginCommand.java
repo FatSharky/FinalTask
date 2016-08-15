@@ -18,8 +18,8 @@ import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongEmailServiceException;
-import by.training.hrsystem.service.exeption.userexception.WrongPasswordServiceException;
+import by.training.hrsystem.service.exeption.user.WrongEmailServiceException;
+import by.training.hrsystem.service.exeption.user.WrongPasswordServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserLoginCommand implements Command {
