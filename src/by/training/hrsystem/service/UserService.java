@@ -20,9 +20,9 @@ public interface UserService {
 			throws WrongEmailServiceException, WrongPasswordServiceException, ServiceException;
 
 	User registration(String email, String password, String copyPass, String surname, String name, String secondName,
-			String skype, String contcatPhone, String birth_date, Role role)
-			throws WrongEmailServiceException, UserWithThisEmailExistServiceException, WrongPasswordServiceException,
-			PasswordNotEqualsServiceException, WrongSurnameServiceException, WrongNameServiceException,
-			WrongSecondnameServiceException, WrongSkypeServiceException, WrongPhoneServiceException,
-			WrongBirthDateServiceException, UserServiceException, ServiceException;
+			String skype, String contcactPhone, String birth_date)
+			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
+			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
+			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
+			UserWithThisEmailExistServiceException, UserServiceException, ServiceException;
 }

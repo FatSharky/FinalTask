@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:if test="${sessionScope.locale==null}">
+	<c:set var="locale" value="EN" scope="session" />
+</c:if>
+<c:if test="${sessionScope.locale!=null}">
+	<fmt:setLocale value="${sessionScope.locale}" />
+</c:if>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
 <head>
@@ -20,25 +27,9 @@
     <![endif]-->
 </head>
 <body>
-
-	<div class="jumbotron clearfix">
-		<div class="about-work">
-			<h1>Найди работу мечты</h1>
-			<p>
-				<a class="btn btn-primary btn-lg" role="button">Для соискателей</a>
-				<a class="btn btn-primary btn-lg" role="button">Для
-					работадателей</a>
-			</p>
-		</div>
-		<div class="count-workplace visible-lg visible-md">
-			<h2>1 231 241</h2>
-			<p>резюме</p>
-			<h2>1 231 241</h2>
-			<p>вакасий</p>
-			<h2>1 231 241</h2>
-			<p>соискателей</p>
-		</div>
-	</div>
+	<%@include file="/WEB-INF/jspf/navigation.jspf"%>
+	<%@include file="/WEB-INF/jspf/header.jspf"%>
+	
 	<div class="col-xs-2 col-sm-2 visible-lg visible-md" id="sidebar"
 		role="navigation">
 		<div class="list-group">
@@ -142,13 +133,7 @@
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 	</nav>
-	<div id="footer">
-		<div class="container">
-			<p>
-				<a href="#">О нас</a> <a href="#">Контакты</a> @"Vlad inc"
-			</p>
-		</div>
-	</div>
+	<%@include file="/WEB-INF/jspf/footer.jspf"%>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

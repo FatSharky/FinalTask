@@ -5,6 +5,7 @@ import java.util.Map;
 
 import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.impl.ChangeLocaleCommand;
+import by.training.hrsystem.command.impl.ToIndexPageCommand;
 import by.training.hrsystem.command.impl.ToPrivateOfficeCommand;
 import by.training.hrsystem.command.impl.ToRegstrationPageCommand;
 import by.training.hrsystem.command.impl.UserLogOutCommand;
@@ -22,7 +23,7 @@ public class CommandHelper {
 		commands.put(CommandName.SWITCH_LOCALE, new ChangeLocaleCommand());
 		commands.put(CommandName.TO_REGISTRATION_PAGE, new ToRegstrationPageCommand());
 		commands.put(CommandName.TO_PRIVATE_OFFICE, new ToPrivateOfficeCommand());
-
+		commands.put(CommandName.TO_INDEX_PAGE, new ToIndexPageCommand());
 	}
 
 	public Command getCommand(String name) {

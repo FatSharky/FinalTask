@@ -5,7 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.constant.Attribute;
@@ -28,7 +30,8 @@ import by.training.hrsystem.service.exeption.userexception.WrongSurnameServiceEx
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class UserRegistrationCommand implements Command {
-	private static final Logger logger = Logger.getLogger(UserRegistrationCommand.class);
+	 private static final Logger logger = LogManager.getRootLogger();
+
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -48,15 +51,15 @@ public class UserRegistrationCommand implements Command {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			UserService userService = serviceFactory.getUserService();
 			userService.registration(email, password, copyPassword, surname, name, secondName, skype, contactPhone,
-					birthDate, Role.APPLICNAT);
+					birthDate);
 			request.setAttribute(Attribute.REGISTRATION_SUCCESS, true);
-			request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+			request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
 		} catch (WrongEmailServiceException e) {
 			request.setAttribute(Attribute.ERROR_EMAIL, true);
 			request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
 			logger.error("Wrong email");
 		} catch (UserWithThisEmailExistServiceException e) {
-			request.setAttribute(Attribute.ERROR_ALREDI_EXIST, true);
+			request.setAttribute(Attribute.ERROR_ALREADY_EXIST, true);
 			request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
 			logger.error("User with this email is aredy exist");
 		} catch (WrongPasswordServiceException e) {

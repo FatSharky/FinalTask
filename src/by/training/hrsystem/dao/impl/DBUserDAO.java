@@ -14,20 +14,21 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DBUserDAO implements UserDAO {
 
-	private static final Logger logger = Logger.getLogger(DBUserDAO.class);
-	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date, role) "
-			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?);";
+	private static final Logger logger = LogManager.getRootLogger();
+	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date) "
+			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?);";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
 
 	@Override
 	public void addUser(User user) throws DAOException {
+		logger.debug("DBUserDAO.addUser() - user = {}", user);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -40,11 +41,10 @@ public class DBUserDAO implements UserDAO {
 			ps.setString(3, user.getSurname());
 			ps.setString(4, user.getName());
 			ps.setString(5, user.getSecondName());
-			ps.setBytes(6, user.getPhoto());
-			ps.setString(7, user.getSkype());
-			ps.setInt(8, user.getContactPhone());
-			ps.setDate(9, new Date(user.getBirthDate().getTime()));
-			ps.setString(10, user.getRole().getRole());
+			ps.setString(6, user.getSkype());
+			ps.setInt(7, user.getContactPhone());
+			ps.setDate(8, new Date(user.getBirthDate().getTime()));
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild insert new User: ", e);
 		} catch (ConnectionPoolException e) {
@@ -125,6 +125,7 @@ public class DBUserDAO implements UserDAO {
 
 	@Override
 	public User getUserByEmail(String email) throws DAOException {
+		logger.debug("DBUserDAO.getUserByEmail - email = {}", email);
 		User user = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -138,7 +139,7 @@ public class DBUserDAO implements UserDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = getUserFromResultSet(rs);
-			} 
+			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find user: ", e);
 		} catch (ConnectionPoolException e) {
@@ -166,7 +167,6 @@ public class DBUserDAO implements UserDAO {
 		user.setSkype(resultSet.getString(SQLField.USER_SKYPE));
 		user.setContactPhone(resultSet.getInt(SQLField.USER_CONTACT_PHONE));
 		user.setBirthDate(resultSet.getDate(SQLField.USER_BIRTH_DATE));
-		user.setRole(Role.valueOf(resultSet.getString(SQLField.USER_ROLE)));
 		return user;
 	}
 

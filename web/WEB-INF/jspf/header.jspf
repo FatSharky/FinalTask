@@ -1,148 +1,39 @@
+
 <fmt:setLocale value="${sessionScope.locale}" />
 <c:if test="${sessionScope.locale==null}">
-	<fmt:setLocale value="en" />
+	<fmt:setLocale value="EN" />
 </c:if>
 <fmt:setBundle basename="resource.locale" var="locale" />
-<fmt:message bundle="${locale}" key="locale.registrationPage.pageName"
-	var="pageName" />
-<fmt:message bundle="${locale}" key="locale.siteName" var="siteName" />
-<fmt:message bundle="${locale}" key="locale.forAplicant"
+<fmt:message bundle="${locale}" key="locale.header.findJob"
+	var="findJob" />
+<fmt:message bundle="${locale}" key="locale.header.forApplicant"
 	var="forApplicant" />
-<fmt:message bundle="${locale}" key="locale.sendResume" var="sendResume" />
-<fmt:message bundle="${locale}" key="locale.howToImproveResume"
-	var="howToImproveResume" />
-<fmt:message bundle="${locale}" key="locale.employers" var="employers" />
-<fmt:message bundle="${locale}" key="locale.placeOpenPosition"
-	var="placeOpenPosition" />
-<fmt:message bundle="${locale}" key="locale.services" var="services" />
-<fmt:message bundle="${locale}" key="locale.aboutUs" var="aboutUs" />
-<fmt:message bundle="${locale}" key="locale.privateOffice"
-	var="privateOffice" />
-<fmt:message bundle="${locale}" key="locale.signOut" var="signOut" />
-<fmt:message bundle="${locale}" key="locale.signIn" var="signIn" />
-<fmt:message bundle="${locale}" key="locale.pleaseSignIn"
-	var="pleaseSignIn" />
-<fmt:message bundle="${locale}" key="locale.email" var="email" />
-<fmt:message bundle="${locale}" key="locale.password" var="password" />
-<fmt:message bundle="${locale}" key="locale.descriptionApplicant"
-	var="descriptionApplicant" />
-<fmt:message bundle="${locale}" key="locale.registration"
-	var="registration" />
-<fmt:message bundle="${locale}" key="locale.descriptionEmloyer"
-	var="descriptionEmloyer" />
-<fmt:message bundle="${locale}" key="locale.close" var="close" />
-<nav class="navbar navbar-fixed-top navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#responsive-menu">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="Controller?command=to-index-page">${siteName}</a>
-		</div>
-		<div class="collapse navbar-collapse" id="responsive-menu">
-			<ul class="nav navbar-nav visible-lg visible-md">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">${forApplicant}<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">${sendResume}</a></li>
-						<li><a href="#">${howToImproveResume}</a></li>
-					</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">${employers}<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">${placeOpenPosition}</a></li>
-						<li><a href="#">${services}</a></li>
-					</ul></li>
-				<li><a href="#">${aboutUs}</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<c:if test="${sessionScope.user!=null}">
-					<li class="dropdown"><a href="#"
-						class="dropdown-toggle user-set" data-toggle="dropdown"> <span>${sessionScope.user.surname}
-								${sessionScope.user.name}</span>
-					</a></li>
-					<ul class="dropdown-menu">
-						<li>
-							<form action="Controller" method="get">
-								<input type="hidden" name="command" value="to-private-office">
-								<div class="form-group">
-									<input type="submit" class="btn btn-default btn-block"
-										value="${privateOffice}">
-								</div>
-							</form>
-						</li>
-						<li>
-							<form action="Controller" method="post">
-								<input type="hidden" name="command" value="sign-out">
-								<div class="form-group">
-									<input type="submit" class="btn btn-danger btn-block"
-										value="${signOut}">
-								</div>
-							</form>
-						</li>
-					</ul>
-				</c:if>
-				<c:if test="${sessionScope.user == null}">
-					<li>
-						<button class="btn btn-success" data-toggle="modal"
-							data-target="#signInModal">
-							<span class="glyphicon glyphicon-log-in"></span> ${signIn}
-						</button>
-					</li>
-				</c:if>
-				<form action="Controller" method="get">
-					<li><input type="submit"
-						class="btn btn-link btn-on-nav btn-locale-left" name="locale"
-						value="EN"></li>
-					<li><input type="submit" class="btn btn-link btn-on-nav"
-						name="locale" value="RU"></li> <input type="hidden"
-						name="command" value="change-locale">
-				</form>
-			</ul>
-		</div>
+<fmt:message bundle="${locale}" key="locale.header.forEmployer"
+	var="forEmployer" />
+<fmt:message bundle="${locale}" key="locale.header.resume" var="resume" />
+<fmt:message bundle="${locale}" key="locale.header.vacancy"
+	var="vacancy" />
+<fmt:message bundle="${locale}" key="locale.header.applicants"
+	var="applicants" />
+
+<div class="jumbotron clearfix">
+	<div class="about-work">
+		<h1>${findJob}</h1>
+		<form action="Controller">
+			<p>
+				<input type="hidden" name="command" value="to-registration-page">
+				<input type="submit" class="btn btn-primary btn-lg"
+					value="${forEmployer}"> <input type="submit"
+					class="btn btn-primary btn-lg" value="${forApplicant}">
+			</p>
+		</form>
 	</div>
-</nav>
-
-<div class="modal fade" id="signInModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="myModalLabel">${siteName}</h3>
-			</div>
-			<div class="modal-body clearfix">
-				<form class="form-signin" method="post" action="Controller">
-					<h2 class="form-signin-heading">${pleaseSignIn}</h2>
-					<input type="email" class="form-control" placeholder="${email}"
-						name="email" required autofocus> <input type="password"
-						class="form-control" placeholder="${password}" required> <input
-						type="hidden" name="command" value="user-login"> <input
-						type="submit" class="btn btn-lg btn-primary btn-block"
-						value="${signIn}" />
-
-				</form>
-			</div>
-			<form action="Controller">
-				<div class="applicant">
-					<h4>${forApplicant}</h4>
-					<p>${descriptionApplicant}</p>
-					<input type="hidden" name="command" value="to-registration-page">
-					<input type="submit" class="btn btn-success" value="${registation}">
-				</div>
-			</form>
-			<div class="employer clearfix">
-				<h4>${employers}</h4>
-				<p>${descriptionEmloyer}</p>
-				<input type="submit" class="btn btn-warning" value="${registation}">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">${close}</button>
-			</div>
-		</div>
+	<div class="count-workplace visible-lg visible-md">
+		<h2>1 231 241</h2>
+		<p>${resume}</p>
+		<h2>1 231 241</h2>
+		<p>${vacancy}</p>
+		<h2>1 231 241</h2>
+		<p>${applicants}</p>
 	</div>
 </div>

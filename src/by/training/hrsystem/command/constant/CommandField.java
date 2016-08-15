@@ -15,7 +15,7 @@ public final class CommandField {
 	public static final String NAME = "name";
 	public static final String SECOND_NAME = "secondname";
 	public static final String SKYPE = "skype";
-	public static final String CONTACT_PHONE = "contactPhone";
+	public static final String CONTACT_PHONE = "phone";
 	public static final String BIRHT_DATE = "birthDate";
 	public static final String ROLE = "role";
 

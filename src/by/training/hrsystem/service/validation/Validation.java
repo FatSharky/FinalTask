@@ -14,7 +14,7 @@ public final class Validation {
 	private static final String FIFTEEM_LETTERS_PATTERN = "^[à-ÿÀ-ß¸¨a-zA-Z\\-]{2,15}$";
 	private static final String PHONE_PATTERN = "\\d{7}";
 	private static final String COURSE_PATTER = "[0-5]{1}";
-	private static final String DATE_FULL_PATTERN = "dd.MM.yyyy";
+	private static final String DATE_FULL_PATTERN = "(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d";
 	private static final String DATE_SHORT = "yyyy";
 
 	private static boolean checkStringField(String patternStr, String field) {

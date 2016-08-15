@@ -1,5 +1,8 @@
 package by.training.hrsystem.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.dao.UserDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.factory.DAOFactory;
@@ -23,6 +26,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class UserServiceImpl implements UserService {
+	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public User login(String email, String password)
@@ -31,7 +35,7 @@ public class UserServiceImpl implements UserService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
 			User user = userDAO.userAuthentication(email, password);
-			if (user == null) {
+			if (!user.getEmail().equals(email)) {
 				throw new WrongEmailServiceException("Wrong email");
 			}
 			if (!user.getPassword().equals(password)) {
@@ -45,12 +49,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User registration(String email, String password, String copyPass, String surname, String name,
-			String secondName, String skype, String contcactPhone, String birth_date, Role role)
+			String secondName, String skype, String contcactPhone, String birth_date)
 			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
 			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
 			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
 			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
-
+		logger.debug(
+				"UserServiceImpl : registration() : user's data is valid (email = {}, password = {}, "
+						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={})",
+				email, password, surname, name, secondName, skype, contcactPhone, birth_date);
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
 		}
@@ -92,6 +99,7 @@ public class UserServiceImpl implements UserService {
 			newUser.setPassword(password);
 			newUser.setSurname(surname);
 			newUser.setName(name);
+			newUser.setSecondName(secondName);
 			newUser.setSkype(skype);
 			newUser.setContactPhone(Parser.parseStringtoInt(contcactPhone));
 			newUser.setBirthDate(Parser.parseToFullDate(birth_date));
