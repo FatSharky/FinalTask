@@ -1,4 +1,3 @@
-
 <fmt:setLocale value="${sessionScope.locale}" />
 <c:if test="${sessionScope.locale==null}">
 	<fmt:setLocale value="EN" />

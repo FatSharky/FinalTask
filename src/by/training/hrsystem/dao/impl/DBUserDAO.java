@@ -8,6 +8,7 @@ import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
+import by.training.hrsystem.domain.type.LanguageLevelType;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -168,6 +169,7 @@ public class DBUserDAO implements UserDAO {
 		user.setSkype(resultSet.getString(SQLField.USER_SKYPE));
 		user.setContactPhone(resultSet.getInt(SQLField.USER_CONTACT_PHONE));
 		user.setBirthDate(resultSet.getDate(SQLField.USER_BIRTH_DATE));
+		user.setRole((Role.valueOf(resultSet.getString(SQLField.USER_ROLE).toUpperCase())));
 		return user;
 	}
 

@@ -38,9 +38,6 @@ public class UserServiceImpl implements UserService {
 			if (!user.getEmail().equals(email)) {
 				throw new WrongEmailServiceException("Wrong email");
 			}
-			if (!user.getPassword().equals(password)) {
-				throw new WrongPasswordServiceException("Wrong password");
-			}
 			return user;
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: cannot make a login operation", e);

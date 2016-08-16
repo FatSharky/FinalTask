@@ -1,7 +1,7 @@
 package by.training.hrsystem.domain.role;
 
 public enum Role {
-	APPLICNAT {
+	APPLICANT {
 		{
 			role = "applicant";
 		}

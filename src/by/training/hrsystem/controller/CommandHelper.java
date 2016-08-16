@@ -11,6 +11,7 @@ import by.training.hrsystem.command.impl.ToRegstrationPageCommand;
 import by.training.hrsystem.command.impl.UserLogOutCommand;
 import by.training.hrsystem.command.impl.UserLoginCommand;
 import by.training.hrsystem.command.impl.UserRegistrationCommand;
+import by.training.hrsystem.command.impl.applicant.ToApplicantEditProfileCommand;
 
 public class CommandHelper {
 	private static final CommandHelper INSTANCE = new CommandHelper();
@@ -24,6 +25,7 @@ public class CommandHelper {
 		commands.put(CommandName.TO_REGISTRATION_PAGE, new ToRegstrationPageCommand());
 		commands.put(CommandName.TO_PRIVATE_OFFICE, new ToPrivateOfficeCommand());
 		commands.put(CommandName.TO_INDEX_PAGE, new ToIndexPageCommand());
+		commands.put(CommandName.TO_APPLICANT_EDIT_PROFILE, new ToApplicantEditProfileCommand());
 	}
 
 	public Command getCommand(String name) {
