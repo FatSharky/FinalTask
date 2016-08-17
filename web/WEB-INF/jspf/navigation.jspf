@@ -66,7 +66,7 @@
 					</a>
 						<ul class="dropdown-menu">
 							<li>
-								<form action="Controller" method="get">
+								<form action="Controller" method="post">
 									<input type="hidden" name="command" value="to-private-office">
 									<div class="form-group">
 										<input type="submit" class="btn btn-default btn-block"

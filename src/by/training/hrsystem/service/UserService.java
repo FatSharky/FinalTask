@@ -24,5 +24,12 @@ public interface UserService {
 			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
 			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
 			UserWithThisEmailExistServiceException, UserServiceException, ServiceException;
+	
+	User updateProfile(String password, String copyPass, String surname, String name, String secondName,
+			String skype, String contcactPhone, String birth_date, String email)
+			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
+			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
+			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
+			UserWithThisEmailExistServiceException, UserServiceException, ServiceException;
 
 }

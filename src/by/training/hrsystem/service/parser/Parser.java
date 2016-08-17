@@ -8,6 +8,7 @@ import java.util.Date;
 import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.domain.type.EducationType;
 import by.training.hrsystem.domain.type.LanguageLevelType;
+import by.training.hrsystem.domain.type.MilitaryType;
 import by.training.hrsystem.domain.type.PostgraduateType;
 import by.training.hrsystem.domain.type.SkillType;
 import by.training.hrsystem.service.parser.exception.ParserException;
@@ -87,6 +88,17 @@ public final class Parser {
 			}
 		}
 		throw new ParserException("Can't find such educationType");
+	}
+
+	public static MilitaryType fromStringToMilitaryType(String value) throws ParserException {
+		if (value != null) {
+			for (MilitaryType mt : MilitaryType.values()) {
+				if (value.equalsIgnoreCase(mt.getMillatryType())) {
+					return mt;
+				}
+			}
+		}
+		throw new ParserException("Can't find such military type");
 	}
 
 	public static Date parseToFullDate(String field) throws ParserException {

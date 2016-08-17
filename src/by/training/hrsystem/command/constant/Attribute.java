@@ -17,6 +17,9 @@ public final class Attribute {
 	public static final String ERROR_PHONE = "errorPhone";
 	public static final String ERROR_DATE = "errorDate";
 
+	public static final String ADD_RESUME_SUCCESS = "addResSuccess";
+	public static final String ERROR_RESUME_NAME = "errorResumeName";
+
 	public static final String USER = "user";
 	public static final String PREV_QUERY = "prev-query";
 }

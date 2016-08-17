@@ -20,6 +20,10 @@
 	var="skype" />
 <fmt:message bundle="${locale}" key="locale.applicant.office.birthDate"
 	var="birthDate" />
+<fmt:message bundle="${locale}"
+	key="locale.applicant.office.header.profile" var="profile" />
+<fmt:message bundle="${locale}"
+	key="locale.applicant.office.header.resume" var="resume" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -42,52 +46,59 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/jspf/navigation.jspf"%>
-
-
 	<div class="container">
-		<%@include file="/WEB-INF/jspf/privateOfficeApplicantHeader.jspf"%>
-		<form action="Controller" method="get">
-			<input type="hidden" name="command" value="to-applicant-edit-profile">
-			<div class="left-menu clearfix">
-				<input type="submit" class="btn btn-success btn-lg" value="${edit}">
+		<br><br><br><br><br>
+		<div class="container">
+			<div class="top-nav clearfix">
+				<ul class="nav nav-tabs nav-justified">
+					<li class="active"><a href="Controller?command=to-applicant-profile">${profile}</a></li>
+					<li><a href="Controller?command=to-applicant-list-resume">${resume}</a></li>
+				</ul>
 			</div>
-		</form>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">${sessionScope.user.surname}
-					${sessionScope.user.name} ${sessionScope.user.secondName}</h3>
-			</div>
-			<div class="panel-body">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<img src="../images/photo.jpg" alt="..."
-							class="img-circle col-xs-4">
-					</div>
-					<div class="form-group">
-						<p class="text-left col-xs-2">
-							<b>${email}</b>
-						</p>
-						<p class="text-left col-xs-6">${sessionScope.user.email}</p>
-					</div>
-					<div class="form-group">
-						<p class="text-left col-xs-2">
-							<b>${mobPhone}</b>
-						</p>
-						<p class="text-left col-xs-6">${sessionScope.user.contactPhone}</p>
-					</div>
-					<div class="form-group">
-						<p class="text-left col-xs-2">
-							<b>${skype}</b>
-						</p>
-						<p class="text-left col-xs-6">${sessionScope.user.skype}</p>
-					</div>
-					<div class="form-group">
-						<p class="text-left col-xs-2">
-							<b>${birthDate}</b>
-						</p>
-						<p class="text-left col-xs-6">${sessionScope.user.birthDate}</p>
-					</div>
-				</form>
+			<form action="Controller" method="post">
+				<input type="hidden" name="command"
+					value="to-applicant-edit-profile">
+				<div class="left-menu clearfix">
+					<input type="submit" class="btn btn-success btn-lg" value="${edit}">
+				</div>
+			</form>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">${sessionScope.user.surname}
+						${sessionScope.user.name} ${sessionScope.user.secondName}</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<img src="../images/photo.jpg" alt="..."
+								class="img-circle col-xs-4">
+						</div>
+						<div class="form-group">
+							<p class="text-left col-xs-2">
+								<b>${email}</b>
+							</p>
+							<p class="text-left col-xs-6">${sessionScope.user.email}</p>
+						</div>
+						<div class="form-group">
+							<p class="text-left col-xs-2">
+								<b>${mobPhone}</b>
+							</p>
+							<p class="text-left col-xs-6">${sessionScope.user.contactPhone}</p>
+						</div>
+						<div class="form-group">
+							<p class="text-left col-xs-2">
+								<b>${skype}</b>
+							</p>
+							<p class="text-left col-xs-6">${sessionScope.user.skype}</p>
+						</div>
+						<div class="form-group">
+							<p class="text-left col-xs-2">
+								<b>${birthDate}</b>
+							</p>
+							<p class="text-left col-xs-6">${sessionScope.user.birthDate}</p>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -3,13 +3,10 @@ package by.training.hrsystem.dao.impl;
 import by.training.hrsystem.dao.UserDAO;
 import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
-import by.training.hrsystem.domain.type.LanguageLevelType;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -23,6 +20,7 @@ public class DBUserDAO implements UserDAO {
 	private static final Logger logger = LogManager.getRootLogger();
 	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date,role) "
 			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?,?);";
+	private static final String SQL_UPDATE_USER = "UPDATE user SET password=md5(?), surname=?, name=?, secondname=?, skype=?, contact_phone=?, birth_date=? WHERE email=?;";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
@@ -82,7 +80,35 @@ public class DBUserDAO implements UserDAO {
 
 	@Override
 	public void updateUser(User user) throws DAOException {
-		// TODO Auto-generated method stub
+		logger.debug("DBUserDAO.updateUser() - user = {}", user);
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_UPDATE_USER);
+			ps.setString(1, user.getPassword());
+			ps.setString(2, user.getSurname());
+			ps.setString(3, user.getName());
+			ps.setString(4, user.getSecondName());
+			ps.setString(5, user.getSkype());
+			ps.setInt(6, user.getContactPhone());
+			ps.setDate(7, new Date(user.getBirthDate().getTime()));
+			ps.setString(8, user.getEmail());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Faild update new User: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
 
 	}
 

@@ -111,4 +111,67 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public User updateProfile(String password, String copyPass, String surname, String name, String secondName,
+			String skype, String contcactPhone, String birth_date, String email)
+			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
+			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
+			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
+			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
+		logger.debug(
+				"UserServiceImpl : updateProfile() : user's data is valid (password = {}, "
+						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={},email = {})",
+				password, surname, name, secondName, skype, contcactPhone, birth_date, email);
+		if (!(email == null)) {
+			throw new WrongEmailServiceException("Wrong email");
+		}
+		if (!Validation.validatePassword(password)) {
+			throw new WrongPasswordServiceException("Wrong password");
+		}
+		if (!password.equals(copyPass)) {
+			throw new PasswordNotEqualsServiceException("Password not equals");
+		}
+		if (!Validation.validateStringField(surname)) {
+			throw new WrongSurnameServiceException("Wrong surname");
+		}
+		if (!Validation.validateStringField(name)) {
+			throw new WrongNameServiceException("Wrong name");
+		}
+		if (!Validation.validateStringField(secondName)) {
+			throw new WrongSecondnameServiceException("Wrong Surname");
+		}
+		if (!Validation.validateStringField(skype)) {
+			throw new WrongSkypeServiceException("Wrong Skype");
+		}
+		if (!Validation.validatePhoneField(contcactPhone)) {
+			throw new WrongPhoneServiceException("Wrong contact phone");
+		}
+		if (!Validation.validateFullDateField(birth_date)) {
+			throw new WrongBirthDateServiceException("Wrong birht date");
+		}
+
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+
+			User updateUser = new User();
+			updateUser.setPassword(password);
+			updateUser.setSurname(surname);
+			updateUser.setName(name);
+			updateUser.setSecondName(secondName);
+			updateUser.setSkype(skype);
+			updateUser.setContactPhone(Parser.parseStringtoInt(contcactPhone));
+			updateUser.setBirthDate(Parser.parseToFullDate(birth_date));
+			updateUser.setEmail(email);
+			userDAO.updateUser(updateUser);
+
+			return updateUser;
+		} catch (DAOException e) {
+			throw new UserServiceException("Service layer: cannot make a registration", e);
+		} catch (ParserException e) {
+			throw new ServiceException("Service layer: can not parse date");
+		}
+
+	}
+
 }
