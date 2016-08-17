@@ -222,8 +222,7 @@
 					</select>
 				</div>
 			</div>
-
-			<br />
+			<br>
 			<div class="col-xs-offset-1 col-xs-9">
 				<input type="submit" class="btn btn-primary" value="Регистрация">
 				<input type="reset" class="btn btn-default" value="Очистить форму">

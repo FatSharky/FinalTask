@@ -16,12 +16,7 @@ public class ToRegstrationPageCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-
-		try {
-			request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
-		} catch (IOException | ServletException ex) {
-			throw new CommandException(ex);
-		}
+		request.getRequestDispatcher(PageName.REGISTRATION_PAGE).forward(request, response);
 		QueryUtil.saveHttpQuery(request);
 	}
 

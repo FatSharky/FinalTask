@@ -8,57 +8,32 @@
 	<fmt:setLocale value="${sessionScope.locale}" />
 </c:if>
 <fmt:setBundle basename="resource.locale" var="locale" />
+<fmt:message bundle="${locale}" key="locale.resume.add" var="add" />
+<fmt:message bundle="${locale}" key="locale.resume.resumeName"
+	var="resumeName" />
+<fmt:message bundle="${locale}" key="locale.resume.enterResumeName"
+	var="enterResumeName" />
+<fmt:message bundle="${locale}" key="locale.resume.wrongResumeName"
+	var="wrongResumeName" />
+<fmt:message bundle="${locale}" key="locale.resume.military"
+	var="military" />
+<fmt:message bundle="${locale}"
+	key="locale.resume.military.notSpecified" var="notSpecified" />
+<fmt:message bundle="${locale}" key="locale.resume.military.fit"
+	var="fit" />
+<fmt:message bundle="${locale}" key="locale.resume.military.notFit"
+	var="notFit" />
+<fmt:message bundle="${locale}"
+	key="locale.resume.military.militaryDepartment"
+	var="militaryDepartment" />
+<fmt:message bundle="${locale}" key="locale.resume.military.notBound"
+	var="notBound" />
+<fmt:message bundle="${locale}" key="locale.resume.addResume"
+	var="addResume" />
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.profile" var="profile" />
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.resume" var="resume" />
-<fmt:message bundle="${locale}" key="locale.update.applicant"
-	var="update" />
-<fmt:message bundle="${locale}" key="locale.update.save" var="save" />
-<fmt:message bundle="${locale}" key="locale.update.cancel" var="cancel" />
-<fmt:message bundle="${locale}" key="locale.reg.password" var="password" />
-<fmt:message bundle="${locale}" key="locale.reg.enterPassword"
-	var="enterPassword" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongPassword"
-	var="wrongPassword" />
-<fmt:message bundle="${locale}" key="locale.reg.copypassword"
-	var="copypassword" />
-<fmt:message bundle="${locale}" key="locale.reg.enterCopypassword"
-	var="enterCopypassword" />
-<fmt:message bundle="${locale}" key="locale.reg.passwordNotEquals"
-	var="passwordNotEquals" />
-<fmt:message bundle="${locale}" key="locale.reg.surname" var="surname" />
-<fmt:message bundle="${locale}" key="locale.reg.enterSurname"
-	var="enterSurname" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongSurname"
-	var="wrongSurname" />
-<fmt:message bundle="${locale}" key="locale.reg.name" var="name" />
-<fmt:message bundle="${locale}" key="locale.reg.enterName"
-	var="enterName" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongName"
-	var="wrongName" />
-<fmt:message bundle="${locale}" key="locale.reg.secondname"
-	var="secondname" />
-<fmt:message bundle="${locale}" key="locale.reg.enterSecondname"
-	var="enterSecondname" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongSecondname"
-	var="wrongSecondname" />
-<fmt:message bundle="${locale}" key="locale.reg.skype" var="skype" />
-<fmt:message bundle="${locale}" key="locale.reg.enterSkype"
-	var="enterSkype" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongSkype"
-	var="wrongSkype" />
-<fmt:message bundle="${locale}" key="locale.reg.birthDate"
-	var="birthDate" />
-<fmt:message bundle="${locale}" key="locale.reg.enterBirthDate"
-	var="enterBirthDate" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongBirthDate"
-	var="wrongBirthDate" />
-<fmt:message bundle="${locale}" key="locale.reg.phone" var="phone" />
-<fmt:message bundle="${locale}" key="locale.reg.enterPhone"
-	var="enterPhone" />
-<fmt:message bundle="${locale}" key="locale.reg.wrongPhone"
-	var="wrongPhone" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -66,7 +41,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${update}</title>
+<title>${add}</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/styleForProfile.css" rel="stylesheet">
@@ -84,127 +59,45 @@
 	<div class="container">
 		<div class="top-nav clearfix">
 			<ul class="nav nav-tabs nav-justified">
-				<li class="active"><a href="Controller?command=to-applicant-profile">${profile}</a></li>
+				<li class="active"><a
+					href="Controller?command=to-applicant-profile">${profile}</a></li>
 				<li><a href="Controller?command=to-applicant-list-resume">${resume}</a></li>
 			</ul>
 		</div>
-
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">${update}</h3>
+				<h3 class="panel-title">${add}</h3>
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" action="Controller" method="post">
-					<input type="hidden" name="command" value="applicant-edit-profile">
-					<input type="hidden" name="email" value="${user.email}">
+					<input type="hidden" name="command" value="add-resume">
 					<div class="form-group">
-						<img src="../images/photo.jpg" alt="..."
-							class="img-circle col-xs-4">
+						<label class="control-label col-xs-2 col-md-1" for="resumeName">${resumeName}</label>
 						<div class="col-xs-6">
-							<button type="button" class="btn btn-success">Добавить</button>
-							<button type="button" class="btn btn-danger">Удалить</button>
+							<input type="text" class="form-control" name="resumeName"
+								placeholder="${enterResumeName}" required>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="password">${password}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="password"
-								placeholder="${enterPassword}" required>
-						</div>
-						<c:if test="${requestScope.errorPassword}">
+						<c:if test="${requestScope.errorResumeName}">
 							<div class="col-xs-2">
-								<p class="text-danger">${wrongPassword}</p>
+								<p class="text-danger">${wrongResumeName}</p>
 							</div>
 						</c:if>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="copypassword">${password}</label>
+						<label class="control-label col-xs-2 col-md-1" for="military">${military}</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control" name="copypassword"
-								placeholder="${enterCopypassword}" required>
+							<select class="form-control" name="military">
+								<option value="not specified">${notSpecified}</option>
+								<option value="fit">${fit}</option>
+								<option value="not fit">${notFit}</option>
+								<option value="military department">${militaryDepartment}</option>
+								<option value="not bound">${notBound}</option>
+							</select>
 						</div>
-						<c:if test="${requestScope.errorPasswordNotEquals}">
-							<div class="col-xs-2">
-								<p class="text-danger">${passwordNotEquals}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="surname">${surname}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="surname"
-								value="${user.surname}" required>
-						</div>
-						<c:if test="${requestScope.errorSurname}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongSurname}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="name">${name}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="name"
-								value="${user.name}" required>
-						</div>
-						<c:if test="${requestScope.errorName}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongName}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="secondname">${secondname}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="secondname"
-								value="${user.secondName }" required>
-						</div>
-						<c:if test="${requestScope.errorSecondname}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongSecondName}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="skype">${skype}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="skype"
-								value="${user.skype}" required>
-						</div>
-						<c:if test="${requestScope.errorSkype}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongSkype}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="phone">${phone}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="phone"
-								value="${user.contactPhone}" required>
-						</div>
-						<c:if test="${requestScope.errorPhone}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongPhone}</p>
-							</div>
-						</c:if>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-2 col-md-1" for="birthDate">${birthDate}</label>
-						<div class="col-xs-6">
-							<input type="text" class="form-control" name="birthDate"
-								value="${user.birthDate}" required>
-						</div>
-						<c:if test="${requestScope.errorDate}">
-							<div class="col-xs-2">
-								<p class="text-danger">${wrongBirthDate}</p>
-							</div>
-						</c:if>
 					</div>
 					<div class="left-menu clearfix">
 						<input type="submit" class="btn btn-success btn-lg"
-							value="${save}">
-						<button type="button" class="btn btn-danger btn-lg">${cancel}</button>
+							value="${addResume}">
 					</div>
 				</form>
 			</div>

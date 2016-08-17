@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.constant.SQLField;
@@ -22,7 +23,7 @@ import by.training.hrsystem.domain.type.ActiveType;
 import by.training.hrsystem.domain.type.MilitaryType;
 
 public class DBResumeDAO implements ResumeDAO {
-	private static final Logger logger = Logger.getLogger(DBResumeDAO.class);
+	private static final Logger logger = LogManager.getRootLogger();
 
 	private static final String SQL_ADD_RESUME = "INSERT INTO resume (name, publish_date, military, email) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME = "UPDATE resume SET name=?, publish_date=?, military=? WHERE id_resume=?;";
@@ -41,6 +42,7 @@ public class DBResumeDAO implements ResumeDAO {
 
 	@Override
 	public void addResume(Resume resume) throws DAOException {
+		logger.debug("DBResumeDAO.addResume() - resume = {}", resume);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;

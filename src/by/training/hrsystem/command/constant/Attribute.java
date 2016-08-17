@@ -2,7 +2,6 @@ package by.training.hrsystem.command.constant;
 
 public final class Attribute {
 	private Attribute() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static final String REGISTRATION_SUCCESS = "regSuccess";
@@ -19,6 +18,8 @@ public final class Attribute {
 
 	public static final String ADD_RESUME_SUCCESS = "addResSuccess";
 	public static final String ERROR_RESUME_NAME = "errorResumeName";
+
+	public static final String LIST_RESUME_EMPTY = "listResumeEmpty";
 
 	public static final String USER = "user";
 	public static final String PREV_QUERY = "prev-query";

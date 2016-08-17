@@ -13,13 +13,9 @@ import by.training.hrsystem.command.util.QueryUtil;
 
 public class ToIndexPageCommand implements Command {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
-		try {
-			request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
-		} catch (IOException | ServletException ex) {
-			throw new CommandException(ex);
-		}
+	public void execute(HttpServletRequest request, HttpServletResponse response)
+			throws CommandException, ServletException, IOException {
+		request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
 		QueryUtil.saveHttpQuery(request);
 	}
 }

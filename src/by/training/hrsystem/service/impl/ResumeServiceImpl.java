@@ -5,13 +5,19 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.training.hrsystem.dao.EducationDAO;
 import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.exception.DAOException;
+import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
+import by.training.hrsystem.domain.Education;
 import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.exeption.ServiceException;
+import by.training.hrsystem.service.exeption.education.EducationServiceException;
+import by.training.hrsystem.service.exeption.education.ListEducationIsEmptyServiceException;
+import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
@@ -62,9 +68,22 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public List<Resume> selectResumeByEmail(String email, String lang) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Resume> selectResumeByEmail(String email, String lang)
+			throws ListResumeIsEmptyServiceException, ServiceException {
+		logger.debug("ResumeServiceImpl: selectResumeByEmail() : email = {}, lang={}", email, lang);
+		List<Resume> listResume = null;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			try {
+				listResume = resumeDAO.selectResumeByApplicant(email, lang);
+			} catch (DataDoesNotExistException e) {
+				throw new ListResumeIsEmptyServiceException("list resume is empty");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException("Service layre: can not show list of rsume");
+		}
+		return listResume;
 	}
 
 }

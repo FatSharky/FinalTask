@@ -19,6 +19,8 @@ public final class CommandField {
 	public static final String RESUME_NAME = "resumeName";
 	public static final String RESUME_MILITARY = "military";
 
+	public static final String LOCALE = "locale";
+
 	public static final String SESSION_PREV_QUERY = "prevQuery";
 	public static final char QUERY_SEPARATOR = '?';
 

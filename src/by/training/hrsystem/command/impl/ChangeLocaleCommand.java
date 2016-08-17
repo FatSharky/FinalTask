@@ -27,14 +27,11 @@ public class ChangeLocaleCommand implements Command {
 		session.setAttribute(LOCALE_PARAM, lang);
 
 		String prevQuery = (String) session.getAttribute(PREV_QUERY);
-		try {
-			if (prevQuery != null) {
-				response.sendRedirect(prevQuery);
-			} else {
-				request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
-			}
-		} catch (IOException | ServletException e) {
-			// выбрасывает
+		if (prevQuery != null) {
+			response.sendRedirect(prevQuery);
+		} else {
+			request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
 		}
+
 	}
 }

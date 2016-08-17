@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.service.exeption.ServiceException;
+import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceException;
 
 public interface ResumeService {
@@ -13,6 +14,7 @@ public interface ResumeService {
 
 	void deleteResume(String idResume);
 
-	List<Resume> selectResumeByEmail(String email, String lang);
+	List<Resume> selectResumeByEmail(String email, String lang)
+			throws ListResumeIsEmptyServiceException, ServiceException;
 
 }

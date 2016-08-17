@@ -17,37 +17,35 @@ import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceException;
+import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
-public class AddResumeCommand implements Command {
+public class ViewApplicantResumeCommand implements Command {
+
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		logger.debug("addResumeCommand:execute() start");
+		logger.debug("ViewApplicantResume:execute() start");
 
-		User applicantEmail = (User) request.getSession().getAttribute(CommandField.USER_ATTRIBUTE);
-
-		String resumeName = request.getParameter(CommandField.RESUME_NAME);
-		String resumeMilitary = request.getParameter(CommandField.RESUME_MILITARY);
+		User applicant = (User) request.getSession().getAttribute(CommandField.USER_ATTRIBUTE);
+		String lang = (String) request.getSession().getAttribute(CommandField.LOCALE);
 
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			ResumeService resumeService = serviceFactory.getResumeService();
-			resumeService.addResume(resumeName, resumeMilitary, applicantEmail.getEmail());
-			request.setAttribute(Attribute.ADD_RESUME_SUCCESS, true);
-			request.getRequestDispatcher(PageName.APPLICANT_CREATE_RESUME_PAGE).forward(request, response);
-		} catch (WrongResumeNameServiceException e) {
-			request.setAttribute(Attribute.ERROR_RESUME_NAME, true);
-			request.getRequestDispatcher(PageName.APPLICANT_CREATE_RESUME_PAGE).forward(request, response);
+			resumeService.selectResumeByEmail(applicant.getEmail(), lang);
+			request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
+		} catch (ListResumeIsEmptyServiceException e) {
+			request.setAttribute(Attribute.LIST_RESUME_EMPTY, true);
+			request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
 			logger.error("wrong resume name");
 		} catch (ServiceException e) {
 			throw new CommandException("Command layer");
 		}
 
-		logger.debug("addResumeCommand:execute() end");
+		logger.debug("ViewApplicantResume:execute() end");
 	}
 
 }

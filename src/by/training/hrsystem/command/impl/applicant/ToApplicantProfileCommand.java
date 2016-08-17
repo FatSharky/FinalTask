@@ -21,18 +21,10 @@ public class ToApplicantProfileCommand implements Command {
 			throws CommandException, ServletException, IOException {
 		User user = (User) request.getSession().getAttribute(Attribute.USER);
 		if (user != null && user.getRole() == Role.APPLICANT) {
-			try {
-				request.getRequestDispatcher(PageName.APPLICANT_OFFICE_PAGE).forward(request, response);
-			} catch (IOException | ServletException ex) {
-				throw new CommandException(ex);
-			}
+			request.getRequestDispatcher(PageName.APPLICANT_OFFICE_PAGE).forward(request, response);
 			QueryUtil.saveHttpQuery(request);
 		} else {
-			try {
-				request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
-			} catch (IOException | ServletException ex) {
-				throw new CommandException(ex);
-			}
+			request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
 		}
 	}
 

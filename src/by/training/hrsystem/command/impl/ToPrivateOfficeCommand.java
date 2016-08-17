@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.training.hrsystem.command.Command;
+import by.training.hrsystem.command.constant.Attribute;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.command.util.QueryUtil;
@@ -15,30 +16,21 @@ import by.training.hrsystem.domain.role.Role;
 
 public class ToPrivateOfficeCommand implements Command {
 
-	private static final String USER_ATTR = "user";
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		User user = (User) request.getSession().getAttribute(USER_ATTR);
+		User user = (User) request.getSession().getAttribute(Attribute.USER);
 		if (user != null) {
-			try {
-				if (user.getRole() == Role.APPLICANT) {
-					request.getRequestDispatcher(PageName.APPLICANT_OFFICE_PAGE).forward(request, response);
-				} else if (user.getRole() == Role.HR) {
-					request.getRequestDispatcher(PageName.HR_OFFICE_PAGE).forward(request, response);
-				}
-			} catch (IOException | ServletException ex) {
-				throw new CommandException(ex);
+
+			if (user.getRole() == Role.APPLICANT) {
+				request.getRequestDispatcher(PageName.APPLICANT_OFFICE_PAGE).forward(request, response);
+			} else if (user.getRole() == Role.HR) {
+				request.getRequestDispatcher(PageName.HR_OFFICE_PAGE).forward(request, response);
 			}
 			QueryUtil.saveHttpQuery(request);
 
 		} else {
-			try {
-				request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
-			} catch (IOException | ServletException ex) {
-				throw new CommandException(ex);
-			}
+			request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
 		}
 
 	}
