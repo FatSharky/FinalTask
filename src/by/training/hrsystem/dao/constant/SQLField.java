@@ -45,7 +45,7 @@ public final class SQLField {
 	public static final String RESUME_ID = "id_resume";
 	public static final String RESUME_NAME = "name";
 	public static final String RESUME_PUBLISH_DATE = "publish_date";
-	public static final String RESUME_MILLATRY_TYPE = "millatry_type";
+	public static final String RESUME_MILLATRY_TYPE = "millatry type";
 	public static final String RESUME_ACTIVE_TYPE = "active";
 	public static final String RESUME_APPLICANT_EMAIL = "email";
 

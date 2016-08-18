@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import by.training.hrsystem.domain.role.Role;
+import by.training.hrsystem.domain.type.CurrencyType;
 import by.training.hrsystem.domain.type.EducationType;
+import by.training.hrsystem.domain.type.EmploymentType;
 import by.training.hrsystem.domain.type.LanguageLevelType;
 import by.training.hrsystem.domain.type.MilitaryType;
 import by.training.hrsystem.domain.type.PostgraduateType;
@@ -95,6 +97,28 @@ public final class Parser {
 			for (MilitaryType mt : MilitaryType.values()) {
 				if (value.equalsIgnoreCase(mt.getMillatryType())) {
 					return mt;
+				}
+			}
+		}
+		throw new ParserException("Can't find such military type");
+	}
+
+	public static CurrencyType fromStringToCurrencyType(String value) throws ParserException {
+		if (value != null) {
+			for (CurrencyType ct : CurrencyType.values()) {
+				if (value.equalsIgnoreCase(ct.getCurrencyType())) {
+					return ct;
+				}
+			}
+		}
+		throw new ParserException("Can't find such military type");
+	}
+
+	public static EmploymentType fromStringToEmplType(String value) throws ParserException {
+		if (value != null) {
+			for (EmploymentType et : EmploymentType.values()) {
+				if (value.equalsIgnoreCase(et.getCurrencyType())) {
+					return et;
 				}
 			}
 		}

@@ -2,8 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<fmt:setLocale value="EN" />
+<c:if test="${sessionScope.locale==null}">
+	<c:set var="locale" value="EN" scope="session" />
+</c:if>
 <c:if test="${sessionScope.locale!=null}">
 	<fmt:setLocale value="${sessionScope.locale}" />
 </c:if>
@@ -14,10 +15,13 @@
 <fmt:message bundle="${locale}" key="locale.list.resume.add" var="add" />
 <fmt:message bundle="${locale}" key="locale.list.resume.listResume"
 	var="listResume" />
+<fmt:message bundle="${locale}" key="locale.list.resume.publishDate"
+	var="publishDate" />
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.profile" var="profile" />
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.resume" var="resume" />
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -40,55 +44,47 @@
 <body>
 	<%@include file="/WEB-INF/jspf/navigation.jspf"%>
 	<div class="container">
-	<br><br><br><br><br>
-	<div class="container">
-		<div class="top-nav clearfix">
-			<ul class="nav nav-tabs nav-justified">
-				<li><a href="Controller?command=to-applicant-profile">${profile}</a></li>
-				<li class="active"><a href="Controller?command=to-applicant-list-resume">${resume}</a></li>
-			</ul>
-		</div>
-		<form action="Controller" method="post">
-			<input type="hidden" name="command" value="to-applicant-add-resume">
-			<div class="left-menu clearfix">
-				<input type="submit" class="btn btn-success btn-lg" value="${add}">
+		<br> <br> <br> <br> <br>
+		<div class="container">
+			<div class="top-nav clearfix">
+				<ul class="nav nav-tabs nav-justified">
+					<li><a href="Controller?command=to-applicant-profile">${profile}</a></li>
+					<li class="active"><a
+						href="Controller?command=to-applicant-list-resume">${resume}</a></li>
+				</ul>
 			</div>
-		</form>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">${listResume}</h3>
-			</div>
-			<div class="panel-body">
-				<div class="thumbnail">
-					<div class="caption">
-						<h3>Java Junior developer</h3>
-						<p>Дата создания: 02.05.2013</p>
-						<p>
-							<a href="#" class="btn btn-primary" role="button">Открыть</a> <a
-								href="#" class="btn btn-default" role="button">Редактировать</a><a
-								href="#" class="btn btn-default" role="button">Удалить</a>
-						</p>
-					</div>
+			<form action="Controller" method="post">
+				<input type="hidden" name="command" value="to-applicant-add-resume">
+				<div class="left-menu clearfix">
+					<input type="submit" class="btn btn-success btn-lg" value="${add}">
 				</div>
-				<div class="thumbnail">
-					<div class="caption">
-						<h3>С# Junior developer</h3>
-						<p>Дата создания: 02.05.2013</p>
-						<p>
-							<a href="#" class="btn btn-primary" role="button">Открыть</a> <a
-								href="#" class="btn btn-default" role="button">Редактировать</a><a
-								href="#" class="btn btn-default" role="button">Удалить</a>
-						</p>
-					</div>
+			</form>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">${listResume}</h3>
 				</div>
+				<c:forEach items="${requestScope.listResumeByEmail}" var="resume">
+					<div class="panel-body">
+						<div class="thumbnail">
+							<div class="caption">
+								<h3>${resume.name}</h3>
+								<p>${publishDate}${resume.publishDate}</p>
+								<p>
+									<a href="#" class="btn btn-primary" role="button">Открыть</a> <a
+										href="#" class="btn btn-default" role="button">Редактировать</a><a
+										href="#" class="btn btn-default" role="button">Удалить</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
-	</div>
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js"></script>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

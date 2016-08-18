@@ -5,18 +5,14 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.training.hrsystem.dao.EducationDAO;
 import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
-import by.training.hrsystem.domain.Education;
 import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.education.EducationServiceException;
-import by.training.hrsystem.service.exeption.education.ListEducationIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceException;
 import by.training.hrsystem.service.parser.Parser;

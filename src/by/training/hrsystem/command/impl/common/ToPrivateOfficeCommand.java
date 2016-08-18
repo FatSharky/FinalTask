@@ -1,4 +1,4 @@
-package by.training.hrsystem.command.impl.applicant;
+package by.training.hrsystem.command.impl.common;
 
 import java.io.IOException;
 
@@ -14,20 +14,24 @@ import by.training.hrsystem.command.util.QueryUtil;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
 
-public class ToApplicantAddResumeCommand implements Command {
+public class ToPrivateOfficeCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
 		User user = (User) request.getSession().getAttribute(Attribute.USER);
-		if (user != null && user.getRole() == Role.APPLICANT) {
+		if (user != null) {
 
-			request.getRequestDispatcher(PageName.APPLICANT_ADD_RESUME_PAGE).forward(request, response);
-
+			if (user.getRole() == Role.APPLICANT) {
+				request.getRequestDispatcher(PageName.APPLICANT_OFFICE_PAGE).forward(request, response);
+			} else if (user.getRole() == Role.HR) {
+				request.getRequestDispatcher(PageName.HR_OFFICE_PAGE).forward(request, response);
+			}
 			QueryUtil.saveHttpQuery(request);
+
 		} else {
 			request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
 		}
-	}
 
+	}
 }

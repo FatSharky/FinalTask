@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.constant.Attribute;
-import by.training.hrsystem.command.constant.CommandField;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.domain.User;
@@ -30,8 +29,8 @@ public class UserLoginCommand implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, CommandException {
 		logger.debug("UserLoginCommand:execute() start");
-		String email = request.getParameter(CommandField.EMAIL);
-		String password = request.getParameter(CommandField.PASSWORD);
+		String email = request.getParameter(Attribute.EMAIL);
+		String password = request.getParameter(Attribute.PASSWORD);
 
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		HttpSession session = request.getSession(true);

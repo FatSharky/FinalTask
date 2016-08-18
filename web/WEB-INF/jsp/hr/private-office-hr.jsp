@@ -11,8 +11,14 @@
 
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.profile" var="profile" />
+<fmt:message bundle="${locale}" key="locale.hr.office.header.vacancy"
+	var="vacancy" />
 <fmt:message bundle="${locale}"
-	key="locale.applicant.office.header.resume" var="resume" />
+	key="locale.hr.office.header.vacancyVerify" var="vacancyVerify" />
+<fmt:message bundle="${locale}" key="locale.hr.office.header.interview"
+	var="interview" />
+
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -40,9 +46,10 @@
 		<div class="container">
 			<div class="top-nav clearfix">
 				<ul class="nav nav-tabs nav-justified">
-					<li class="active"><a
-						href="Controller?command=to-applicant-profile">${profile}</a></li>
-					<li><a href="Controller?command=to-applicant-list-resume">${resume}</a></li>
+					<li class="active"><a href="#">${profile}</a></li>
+					<li><a href="#">${vacancy}</a></li>
+					<li><a href="#">${vacancyVerify}</a></li>
+					<li><a href="#">${interview}</a></li>
 				</ul>
 			</div>
 			<%@include file="/WEB-INF/jspf/private-office.jspf"%>

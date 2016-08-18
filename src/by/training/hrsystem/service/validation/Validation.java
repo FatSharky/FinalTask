@@ -16,6 +16,8 @@ public final class Validation {
 	private static final String COURSE_PATTER = "[0-5]{1}";
 	private static final String DATE_FULL_PATTERN = "(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d";
 	private static final String DATE_SHORT = "yyyy";
+	private static final String SALARY_PATTERN = "\\^\\d+$";
+	private static final String TEXT_PATTERN = "^[à-ÿÀ-ß¸¨a-zA-Z0-9]+$";
 
 	private static boolean checkStringField(String patternStr, String field) {
 		Pattern pattern = Pattern.compile(patternStr);
@@ -50,6 +52,14 @@ public final class Validation {
 
 	public static boolean validateCourseField(String value) {
 		return checkStringField(COURSE_PATTER, value);
+	}
+
+	public static boolean validateSalaryField(String value) {
+		return checkStringField(SALARY_PATTERN, value);
+	}
+
+	public static boolean validateTextField(String value) {
+		return checkStringField(TEXT_PATTERN, value);
 	}
 
 	public static boolean validateDate(Date checkStartDate, Date checkTillDate) {

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.constant.Attribute;
-import by.training.hrsystem.command.constant.CommandField;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.domain.User;
@@ -28,20 +27,20 @@ public class AddResumeCommand implements Command {
 			throws CommandException, ServletException, IOException {
 		logger.debug("addResumeCommand:execute() start");
 
-		User applicantEmail = (User) request.getSession().getAttribute(CommandField.USER_ATTRIBUTE);
+		User applicant = (User) request.getSession().getAttribute(Attribute.USER);
 
-		String resumeName = request.getParameter(CommandField.RESUME_NAME);
-		String resumeMilitary = request.getParameter(CommandField.RESUME_MILITARY);
+		String resumeName = request.getParameter(Attribute.RESUME_NAME);
+		String resumeMilitary = request.getParameter(Attribute.RESUME_MILITARY);
 
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			ResumeService resumeService = serviceFactory.getResumeService();
-			resumeService.addResume(resumeName, resumeMilitary, applicantEmail.getEmail());
+			resumeService.addResume(resumeName, resumeMilitary, applicant.getEmail());
 			request.setAttribute(Attribute.ADD_RESUME_SUCCESS, true);
-			request.getRequestDispatcher(PageName.APPLICANT_CREATE_RESUME_PAGE).forward(request, response);
+			request.getRequestDispatcher(PageName.APPLICANT_ADD_RESUME_PAGE).forward(request, response);
 		} catch (WrongResumeNameServiceException e) {
 			request.setAttribute(Attribute.ERROR_RESUME_NAME, true);
-			request.getRequestDispatcher(PageName.APPLICANT_CREATE_RESUME_PAGE).forward(request, response);
+			request.getRequestDispatcher(PageName.APPLICANT_ADD_RESUME_PAGE).forward(request, response);
 			logger.error("wrong resume name");
 		} catch (ServiceException e) {
 			throw new CommandException("Command layer");

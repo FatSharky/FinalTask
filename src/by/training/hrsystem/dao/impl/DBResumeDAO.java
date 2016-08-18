@@ -353,11 +353,11 @@ public class DBResumeDAO implements ResumeDAO {
 
 	private Resume getResumeFromResultSet(ResultSet set) throws SQLException {
 		Resume resume = new Resume();
-		resume.setIdResume(set.getInt(SQLField.RESUME_ID));
-		resume.setName(set.getString(SQLField.RESUME_NAME));
-		resume.setPublishDate(set.getDate(SQLField.RESUME_PUBLISH_DATE));
-		resume.setMilitatyType(MilitaryType.valueOf(set.getString(SQLField.RESUME_MILLATRY_TYPE)));
-		resume.setActiveType(ActiveType.valueOf(set.getString(SQLField.RESUME_ACTIVE_TYPE)));
+		resume.setIdResume(set.getInt(1));
+		resume.setName(set.getString(2));
+		resume.setPublishDate(set.getDate(3));
+		resume.setMilitatyType(MilitaryType.valueOf(set.getString(4).toUpperCase().replace(' ', '_')));
+		resume.setActiveType(ActiveType.valueOf(set.getString(5).toUpperCase().replace(' ', '_')));
 		User applicant = new User();
 		applicant.setEmail(set.getString(SQLField.RESUME_APPLICANT_EMAIL));
 		return resume;

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.constant.Attribute;
-import by.training.hrsystem.command.constant.CommandField;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.service.UserService;
@@ -36,16 +35,16 @@ public class UserRegistrationCommand implements Command {
 			throws ServletException, IOException, CommandException {
 		logger.debug("UserRegistrationCommand:execute() start");
 
-		String email = request.getParameter(CommandField.EMAIL);
-		String password = request.getParameter(CommandField.PASSWORD);
-		String copyPassword = request.getParameter(CommandField.COPY_PASSWORD);
-		String surname = request.getParameter(CommandField.SURNAME);
-		String name = request.getParameter(CommandField.NAME);
-		String secondName = request.getParameter(CommandField.SECOND_NAME);
-		String skype = request.getParameter(CommandField.SKYPE);
-		String contactPhone = request.getParameter(CommandField.CONTACT_PHONE);
-		String birthDate = request.getParameter(CommandField.BIRHT_DATE);
-		String role = request.getParameter(CommandField.ROLE);
+		String email = request.getParameter(Attribute.EMAIL);
+		String password = request.getParameter(Attribute.PASSWORD);
+		String copyPassword = request.getParameter(Attribute.COPY_PASSWORD);
+		String surname = request.getParameter(Attribute.SURNAME);
+		String name = request.getParameter(Attribute.NAME);
+		String secondName = request.getParameter(Attribute.SECOND_NAME);
+		String skype = request.getParameter(Attribute.SKYPE);
+		String contactPhone = request.getParameter(Attribute.CONTACT_PHONE);
+		String birthDate = request.getParameter(Attribute.BIRHT_DATE);
+		String role = request.getParameter(Attribute.ROLE);
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			UserService userService = serviceFactory.getUserService();
