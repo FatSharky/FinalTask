@@ -60,4 +60,10 @@ public final class Attribute {
 	public static final String ERROR_SALARY = "errorSalary";
 	public static final String ERROR_DESCRIPTION = "errorDescription";
 	public static final String ERROR_CONDITIONS = "errorConditions";
+
+	public static final String COUNT_ALL_RESUME = "countRessume";
+
+	public static final String VACANCIES = "vacancies";
+	public static final String PAGE = "page";
+	public static final String PAGE_AMONT = "pageAmount";
 }

@@ -82,4 +82,19 @@ public class ResumeServiceImpl implements ResumeService {
 		return listResume;
 	}
 
+	@Override
+	public int countAllResume() throws ServiceException {
+
+		int countResume = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			countResume = resumeDAO.selectCountResume();
+		} catch (DAOException | DataDoesNotExistException e) {
+
+			throw new ServiceException("Service lyer: cant show count of resume");
+		}
+		return countResume;
+	}
+
 }

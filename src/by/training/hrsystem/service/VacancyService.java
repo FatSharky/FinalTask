@@ -22,4 +22,8 @@ public interface VacancyService {
 
 	List<Vacancy> selectAllVacancy(String lang) throws ServiceException;
 
+	List<Vacancy> selectAllActiveVacancy(String lang, int first, int perPage) throws ServiceException;
+
+	int countAllActiveVacancy() throws ServiceException;
+
 }

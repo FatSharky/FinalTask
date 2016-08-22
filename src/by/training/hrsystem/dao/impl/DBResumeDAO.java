@@ -209,19 +209,19 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	// TO DO
 	public int selectCountResume() throws DAOException, DataDoesNotExistException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ConnectionPool pool = null;
+		int countResume = 0;
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_SELECT_COUNT_RESUME);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				// countResume;
+				countResume = rs.getInt(1);
 			} else {
 				throw new DataDoesNotExistException("User not found!");
 			}
@@ -238,7 +238,7 @@ public class DBResumeDAO implements ResumeDAO {
 			}
 		}
 
-		return 0;
+		return countResume;
 	}
 
 	@Override

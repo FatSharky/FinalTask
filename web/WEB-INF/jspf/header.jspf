@@ -28,7 +28,7 @@
 		</form>
 	</div>
 	<div class="count-workplace visible-lg visible-md">
-		<h2>1 231 241</h2>
+		<h2>${requestScope.countResume}</h2>
 		<p>${resume}</p>
 		<h2>1 231 241</h2>
 		<p>${vacancy}</p>

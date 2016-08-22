@@ -49,6 +49,12 @@ public class DBVacancyDAO implements VacancyDAO {
 			+ "FROM vacancy AS v LEFT JOIN (SELECT * FROM tvacancy WHERE lang = ?) AS tv USING(id_vacancy)  WHERE v.email=?;";
 	private static final String SQL_SELECT_VACANCY_LIKE = "SELECT * FROM vacancy WHERE name LIKE ?;";
 	private static final String SQL_SELECT_TRASL_VACANCY_LIKE = "?";
+	private static final String SQL_COUNT_ALL_ACTIVE_VACANCY = "SELECT count(id_vacancy) as countResume FROM vacancy WHERE active='active';";
+	private static final String SQL_SELECT_ALL_ACTIVE_VACANCY = "SELECT * FROM vacancy WHERE active='non active' LIMIT ?,?;";
+	private static final String SQL_SELECT_ALL_TRANSL_ACTIVE_VACANCY = "SELECT v.id_vacancy, coalesce(tv.name, v.name) AS name, "
+			+ "v.salary, v.currency, v. publish_date, coalesce(tv.description, v.description) AS description, "
+			+ "coalesce(tv.conditions, v.conditions) AS conditions, v.employment_type, v.active, v.email "
+			+ "FROM vacancy AS v LEFT JOIN (SELECT * FROM tvacancy WHERE lang = ?) AS tv USING(id_vacancy)  WHERE active='non active' LIMIT ?, ?;";
 
 	@Override
 	public void addVacancy(Vacancy vacancy) throws DAOException {
@@ -62,8 +68,7 @@ public class DBVacancyDAO implements VacancyDAO {
 			ps.setString(1, vacancy.getName());
 			ps.setInt(2, vacancy.getSalary());
 			ps.setString(3, vacancy.getCurrency().getCurrencyType());
-			ps.setDate(4, new java.sql.Date(Calendar.getInstance()
-					.getTimeInMillis()));
+			ps.setDate(4, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 			ps.setString(5, vacancy.getDescription());
 			ps.setString(6, vacancy.getCondition());
 			ps.setString(7, vacancy.getEmploymentType().getCurrencyType());
@@ -143,8 +148,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void addTranslateVacancy(Vacancy vacancy, String lang)
-			throws DAOException {
+	public void addTranslateVacancy(Vacancy vacancy, String lang) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -174,8 +178,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void updateTranslateVacancy(Vacancy vacancy, String lang)
-			throws DAOException {
+	public void updateTranslateVacancy(Vacancy vacancy, String lang) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -205,8 +208,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void deleteTranslateVacancy(int idVacancy, String lang)
-			throws DAOException {
+	public void deleteTranslateVacancy(int idVacancy, String lang) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -233,14 +235,41 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public int selectCountVacancy() throws DAOException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectCountVacancy() throws DAOException, DataDoesNotExistException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		int countVacancy = 0;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_COUNT_VACANCY);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				countVacancy = rs.getInt(1);
+			} else {
+				throw new DataDoesNotExistException("Vacancy not found!");
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find count: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+
+		return countVacancy;
+
 	}
 
 	@Override
-	public Vacancy selectVacancyById(int idVacancy, String lang)
-			throws DAOException, DataDoesNotExistException {
+	public Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException, DataDoesNotExistException {
 		Vacancy vacancy = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -281,8 +310,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public List<Vacancy> selectAllVacancy(String lang) throws DAOException,
-			DataDoesNotExistException {
+	public List<Vacancy> selectAllVacancy(String lang) throws DAOException, DataDoesNotExistException {
 		List<Vacancy> vacancy = new ArrayList<Vacancy>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -363,8 +391,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public List<Vacancy> selectVacancyLike(String name, String lang)
-			throws DAOException, DataDoesNotExistException {
+	public List<Vacancy> selectVacancyLike(String name, String lang) throws DAOException, DataDoesNotExistException {
 		List<Vacancy> vacancy = new ArrayList<Vacancy>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -404,18 +431,94 @@ public class DBVacancyDAO implements VacancyDAO {
 		return vacancy;
 	}
 
+	@Override
+	public List<Vacancy> selectAllActiveVacancy(String lang, int pageNum, int amountPerPage)
+			throws DataDoesNotExistException, DAOException {
+		List<Vacancy> vacancy = new ArrayList<Vacancy>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
+				ps = conn.prepareStatement(SQL_SELECT_ALL_ACTIVE_VACANCY);
+				ps.setInt(1, pageNum);
+				ps.setInt(2, amountPerPage);
+			} else {
+				ps = conn.prepareStatement(SQL_SELECT_ALL_TRANSL_ACTIVE_VACANCY);
+				ps.setString(1, lang);
+				ps.setInt(2, pageNum);
+				ps.setInt(3, amountPerPage);
+			}
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				vacancy.add(getVacacnyFromResultSet(rs));
+			} else {
+				throw new DataDoesNotExistException("Vacancy not found!");
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find resume: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+
+		return vacancy;
+	}
+
+	@Override
+	public int selectCountActiveVacancy() throws DAOException, DataDoesNotExistException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		int countActiveVacancy = 0;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_COUNT_ALL_ACTIVE_VACANCY);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				countActiveVacancy = rs.getInt(1);
+			} else {
+				throw new DataDoesNotExistException("Vacancy not found!");
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find count: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+
+		return countActiveVacancy;
+
+	}
+
 	private Vacancy getVacacnyFromResultSet(ResultSet set) throws SQLException {
 		Vacancy vacancy = new Vacancy();
 		vacancy.setIdVacancy(set.getInt(SQLField.VACANCY_ID));
 		vacancy.setName(set.getString(SQLField.VACANCY_NAME));
 		vacancy.setSalary(set.getInt(SQLField.VACANCY_SALARY));
-		vacancy.setCurrency(CurrencyType.valueOf(set
-				.getString(SQLField.VACANCY_CURRENCY)));
+		vacancy.setCurrency(CurrencyType.valueOf(set.getString(SQLField.VACANCY_CURRENCY)));
 		vacancy.setPublishDate(set.getDate(SQLField.VACANCY_PUBLISH_DATE));
 		vacancy.setDescription(set.getString(SQLField.VACANCY_DESCRIPTION));
 		vacancy.setCondition(set.getString(SQLField.VACANCY_CONDITIONS));
-		vacancy.setActive(ActiveType.valueOf(set
-				.getString(SQLField.VACANCY_ACTIVE_TYPE)));
+		vacancy.setActive(ActiveType.valueOf(set.getString(SQLField.VACANCY_ACTIVE_TYPE)));
 		User hr = new User();
 		hr.setEmail(set.getString(SQLField.VACANCY_HR_EMAIL));
 		return vacancy;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.VacancyDAO;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.exception.DataDoesNotExistException;
@@ -100,6 +101,39 @@ public class VacancyServiceImpl implements VacancyService {
 			throw new ServiceException("Service laye: can not show list of education");
 		}
 		return listVacancy;
+	}
+
+	@Override
+	public List<Vacancy> selectAllActiveVacancy(String lang, int first, int perPage) throws ServiceException {
+		logger.debug("VacancyServiceImpl: selectAllActiveVacancy() : user's data is valid (lang={}", lang);
+		List<Vacancy> listVacancy = null;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
+			try {
+				listVacancy = vacancyDAO.selectAllActiveVacancy(lang, first, perPage);
+			} catch (DataDoesNotExistException e) {
+				throw new ServiceException("list is empty");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException("Service laye: can not show list of education");
+		}
+		return listVacancy;
+
+	}
+
+	@Override
+	public int countAllActiveVacancy() throws ServiceException {
+		int countActiveVacancy = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			countActiveVacancy = resumeDAO.selectCountResume();
+		} catch (DAOException | DataDoesNotExistException e) {
+
+			throw new ServiceException("Service layer: cant show count of vacancy");
+		}
+		return countActiveVacancy;
 	}
 
 }

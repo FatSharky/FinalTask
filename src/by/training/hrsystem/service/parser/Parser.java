@@ -27,7 +27,7 @@ public final class Parser {
 		Date date = null;
 		try {
 			DateFormat df = new SimpleDateFormat(datePattern);
-			date = df.parse(field);
+			date = df.parse(field); 
 		} catch (ParseException e) {
 			throw new ParserException("Can't parse string to date");
 		}

@@ -14,6 +14,7 @@ import by.training.hrsystem.command.Command;
 import by.training.hrsystem.command.constant.Attribute;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
+import by.training.hrsystem.command.util.QueryUtil;
 import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
@@ -42,6 +43,7 @@ public class ToApplicantListResumeCommand implements Command {
 				List<Resume> resumeList = resumeService.selectResumeByEmail(applicant.getEmail(), lang);
 				request.setAttribute(Attribute.LIST_RESUME_BY_EMAIL, resumeList);
 				request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
+				QueryUtil.saveHttpQuery(request);
 			} catch (ListResumeIsEmptyServiceException e) {
 				request.setAttribute(Attribute.LIST_RESUME_EMPTY, true);
 				request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);

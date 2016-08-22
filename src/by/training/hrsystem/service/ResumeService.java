@@ -17,4 +17,5 @@ public interface ResumeService {
 	List<Resume> selectResumeByEmail(String email, String lang)
 			throws ListResumeIsEmptyServiceException, ServiceException;
 
+	int countAllResume() throws ServiceException;
 }
