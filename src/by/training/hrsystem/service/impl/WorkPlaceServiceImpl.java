@@ -27,7 +27,7 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
-	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idResume)
+	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idResume)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException {
 		logger.debug(
@@ -63,7 +63,7 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 			workPlace.setPosition(position);
 			workPlace.setDateBegin(Parser.parseToFullDate(dateBegin));
 			workPlace.setDateEnd(Parser.parseToFullDate(dateEnd));
-			workPlace.setIdResume(Parser.parseStringtoInt(idResume));
+			workPlace.setIdResume(idResume);
 
 			workPlaceDAO.addWorkPlace(workPlace);
 
@@ -75,9 +75,9 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public void updateWorplace(String companyName, String position, String dateBegin, String dateEnd,
-			String idWorkPlace) throws WrongCompanyNameServiceException, WrongPositionServiceException,
-			WrongDateBeginServiceException, WrongDateEndServiceException, WrongDateServiceException, ServiceException {
+	public void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idWorkPlace)
+			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
+			WrongDateEndServiceException, WrongDateServiceException, ServiceException {
 		logger.debug(
 				"WorkPlaceServiceImpl: updateWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
 						+ " dateEnd = {}, idWorkPlace={})",
@@ -111,7 +111,7 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 			workPlace.setPosition(position);
 			workPlace.setDateBegin(Parser.parseToFullDate(dateBegin));
 			workPlace.setDateEnd(Parser.parseToFullDate(dateEnd));
-			workPlace.setIdResume(Parser.parseStringtoInt(idWorkPlace));
+			workPlace.setIdWorkPlace(idWorkPlace);
 
 			workPlaceDAO.updateWorkPlace(workPlace);
 
@@ -124,13 +124,13 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public void deleteWorkplace(String idWorPlace) throws EducationServiceException {
+	public void deleteWorkplace(int idWorPlace) throws EducationServiceException {
 		logger.debug("WorkPlaceServiceImpl: deleteWorkPlace() : user's data is valid (idWorkPlace={})", idWorPlace);
 
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
-			workPlaceDAO.deleteWorkPlace(Parser.parseStringtoInt(idWorPlace));
+			workPlaceDAO.deleteWorkPlace(idWorPlace);
 
 		} catch (DAOException e) {
 			throw new EducationServiceException("Service layer: can not delete workPlace");
@@ -139,7 +139,7 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public List<WorkPlace> selectWorkPlaceByIdResume(String idResume, String lang)
+	public List<WorkPlace> selectWorkPlaceByIdResume(int idResume, String lang)
 			throws ListWorkPlaceIsEmptyServiceException, ServiceException {
 		logger.debug("WorkPlaceServiceImpl: selectWorkPlaceByIdResume() : user's data is valid (idResume={}, lang={})",
 				idResume, lang);
@@ -149,7 +149,7 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
 			try {
-				listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(Parser.parseStringtoInt(idResume), lang);
+				listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(idResume, lang);
 			} catch (DataDoesNotExistException e) {
 				throw new ListWorkPlaceIsEmptyServiceException("list is empty");
 			}

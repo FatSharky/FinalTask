@@ -17,7 +17,7 @@ public interface ResumeLanguageService {
 
 	void deleteLanguage(int idLanguage) throws ServiceException;
 
-	List<ResumeLanguage> selectLanguageByIdResume(String idResume, String lang)
+	List<ResumeLanguage> selectLanguageByIdResume(int idResume, String lang)
 			throws ListLanguageLevelIsEmptyServiceException, LanguageLevelServiceException;
 
 }

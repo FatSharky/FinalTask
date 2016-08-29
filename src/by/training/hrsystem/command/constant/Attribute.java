@@ -94,4 +94,16 @@ public final class Attribute {
 	public static final String LANGUAGE_NAME = "languageName";
 	public static final String LANGUAGE_LEVEL = "languageLevel";
 	public static final String ID_LANGUAGE = "idLanguage";
+
+	public static final String SKILL_LIST = "skillList";
+	public static final String SKILL_NAME = "skillName";
+	public static final String SKILL_LEVEL = "skillLevel";
+	public static final String ID_SKILL = "idSkill";
+
+	public static final String WORKPLACE_LIST = "workPlaceList";
+	public static final String WORKPLACE_NAME = "workPlaceName";
+	public static final String WORKPLACE_POSITION = "workPlacePosition";
+	public static final String WORKPLACE_DATE_BEGIN = "dateBegin";
+	public static final String WORKPLACE_DATE_END = "dateEnd";
+	public static final String ID_WORKPLACE = "idWorkPlace";
 }

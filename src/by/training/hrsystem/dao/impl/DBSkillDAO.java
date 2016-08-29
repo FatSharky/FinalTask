@@ -7,19 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.SkillDAO;
 import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.Skill;
 import by.training.hrsystem.domain.type.SkillType;
 
 public class DBSkillDAO implements SkillDAO {
-	private static final Logger logger = Logger.getLogger(DBSkillDAO.class);
+
+	private static final Logger logger = LogManager.getRootLogger();
 	private static final String SQL_ADD_SKILL = "INSERT INTO skill (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_SKILL = "UPDATE skill SET name=?, raiting=? WHERE id_skill=?;";
 	private static final String SQL_DELETE_SKILL = "DELETE FROM skill WHERE id_skill=?;";
@@ -32,6 +33,7 @@ public class DBSkillDAO implements SkillDAO {
 
 	@Override
 	public void addSkill(Skill skill) throws DAOException {
+		logger.debug("DBSkillDAO.addSkill() - skill = {}", skill);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -196,7 +198,7 @@ public class DBSkillDAO implements SkillDAO {
 	}
 
 	@Override
-	public List<Skill> getSkillByIdResume(int idResume, String lang) throws DAOException, DataDoesNotExistException {
+	public List<Skill> getSkillByIdResume(int idResume, String lang) throws DAOException {
 		List<Skill> skill = new ArrayList<Skill>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -215,10 +217,8 @@ public class DBSkillDAO implements SkillDAO {
 
 			}
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				skill.add(getSkillFromResultSet(rs));
-			} else {
-				throw new DataDoesNotExistException("Such language not found not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find langugae: ", e);
@@ -240,7 +240,7 @@ public class DBSkillDAO implements SkillDAO {
 		Skill skill = new Skill();
 		skill.setIdSkill(set.getInt(SQLField.SKILL_ID));
 		skill.setName(set.getString(SQLField.SKILL_NAME));
-		skill.setRaiting(SkillType.valueOf(set.getString(SQLField.SKILL_RAITING)));
+		skill.setRaiting(SkillType.valueOf(set.getString(SQLField.SKILL_RAITING).toUpperCase()));
 		skill.setIdResume(set.getInt(SQLField.SKILL_ID_RESUME));
 		return skill;
 

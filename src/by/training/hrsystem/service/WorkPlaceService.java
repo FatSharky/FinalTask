@@ -13,16 +13,16 @@ import by.training.hrsystem.service.exeption.workplace.WrongDateServiceException
 import by.training.hrsystem.service.exeption.workplace.WrongPositionServiceException;
 
 public interface WorkPlaceService {
-	void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idResume)
+	void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idResume)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException;
 
-	void updateWorplace(String companyName, String position, String dateBegin, String dateEnd, String idWorkPlace)
+	void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idWorkPlace)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException;
 
-	void deleteWorkplace(String idWorPlace) throws EducationServiceException;
+	void deleteWorkplace(int idWorPlace) throws EducationServiceException;
 
-	List<WorkPlace> selectWorkPlaceByIdResume(String idResume, String lang)
+	List<WorkPlace> selectWorkPlaceByIdResume(int idResume, String lang)
 			throws ListWorkPlaceIsEmptyServiceException, ServiceException;
 }

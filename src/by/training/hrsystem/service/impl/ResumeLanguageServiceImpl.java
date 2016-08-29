@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.ResumeLangugaeDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.ResumeLanguage;
 import by.training.hrsystem.service.ResumeLanguageService;
@@ -72,7 +71,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 			ResumeLanguage language = new ResumeLanguage();
 			language.setName(name);
 			language.setRaiting(Parser.fromStringToLanguageLevel(skillLevel));
-			language.setIdResume(idLanguage);
+			language.setIdLanguage(idLanguage);
 
 			resumeLangugaeDAO.updateResumeLang(language);
 
@@ -96,7 +95,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public List<ResumeLanguage> selectLanguageByIdResume(String idResume, String lang)
+	public List<ResumeLanguage> selectLanguageByIdResume(int idResume, String lang)
 			throws ListLanguageLevelIsEmptyServiceException, LanguageLevelServiceException {
 		logger.debug("ResumeLanguageImpl: selectLanguageByIdResume() : user's data is valid (idResume={},lang={}",
 				idResume, lang);
@@ -104,11 +103,9 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeLangugaeDAO resumeLanguageDAO = daoFactory.getResumeLanguageDAO();
-			try {
-				listResumeLanguage = resumeLanguageDAO.getResumeLangByIdResume(Parser.parseStringtoInt(idResume), lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ListLanguageLevelIsEmptyServiceException("list is empty");
-			}
+
+			listResumeLanguage = resumeLanguageDAO.getResumeLangByIdResume(idResume, lang);
+
 		} catch (DAOException e) {
 			throw new LanguageLevelServiceException("Service laye: can not show list of education");
 		}

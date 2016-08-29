@@ -1,6 +1,5 @@
 package by.training.hrsystem.dao.impl;
 
-import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,17 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.training.hrsystem.dao.ResumeLangugaeDAO;
 import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.ResumeLanguage;
 import by.training.hrsystem.domain.type.LanguageLevelType;
 
 public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
-	private static final Logger logger = Logger.getLogger(DBResumeLanguageDAO.class);
+	
+	private static final Logger logger = LogManager.getRootLogger();
+	
 	private static final String SQL_ADD_RESEUME_LANGUAGE = "INSERT INTO resumelanguage (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME_LANGUAGE = "UPDATE resumelanguage SET name=?, raiting=? WHERE id_language=?;";
 	private static final String SQL_DELETE_RESUME_LANGUAGE = "DELETE FROM resumelanguage WHERE id_language=?;";
@@ -27,10 +30,11 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 	private static final String SQL_DELETE_TRANSL_RESUME_LANG = "DELETE FROM tresumelanguage WHERE id_language=? and lang=?;";
 	private static final String SQL_SELECT_RESUME_LANG_BY_ID_RESUME = "SELECT * FROM resumelanguage WHERE id_resume=?;";
 	private static final String SQL_SELECT_TRANSL_LANG_BY_ID_RESUME = "SELECT r.id_language, coalesce(tr.name, r.name) AS name, r.raiting, r.id_resume "
-			+ "FROM resumelanguage AS r LEFT JOIN (SELECT * FROM tresumelanguage WHERE lang = @applang) AS trUSING(id_language) WHERE id_resume=4;";
+			+ "FROM resumelanguage AS r LEFT JOIN (SELECT * FROM tresumelanguage WHERE lang = ?) AS tr USING(id_language) WHERE id_resume=?;";
 
 	@Override
 	public void addResumeLang(ResumeLanguage resumeLang) throws DAOException {
+		logger.debug("DBResumeLanguageDAO.addResume() - language = {}", resumeLang);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -59,6 +63,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 
 	@Override
 	public void updateResumeLang(ResumeLanguage resumeLang) throws DAOException {
+		logger.debug("DBResumeLanguageDAO.updateResumeLang() - language = {}", resumeLang);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -195,8 +200,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 	}
 
 	@Override
-	public List<ResumeLanguage> getResumeLangByIdResume(int idResume, String lang)
-			throws DAOException, DataDoesNotExistException {
+	public List<ResumeLanguage> getResumeLangByIdResume(int idResume, String lang) throws DAOException {
 		List<ResumeLanguage> language = new ArrayList<ResumeLanguage>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -215,10 +219,8 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 
 			}
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				language.add(getLanguageFromResultSet(rs));
-			} else {
-				throw new DataDoesNotExistException("Such language not found not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find langugae: ", e);
@@ -238,10 +240,10 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 
 	private ResumeLanguage getLanguageFromResultSet(ResultSet set) throws SQLException {
 		ResumeLanguage language = new ResumeLanguage();
-		language.setIdLanguage(set.getInt(SQLField.LANGUAGE_ID));
-		language.setName(set.getString(SQLField.LANGUAGE_NAME));
-		language.setRaiting(LanguageLevelType.valueOf(set.getString(SQLField.LANGUAGE_RAITING)));
-		language.setIdResume(set.getInt(SQLField.LANGUAGE_ID_RESUME));
+		language.setIdLanguage(set.getInt(1));
+		language.setName(set.getString(2));
+		language.setRaiting(LanguageLevelType.valueOf(set.getString(3).toUpperCase().replace(' ', '_')));
+		language.setIdResume(set.getInt(4));
 		return language;
 
 	}

@@ -13,7 +13,7 @@ public enum LanguageLevelType {
 	},
 	A1_PLUS {
 		{
-			languageLevelType = "A1+";
+			languageLevelType = "A1 plus";
 		}
 	},
 	A2 {
@@ -23,7 +23,7 @@ public enum LanguageLevelType {
 	},
 	A2_PLUS {
 		{
-			languageLevelType = "A2+";
+			languageLevelType = "A2 plus";
 		}
 	},
 	B1 {
@@ -33,7 +33,17 @@ public enum LanguageLevelType {
 	},
 	B1_PLUS {
 		{
-			languageLevelType = "B1+";
+			languageLevelType = "B1 plus";
+		}
+	},
+	B2 {
+		{
+			languageLevelType = "B2";
+		}
+	},
+	B2_PLUS {
+		{
+			languageLevelType = "B2 plus";
 		}
 	},
 	C1 {
@@ -43,7 +53,7 @@ public enum LanguageLevelType {
 	},
 	C1_PLUS {
 		{
-			languageLevelType = "C1+";
+			languageLevelType = "C1 plus";
 		}
 	},
 	C2 {

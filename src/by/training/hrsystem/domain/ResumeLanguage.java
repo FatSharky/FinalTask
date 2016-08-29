@@ -14,7 +14,7 @@ public class ResumeLanguage implements Serializable {
 	private int idResume;
 
 	public ResumeLanguage() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getIdLanguage() {

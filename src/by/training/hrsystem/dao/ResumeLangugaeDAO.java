@@ -20,6 +20,6 @@ public interface ResumeLangugaeDAO {
 
 	void deleteTranslateResumeLang(int idResumeLang, String lang) throws DAOException;
 
-	List<ResumeLanguage> getResumeLangByIdResume(int idResume, String lang) throws DAOException, DataDoesNotExistException;
+	List<ResumeLanguage> getResumeLangByIdResume(int idResume, String lang) throws DAOException;
 
 }

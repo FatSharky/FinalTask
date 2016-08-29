@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import by.training.hrsystem.dao.WorkPlaceDAO;
 import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.WorkPlace;
@@ -44,7 +43,7 @@ public class DBWorkPlaceDAO implements WorkPlaceDAO {
 			ps.setString(2, workplace.getPosition());
 			ps.setDate(3, new java.sql.Date(workplace.getDateBegin().getTime()));
 			ps.setDate(4, new java.sql.Date(workplace.getDateEnd().getTime()));
-			ps.setInt(4, workplace.getIdResume());
+			ps.setInt(5, workplace.getIdResume());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create WorkPlace: ", e);
@@ -74,7 +73,7 @@ public class DBWorkPlaceDAO implements WorkPlaceDAO {
 			ps.setString(2, workplace.getPosition());
 			ps.setDate(3, new java.sql.Date(workplace.getDateBegin().getTime()));
 			ps.setDate(4, new java.sql.Date(workplace.getDateEnd().getTime()));
-			ps.setInt(4, workplace.getIdWorkPlace());
+			ps.setInt(5, workplace.getIdWorkPlace());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild to update WorkPlace: ", e);
@@ -203,8 +202,7 @@ public class DBWorkPlaceDAO implements WorkPlaceDAO {
 	}
 
 	@Override
-	public List<WorkPlace> getWorkPlaceByIdResume(int idResume, String lang)
-			throws DAOException, DataDoesNotExistException {
+	public List<WorkPlace> getWorkPlaceByIdResume(int idResume, String lang) throws DAOException {
 		List<WorkPlace> workplace = new ArrayList<WorkPlace>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -222,10 +220,8 @@ public class DBWorkPlaceDAO implements WorkPlaceDAO {
 				ps.setInt(2, idResume);
 			}
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				workplace.add(getWorkPlaceFromResultSet(rs));
-			} else {
-				throw new DataDoesNotExistException("Company not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find Company: ", e);
@@ -246,12 +242,12 @@ public class DBWorkPlaceDAO implements WorkPlaceDAO {
 
 	private WorkPlace getWorkPlaceFromResultSet(ResultSet set) throws SQLException {
 		WorkPlace workPlace = new WorkPlace();
-		workPlace.setIdWorkPlace(set.getInt(SQLField.WORKPLACE_ID));
-		workPlace.setCompanyName(set.getString(SQLField.WORKPLACE_COMPANY_NAME));
-		workPlace.setPosition(set.getString(SQLField.WORKPLACE_POSITION));
-		workPlace.setDateBegin(set.getDate(SQLField.WORKPLACE_DATE_BEGIN));
-		workPlace.setDateEnd(set.getDate(SQLField.WORKPLACE_DATE_END));
-		workPlace.setIdResume(set.getInt(SQLField.WORKPLACE_ID_RESUME));
+		workPlace.setIdWorkPlace(set.getInt(1));
+		workPlace.setCompanyName(set.getString(2));
+		workPlace.setPosition(set.getString(3));
+		workPlace.setDateBegin(set.getDate(4));
+		workPlace.setDateEnd(set.getDate(5));
+		workPlace.setIdResume(set.getInt(6));
 		return workPlace;
 
 	}

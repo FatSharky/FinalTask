@@ -13,12 +13,18 @@ import by.training.hrsystem.command.impl.UserRegistrationCommand;
 import by.training.hrsystem.command.impl.applicant.AddEducationCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeLanguageCommand;
+import by.training.hrsystem.command.impl.applicant.AddSkillCommand;
+import by.training.hrsystem.command.impl.applicant.AddWorkplaceCommand;
 import by.training.hrsystem.command.impl.applicant.ApplicantEditProfileCommand;
 import by.training.hrsystem.command.impl.applicant.DeleteEducationCommand;
 import by.training.hrsystem.command.impl.applicant.DeleteResumeLanguageCommand;
+import by.training.hrsystem.command.impl.applicant.DeleteSkillCommand;
+import by.training.hrsystem.command.impl.applicant.DeleteWorkPlaceCommand;
 import by.training.hrsystem.command.impl.applicant.EditEducationCommand;
 import by.training.hrsystem.command.impl.applicant.EditResumeCommand;
 import by.training.hrsystem.command.impl.applicant.EditResumeLanguageCommand;
+import by.training.hrsystem.command.impl.applicant.EditSkillCommand;
+import by.training.hrsystem.command.impl.applicant.EditWorkPlaceCommand;
 import by.training.hrsystem.command.impl.applicant.ShowResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantAddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantEditResumeCommand;
@@ -70,6 +76,12 @@ public class CommandHelper {
 		commands.put(CommandName.ADD_RESUME_LANGUAGE, new AddResumeLanguageCommand());
 		commands.put(CommandName.DELETE_RESUME_LANGUAGE, new DeleteResumeLanguageCommand());
 		commands.put(CommandName.EDIT_RESUME_LANGUAGE, new EditResumeLanguageCommand());
+		commands.put(CommandName.ADD_SKILL, new AddSkillCommand());
+		commands.put(CommandName.DELETE_SKILL, new DeleteSkillCommand());
+		commands.put(CommandName.EDIT_SKILL, new EditSkillCommand());
+		commands.put(CommandName.ADD_WORKPLACE, new AddWorkplaceCommand());
+		commands.put(CommandName.EDIT_WORKPLACE, new EditWorkPlaceCommand());
+		commands.put(CommandName.DELETE_WORKPLACE, new DeleteWorkPlaceCommand());
 
 	}
 
