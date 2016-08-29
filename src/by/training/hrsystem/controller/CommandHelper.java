@@ -10,12 +10,25 @@ import by.training.hrsystem.command.impl.ToRegstrationPageCommand;
 import by.training.hrsystem.command.impl.UserLogOutCommand;
 import by.training.hrsystem.command.impl.UserLoginCommand;
 import by.training.hrsystem.command.impl.UserRegistrationCommand;
+import by.training.hrsystem.command.impl.applicant.AddEducationCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ApplicantEditProfileCommand;
+import by.training.hrsystem.command.impl.applicant.EditResumeCommand;
+import by.training.hrsystem.command.impl.applicant.ShowResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantAddResumeCommand;
+import by.training.hrsystem.command.impl.applicant.ToApplicantEditResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantListResumeCommand;
+import by.training.hrsystem.command.impl.common.ShowVacancyCommand;
 import by.training.hrsystem.command.impl.common.ToEditProfileCommand;
 import by.training.hrsystem.command.impl.common.ToPrivateOfficeCommand;
+import by.training.hrsystem.command.impl.hr.ActivateVacancyCommand;
+import by.training.hrsystem.command.impl.hr.AddVacancyCommand;
+import by.training.hrsystem.command.impl.hr.DeactivateVacancyCommand;
+import by.training.hrsystem.command.impl.hr.DeleteVacancyCommand;
+import by.training.hrsystem.command.impl.hr.HotVacancyCommand;
+import by.training.hrsystem.command.impl.hr.HrPrivateOfficeShowVacancy;
+import by.training.hrsystem.command.impl.hr.ToHrAddVacancyCommand;
+import by.training.hrsystem.command.impl.hr.ToHrListVacancyCommand;
 
 public class CommandHelper {
 	private static final CommandHelper INSTANCE = new CommandHelper();
@@ -34,6 +47,19 @@ public class CommandHelper {
 		commands.put(CommandName.TO_APPLICANT_ADD_RESUME, new ToApplicantAddResumeCommand());
 		commands.put(CommandName.ADD_RESUME, new AddResumeCommand());
 		commands.put(CommandName.TO_APPLICANT_LIST_RESUME, new ToApplicantListResumeCommand());
+		commands.put(CommandName.SHOW_VACANCY, new ShowVacancyCommand());
+		commands.put(CommandName.TO_HR_LIST_VACANCY, new ToHrListVacancyCommand());
+		commands.put(CommandName.TO_HR_ADD_VACANCY_PAGE, new ToHrAddVacancyCommand());
+		commands.put(CommandName.ADD_VACANCY, new AddVacancyCommand());
+		commands.put(CommandName.HR_PRIVATE_OFFICE_SHOW_VACANCY, new HrPrivateOfficeShowVacancy());
+		commands.put(CommandName.DELETE_VACANCY, new DeleteVacancyCommand());
+		commands.put(CommandName.ACTIVATE_VACANCY, new ActivateVacancyCommand());
+		commands.put(CommandName.DEACTIVATE_VACANCY, new DeactivateVacancyCommand());
+		commands.put(CommandName.HOT_VACANCY, new HotVacancyCommand());
+		commands.put(CommandName.TO_APPLICANT_EDIT_RESUME, new ToApplicantEditResumeCommand());
+		commands.put(CommandName.SHOW_RESUME, new ShowResumeCommand());
+		commands.put(CommandName.EDIT_RESUME, new EditResumeCommand());
+		commands.put(CommandName.ADD_EDUCATION, new AddEducationCommand());
 
 	}
 

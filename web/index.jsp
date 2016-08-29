@@ -2,12 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="/WEB-INF/tld/paging.tlg" prefix="pt"%>
+
 <c:if test="${sessionScope.locale==null}">
 	<c:set var="locale" value="EN" scope="session" />
 </c:if>
 <c:if test="${sessionScope.locale!=null}">
 	<fmt:setLocale value="${sessionScope.locale}" />
 </c:if>
+<fmt:setBundle basename="resource.locale" var="locale" />
+<fmt:message bundle="${locale}" key="locale.index.hotVacancies"
+	var="hotVacancies" />
+<fmt:message bundle="${locale}" key="locale.mainPage" var="mainPage" />
+<fmt:message bundle="${locale}" key="locale.index.listOfVacancies"
+	var="listOfVacancies" />
+<fmt:message bundle="${locale}" key="locale.reg.email" var="email" />
+<fmt:message bundle="${locale}" key="locale.reg.enterEmail"
+	var="enterEmail" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
 <head>
@@ -29,48 +41,29 @@
 <body>
 	<%@include file="/WEB-INF/jspf/navigation.jspf"%>
 	<%@include file="/WEB-INF/jspf/header.jspf"%>
-	
+
 	<div class="col-xs-2 col-sm-2 visible-lg visible-md" id="sidebar"
 		role="navigation">
 		<div class="list-group">
 			<a href="#" class="list-group-item active">
-				<h4 class="list-group-item-heading">Горячие вакансии</h4>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
-			</a> <a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">Заместистель начальника
-					Главного управления</h4>
-				<p class="list-group-item-text">2020 руб.</p>
-				<p class="list-group-item-text">Пожалуй лучшая работа на свете</p>
+				<h4 class="list-group-item-heading">${hotVacancies}</h4>
 			</a>
+			<c:forEach var="hotVacancy" items="${requestScope.hotVacancies}">
+				<a
+					href="Controller?command=show-vacancy&vacancy-id=${hotVacancy.idVacancy}"
+					class="list-group-item">
+					<h4 class="list-group-item-heading">${hotVacancy.name}</h4>
+					<p class="list-group-item-text">${hotVacancy.salary}руб.</p>
+					<p class="list-group-item-text">${hotVacancy.description}</p>
+				</a>
+
+			</c:forEach>
+
 		</div>
 	</div>
 	<div class="container">
 		<ol class="breadcrumb">
-			<li class="active"><a href="#">Главная</a></li>
+			<li class="active"><a href="Controller?command=to-index-page">${mainPage}</a></li>
 		</ol>
 		<div class="search-panel">
 			<div class="input-group">
@@ -88,51 +81,22 @@
 			</div>
 			<a href="#">Расширеный поиск</a>
 		</div>
-		<h1>Вакансии ведущих компаний</h1>
-		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="images/logo.png"
-					alt="...">
-				</a>
-			</div>
+		<h1>${listOfVacancies}</h1>
+		<div class="row text-center">
+			<c:forEach var="vacancy" items="${requestScope.vacancies}">
+				<div class="col-md-3 thumbnail thumbnail-poster center-block">
+					<a
+						href="Controller?command=show-vacancy&vacancy-id=${vacancy.idVacancy}">
+						<h3>${vacancy.name}</h3>
+					</a>
+
+				</div>
+			</c:forEach>
+			<pt:paging-links page="${requestScope.page}"
+				pageAmount="${requestScope.pageAmount}"
+				href="Controller?command=to-index-page" />
 		</div>
 	</div>
-	<nav class="text-center">
-	<ul class="pagination">
-		<li class="disabled"><a href="#">&laquo;</a></li>
-		<li class="active"><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-		<li><a href="#">&raquo;</a></li>
-	</ul>
-	</nav>
 	<%@include file="/WEB-INF/jspf/footer.jspf"%>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script

@@ -16,7 +16,7 @@ import by.training.hrsystem.service.exeption.education.WrongPostGraduateServiceE
 
 public interface EducationService {
 	void addEducation(String institution, String faculty, String department, String education, String course,
-			String grandYer, String postgraduate, String idResume)
+			String grandYer, String postgraduate, int idResume)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException;

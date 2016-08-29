@@ -8,7 +8,6 @@
 	<fmt:setLocale value="EN" />
 </c:if>
 <fmt:setBundle basename="resource.locale" var="locale" />
-
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.profile" var="profile" />
 <fmt:message bundle="${locale}" key="locale.hr.office.header.vacancy"
@@ -47,7 +46,7 @@
 			<div class="top-nav clearfix">
 				<ul class="nav nav-tabs nav-justified">
 					<li class="active"><a href="#">${profile}</a></li>
-					<li><a href="#">${vacancy}</a></li>
+					<li><a href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
 					<li><a href="#">${vacancyVerify}</a></li>
 					<li><a href="#">${interview}</a></li>
 				</ul>

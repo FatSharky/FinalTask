@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="/WEB-INF/tld/paging.tlg" prefix="pt"%>
 <c:if test="${sessionScope.locale==null}">
 	<c:set var="locale" value="EN" scope="session" />
 </c:if>
@@ -43,48 +44,57 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/jspf/navigation.jspf"%>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<div class="container">
-		<br> <br> <br> <br> <br>
-		<div class="container">
-			<div class="top-nav clearfix">
-				<ul class="nav nav-tabs nav-justified">
-					<li><a href="Controller?command=to-applicant-profile">${profile}</a></li>
-					<li class="active"><a
-						href="Controller?command=to-applicant-list-resume">${resume}</a></li>
-				</ul>
+		<div class="top-nav clearfix">
+			<ul class="nav nav-tabs nav-justified">
+				<li><a href="Controller?command=to-private-office">${profile}</a></li>
+				<li class="active"><a
+					href="Controller?command=to-applicant-list-resume">${resume}</a></li>
+			</ul>
+		</div>
+		<form action="Controller" method="post">
+			<input type="hidden" name="command" value="to-applicant-add-resume">
+			<div class="left-menu clearfix">
+				<input type="submit" class="btn btn-success btn-lg" value="${add}">
 			</div>
-			<form action="Controller" method="post">
-				<input type="hidden" name="command" value="to-applicant-add-resume">
-				<div class="left-menu clearfix">
-					<input type="submit" class="btn btn-success btn-lg" value="${add}">
-				</div>
-			</form>
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">${listResume}</h3>
-				</div>
-				<c:forEach items="${requestScope.listResumeByEmail}" var="resume">
-					<div class="panel-body">
-						<div class="thumbnail">
-							<div class="caption">
-								<h3>${resume.name}</h3>
-								<p>${publishDate}${resume.publishDate}</p>
-								<p>
-									<a href="#" class="btn btn-primary" role="button">Открыть</a> <a
-										href="#" class="btn btn-default" role="button">Редактировать</a><a
-										href="#" class="btn btn-default" role="button">Удалить</a>
-								</p>
-							</div>
+		</form>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">${listResume}</h3>
+			</div>
+			<c:forEach items="${requestScope.listResumeByEmail}" var="resume">
+				<div class="panel-body">
+					<div class="thumbnail">
+						<div class="caption">
+							<h3>${resume.name}</h3>
+							<p>${publishDate}${resume.publishDate}</p>
+							<p>
+								<a
+									href="Controller?command=show-resume&idResume=${resume.idResume}"
+									class="btn btn-primary" role="button">Открыть</a> <a
+									href="Controller?command=to-applicant-edit-resume&idResume=${resume.idResume}"
+									class="btn btn-default" role="button">Редактировать</a><a
+									href="#" class="btn btn-default" role="button">Удалить</a>
+							</p>
 						</div>
 					</div>
-				</c:forEach>
-			</div>
+				</div>
+			</c:forEach>
 		</div>
+		<pt:paging-links page="${requestScope.page}"
+			pageAmount="${requestScope.pageAmount}"
+			href="Controller?command=to-applicant-list-resume" />
+	</div>
 
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="js/bootstrap.min.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

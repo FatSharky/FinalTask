@@ -19,4 +19,8 @@ public interface UserDAO {
 	User userAuthentication(String email, String password) throws DAOException;
 
 	User getUserByEmail(String email) throws DAOException;
+
+	User getUserByIdVacancy(int idVcancy) throws DAOException, DAOException;
+	
+	int countAllApplicants() throws DAOException;
 }

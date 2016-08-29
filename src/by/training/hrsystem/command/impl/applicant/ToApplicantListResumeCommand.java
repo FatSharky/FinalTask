@@ -20,41 +20,52 @@ import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class ToApplicantListResumeCommand implements Command {
+
 	private static final Logger logger = LogManager.getRootLogger();
+	private static final int PAGE_NUMBER = 1;
+	private static final int RESUME_PER_PAGE = 4;
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		logger.debug("ToApplicantListResume:execute() start");
+
+		logger.debug("ToApplicantListResumeCommand : execute() - start");
 
 		User user = (User) request.getSession().getAttribute(Attribute.USER);
 		if (user != null && user.getRole() == Role.APPLICANT) {
 
-			User applicant = (User) request.getSession().getAttribute(Attribute.USER);
+			int pageNumber = PAGE_NUMBER;
+			if (request.getParameter(Attribute.PAGE) != null) {
+				pageNumber = Integer.parseInt(request.getParameter(Attribute.PAGE));
+			}
+			ServiceFactory serviceFactory = ServiceFactory.getInstance();
+			ResumeService resumeService = serviceFactory.getResumeService();
+
+			User applicantEmail = (User) request.getSession().getAttribute(Attribute.USER);
 			String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
 
 			try {
-				ServiceFactory serviceFactory = ServiceFactory.getInstance();
-				ResumeService resumeService = serviceFactory.getResumeService();
-				List<Resume> resumeList = resumeService.selectResumeByEmail(applicant.getEmail(), lang);
+				List<Resume> resumeList = resumeService.selectResumeByEmail(applicantEmail.getEmail(), lang,
+						(pageNumber - 1) * RESUME_PER_PAGE, RESUME_PER_PAGE);
 				request.setAttribute(Attribute.LIST_RESUME_BY_EMAIL, resumeList);
-				request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
-				QueryUtil.saveHttpQuery(request);
-			} catch (ListResumeIsEmptyServiceException e) {
-				request.setAttribute(Attribute.LIST_RESUME_EMPTY, true);
-				request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
-				logger.error("wrong resume name");
-			} catch (ServiceException e) {
-				throw new CommandException("Command layer");
-			}
-		} else {
-			request.getRequestDispatcher(PageName.ERROR_ACCESS_PAGE).forward(request, response);
-		}
-		logger.debug("ViewApplicantResume:execute() end");
-	}
 
+				int resumeAmount = resumeService.countVacancyByEmail(applicantEmail.getEmail());
+				int pageAmount = (int) Math.ceil(resumeAmount * 1.0 / RESUME_PER_PAGE);
+				request.setAttribute(Attribute.PAGE_AMONT, pageAmount);
+				request.setAttribute(Attribute.PAGE, pageNumber);
+
+				request.getRequestDispatcher(PageName.APPLICANT_LIST_RESUME_PAGE).forward(request, response);
+
+			} catch (ServiceException e) {
+				throw new CommandException(e);
+			}
+		}
+
+		QueryUtil.saveHttpQuery(request);
+		logger.debug("ToApplicantListResumeCommand : execute() - end");
+
+	}
 }

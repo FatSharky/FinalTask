@@ -1,4 +1,4 @@
-package by.training.hrsystem.command.impl.applicant;
+package by.training.hrsystem.command.impl.hr;
 
 import java.io.IOException;
 
@@ -14,39 +14,40 @@ import by.training.hrsystem.command.constant.Attribute;
 import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.command.util.QueryUtil;
-import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
-import by.training.hrsystem.service.ResumeService;
+import by.training.hrsystem.domain.Vacancy;
 import by.training.hrsystem.service.UserService;
+import by.training.hrsystem.service.VacancyService;
 import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
-public class ToApplicantEditResumeCommand implements Command {
+public class HrPrivateOfficeShowVacancy implements Command {
+
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		logger.debug("ToApplicantEditResumeCommand:execute() start");
+		logger.debug("HrPrivateOfficeShowVacancy:execute() start");
 
-		int idResume = Integer.valueOf(request.getParameter(Attribute.ID_RESUME));
+		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
 		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
-			ResumeService resumeService = serviceFactory.getResumeService();
+			VacancyService vacancyService = serviceFactory.getVacancyService();
 			UserService userService = serviceFactory.getUserService();
 
-			Resume resume = resumeService.selectResumeById(idResume, lang);
-			User applicant = userService.selectUserByIdVacancy(idResume);
+			Vacancy vacnacy = vacancyService.selectVacancyById(idVacancy, lang);
+			User hr = userService.selectUserByIdVacancy(idVacancy);
 
-			request.setAttribute(Attribute.RESUME, resume);
-			request.setAttribute(Attribute.APPLICANT, applicant);
-			request.getRequestDispatcher(PageName.APPLICANT_EDIT_RESUME_PAGE).forward(request, response);
+			request.setAttribute(Attribute.VACANCY, vacnacy);
+			request.setAttribute(Attribute.HR, hr);
+			request.getRequestDispatcher(PageName.HR_VACANCY_PAGE).forward(request, response);
 		} catch (ServiceException e) {
 			throw new CommandException("Command layer");
 		}
 		QueryUtil.saveHttpQuery(request);
-		logger.debug("ToApplicantEditResumeCommand:execute() end");
+		logger.debug("HrPrivateOfficeShowVacancy:execute() end");
 
 	}
 

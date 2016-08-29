@@ -30,7 +30,7 @@ public class EducationServiceImpl implements EducationService {
 
 	@Override
 	public void addEducation(String institution, String faculty, String department, String education, String course,
-			String gradYear, String postgraduate, String idResume)
+			String gradYear, String postgraduate, int idResume)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
@@ -72,7 +72,7 @@ public class EducationServiceImpl implements EducationService {
 			newEducation.setCourse(Parser.parseStringtoInt(course));
 			newEducation.setGradYear(Parser.parseToShorterForm(gradYear));
 			newEducation.setPostGraduate(Parser.fromStringToPostGradType(postgraduate));
-			newEducation.setIdResume(Parser.parseStringtoInt(idResume));
+			newEducation.setIdResume(idResume);
 			educationDAO.addEducation(newEducation);
 
 		} catch (DAOException e) {

@@ -20,17 +20,29 @@ public interface VacancyDAO {
 	void deleteTranslateVacancy(int idVacancy, String lang) throws DAOException;
 
 	int selectCountVacancy() throws DAOException, DataDoesNotExistException;
-	
+
 	int selectCountActiveVacancy() throws DAOException, DataDoesNotExistException;
-	
+
 	Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException, DataDoesNotExistException;
 
 	List<Vacancy> selectAllVacancy(String lang) throws DAOException, DataDoesNotExistException;
-	
-	List<Vacancy> selectAllActiveVacancy(String lang, int pageNum, int amountPerPage) throws DataDoesNotExistException, DAOException;
 
-	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang) throws DAOException, DataDoesNotExistException;
+	List<Vacancy> selectAllActiveVacancy(String lang, int pageNum, int amountPerPage)
+			throws DataDoesNotExistException, DAOException;
 
 	List<Vacancy> selectVacancyLike(String name, String lang) throws DAOException, DataDoesNotExistException;
+
+	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int pageNum, int amountPerPage)
+			throws DAOException;
+
+	int selectCountVacancyByHrEmail(String hrEmail) throws DAOException, DataDoesNotExistException;
+
+	void activateVacancy(int idVacancy) throws DAOException;
+
+	void deactivateVacancy(int idVacancy) throws DAOException;
+
+	void hotVacancy(int idVacancy) throws DAOException;
+
+	List<Vacancy> selectAllHotVacancy(String lang) throws DAOException;
 
 }

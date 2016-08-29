@@ -15,10 +15,12 @@ public final class Attribute {
 	public static final String CONTACT_PHONE = "phone";
 	public static final String BIRHT_DATE = "birthDate";
 	public static final String ROLE = "role";
+	public static final String PHOTO = "photo";
 
 	// FOR RESUME
 	public static final String RESUME_NAME = "resumeName";
 	public static final String RESUME_MILITARY = "military";
+	public static final String ID_RESUME = "idResume";
 
 	// FOR LOCALE
 	public static final String LOCALE = "locale";
@@ -61,9 +63,29 @@ public final class Attribute {
 	public static final String ERROR_DESCRIPTION = "errorDescription";
 	public static final String ERROR_CONDITIONS = "errorConditions";
 
-	public static final String COUNT_ALL_RESUME = "countRessume";
+	public static final String COUNT_ALL_RESUME = "countResume";
 
 	public static final String VACANCIES = "vacancies";
+	public static final String HOT_VACANCIES = "hotVacancies";
 	public static final String PAGE = "page";
 	public static final String PAGE_AMONT = "pageAmount";
+
+	public static final String VACANCY = "vacancy";
+	public static final String ID_VACANCY = "vacancy-id";
+	public static final String HR = "hr";
+	public static final String APPLICANT = "applicant";
+
+	public static final String COUNT_ALL_ACTIVE_VACANCY = "countVacancy";
+	public static final String COUNT_ALL_APPLICANTS = "countApplicants";
+
+	public static final String RESUME = "resume";
+
+	public static final String INSTITUTION = "institution";
+	public static final String FACULTY = "faculty";
+	public static final String DEPARTMENT = "department";
+	public static final String EDUCATION_FIELD = "educField";
+	public static final String COURSE = "course";
+	public static final String GRAD_YEAR = "gradYear";
+	public static final String POSTGRAD = "postGrad";
+
 }

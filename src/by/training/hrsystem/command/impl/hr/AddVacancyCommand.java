@@ -46,7 +46,7 @@ public class AddVacancyCommand implements Command {
 			vacancyService.addVacancy(vacancyName, salary, currency, description, conditions, employmentType,
 					hrEmail.getEmail());
 			request.setAttribute(Attribute.ADD_VACANCY_SUCCESS, true);
-			request.getRequestDispatcher(PageName.HR_LIST_VACANCY_PAGE).forward(request, response);
+			request.getRequestDispatcher(PageName.HR_ADD_VACANCY_PAGE).forward(request, response);
 		} catch (WrongVacancyNameServiceException e) {
 			request.setAttribute(Attribute.ERROR_VACANCY_NAME, true);
 			request.getRequestDispatcher(PageName.HR_ADD_VACANCY_PAGE).forward(request, response);

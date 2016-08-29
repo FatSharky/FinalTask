@@ -6,6 +6,7 @@ import java.util.Date;
 import by.training.hrsystem.domain.type.ActiveType;
 import by.training.hrsystem.domain.type.CurrencyType;
 import by.training.hrsystem.domain.type.EmploymentType;
+import by.training.hrsystem.domain.type.HotType;
 
 public class Vacancy implements Serializable {
 
@@ -20,12 +21,8 @@ public class Vacancy implements Serializable {
 	private String condition;
 	private EmploymentType employmentType;
 	private ActiveType active;
-
-	private User hr;
-
-	public Vacancy() {
-		// TODO Auto-generated constructor stub
-	}
+	private HotType hotType;
+	private String hrEmail;
 
 	public int getIdVacancy() {
 		return idVacancy;
@@ -99,12 +96,20 @@ public class Vacancy implements Serializable {
 		this.active = active;
 	}
 
-	public User getHr() {
-		return hr;
+	public HotType getHotType() {
+		return hotType;
 	}
 
-	public void setHr(User hr) {
-		this.hr = hr;
+	public void setHotType(HotType hotType) {
+		this.hotType = hotType;
+	}
+
+	public String getHrEmail() {
+		return hrEmail;
+	}
+
+	public void setHrEmail(String hrEmail) {
+		this.hrEmail = hrEmail;
 	}
 
 	@Override
@@ -116,7 +121,8 @@ public class Vacancy implements Serializable {
 		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((employmentType == null) ? 0 : employmentType.hashCode());
-		result = prime * result + ((hr == null) ? 0 : hr.hashCode());
+		result = prime * result + ((hotType == null) ? 0 : hotType.hashCode());
+		result = prime * result + ((hrEmail == null) ? 0 : hrEmail.hashCode());
 		result = prime * result + idVacancy;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((publishDate == null) ? 0 : publishDate.hashCode());
@@ -149,10 +155,12 @@ public class Vacancy implements Serializable {
 			return false;
 		if (employmentType != other.employmentType)
 			return false;
-		if (hr == null) {
-			if (other.hr != null)
+		if (hotType != other.hotType)
+			return false;
+		if (hrEmail == null) {
+			if (other.hrEmail != null)
 				return false;
-		} else if (!hr.equals(other.hr))
+		} else if (!hrEmail.equals(other.hrEmail))
 			return false;
 		if (idVacancy != other.idVacancy)
 			return false;
@@ -175,7 +183,8 @@ public class Vacancy implements Serializable {
 	public String toString() {
 		return "Vacancy [idVacancy=" + idVacancy + ", name=" + name + ", salary=" + salary + ", currency=" + currency
 				+ ", publishDate=" + publishDate + ", description=" + description + ", condition=" + condition
-				+ ", employmentType=" + employmentType + ", active=" + active + ", hr=" + hr + "]";
+				+ ", employmentType=" + employmentType + ", active=" + active + ", hotType=" + hotType + ", hrEmail="
+				+ hrEmail + "]";
 	}
 
 }

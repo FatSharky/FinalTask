@@ -1,7 +1,6 @@
 package by.training.hrsystem.domain;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 
 import by.training.hrsystem.domain.role.Role;
@@ -15,14 +14,13 @@ public class User implements Serializable {
 	private String surname;
 	private String name;
 	private String secondName;
-	private byte[] photo;
+	private String photo;
 	private String skype;
 	private int contactPhone;
 	private Date birthDate;
 	private Role role;
 
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getEmail() {
@@ -65,11 +63,11 @@ public class User implements Serializable {
 		this.secondName = secondName;
 	}
 
-	public byte[] getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
@@ -114,7 +112,7 @@ public class User implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + Arrays.hashCode(photo);
+		result = prime * result + ((photo == null) ? 0 : photo.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
 		result = prime * result + ((skype == null) ? 0 : skype.hashCode());
@@ -153,7 +151,10 @@ public class User implements Serializable {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (!Arrays.equals(photo, other.photo))
+		if (photo == null) {
+			if (other.photo != null)
+				return false;
+		} else if (!photo.equals(other.photo))
 			return false;
 		if (role != other.role)
 			return false;
@@ -178,8 +179,8 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [email=" + email + ", password=" + password + ", surname=" + surname + ", name=" + name
-				+ ", secondName=" + secondName + ", photo=" + Arrays.toString(photo) + ", skype=" + skype
-				+ ", contactPhone=" + contactPhone + ", birthDate=" + birthDate + ", role=" + role + "]";
+				+ ", secondName=" + secondName + ", photo=" + photo + ", skype=" + skype + ", contactPhone="
+				+ contactPhone + ", birthDate=" + birthDate + ", role=" + role + "]";
 	}
 
 }

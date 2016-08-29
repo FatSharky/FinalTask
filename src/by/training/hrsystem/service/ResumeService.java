@@ -10,12 +10,18 @@ import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceExcept
 public interface ResumeService {
 	void addResume(String name, String military, String email) throws WrongResumeNameServiceException, ServiceException;
 
-	void updateResume(String name, String military, String idResume);
+	void updateResume(String name, String military, int idResume)
+			throws WrongResumeNameServiceException, ServiceException;
 
 	void deleteResume(String idResume);
 
-	List<Resume> selectResumeByEmail(String email, String lang)
+	List<Resume> selectResumeByEmail(String email, String lang, int first, int perPage)
 			throws ListResumeIsEmptyServiceException, ServiceException;
 
 	int countAllResume() throws ServiceException;
+
+	int countVacancyByEmail(String hrEmail) throws ServiceException;
+
+	Resume selectResumeById(int idResume, String lang) throws ServiceException;
+
 }

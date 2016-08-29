@@ -1,7 +1,6 @@
 package by.training.hrsystem.command.impl;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +44,7 @@ public class UserRegistrationCommand implements Command {
 		String contactPhone = request.getParameter(Attribute.CONTACT_PHONE);
 		String birthDate = request.getParameter(Attribute.BIRHT_DATE);
 		String role = request.getParameter(Attribute.ROLE);
+
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			UserService userService = serviceFactory.getUserService();

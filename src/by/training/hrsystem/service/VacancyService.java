@@ -18,7 +18,7 @@ public interface VacancyService {
 	void updateVacancy(String vacancyName, String slary, String currency, String description, String conditions,
 			String employmentType, String idVacancy);
 
-	void deleteVacancy(String idVacancy);
+	void deleteVacancy(int idVacancy) throws ServiceException;
 
 	List<Vacancy> selectAllVacancy(String lang) throws ServiceException;
 
@@ -26,4 +26,20 @@ public interface VacancyService {
 
 	int countAllActiveVacancy() throws ServiceException;
 
+	Vacancy selectVacancyById(int idVacancy, String lang) throws ServiceException;
+
+	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int first, int perPage)
+			throws ServiceException;
+
+	int countVacancyByHrEmail(String hrEmail) throws ServiceException;
+	
+
+	void activateVacancy(int idVacancy) throws ServiceException;
+
+	void deactivateVacancy(int idVacancy) throws ServiceException;
+	
+	void hotVacancy(int idVacancy) throws ServiceException;
+
+	List<Vacancy> selectHotVacancy(String lang) throws ServiceException;
+	
 }

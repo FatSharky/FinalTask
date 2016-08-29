@@ -19,13 +19,15 @@ public interface ResumeDAO {
 
 	void deleteTranslateResume(int Idresume, String lang) throws DAOException;
 
-	int selectCountResume() throws DAOException, DataDoesNotExistException ;
+	int selectCountResume() throws DAOException, DataDoesNotExistException;
 
 	void activateResume(Resume resume) throws DAOException;
 
 	Resume selectResumeById(int idResume, String lang) throws DAOException, DataDoesNotExistException;
 
-	List<Resume> selectResumeByApplicant(String applicantEmail, String lang)
-			throws DAOException, DataDoesNotExistException;
+	List<Resume> selectResumeByApplicant(String applicantEmail, String lang, int pageNum, int amountPerPage)
+			throws DAOException;
+
+	int selectCountResumeByEmail(String applicantEmail) throws DAOException, DataDoesNotExistException;
 
 }

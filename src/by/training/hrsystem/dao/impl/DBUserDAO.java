@@ -18,12 +18,15 @@ import org.apache.logging.log4j.Logger;
 public class DBUserDAO implements UserDAO {
 
 	private static final Logger logger = LogManager.getRootLogger();
-	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, skype, contact_phone, birth_date,role) "
-			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?,?);";
+	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, photo, skype, contact_phone, birth_date,role) "
+			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE_USER = "UPDATE user SET password=md5(?), surname=?, name=?, secondname=?, skype=?, contact_phone=?, birth_date=? WHERE email=?;";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
+	private static final String SQL_SELECT_USER_BY_ID_RESUME = "SELECT user.surname, user.name, user.secondname,user.skype,user.contact_phone,user.photo "
+			+ "FROM user LEFT JOIN vacancy on user.email= vacancy.email WHERE vacancy.id_vacancy=?;";
+	private static final String SQL_SELECT_COUNT_APPLICANTS = "SELECT COUNT(email) FROM user WHERE role='applicant';";
 
 	@Override
 	public void addUser(User user) throws DAOException {
@@ -40,10 +43,11 @@ public class DBUserDAO implements UserDAO {
 			ps.setString(3, user.getSurname());
 			ps.setString(4, user.getName());
 			ps.setString(5, user.getSecondName());
-			ps.setString(6, user.getSkype());
-			ps.setInt(7, user.getContactPhone());
-			ps.setDate(8, new Date(user.getBirthDate().getTime()));
-			ps.setString(9, user.getRole().getRole());
+			ps.setString(6, user.getPhoto());
+			ps.setString(7, user.getSkype());
+			ps.setInt(8, user.getContactPhone());
+			ps.setDate(9, new Date(user.getBirthDate().getTime()));
+			ps.setString(10, user.getRole().getRole());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild insert new User: ", e);
@@ -184,6 +188,45 @@ public class DBUserDAO implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public User getUserByIdVacancy(int idVcancy) throws DAOException, DAOException {
+		logger.debug("DBUserDAO.getUserByIdVacancy - idVacancy = {}", idVcancy);
+		User user = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_ID_RESUME);
+			ps.setInt(1, idVcancy);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setSurname(rs.getString(1));
+				user.setName(rs.getString(2));
+				user.setSecondName(rs.getString(3));
+				user.setSkype(rs.getString(4));
+				user.setContactPhone(rs.getInt(5));
+			}
+			return user;
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find user: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+
+	}
+
 	private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
 		User user = new User();
 		user.setEmail(resultSet.getString(SQLField.USER_EMAIL));
@@ -191,12 +234,43 @@ public class DBUserDAO implements UserDAO {
 		user.setSurname(resultSet.getString(SQLField.USER_SURNAME));
 		user.setName(resultSet.getString(SQLField.USER_NAME));
 		user.setSecondName(resultSet.getString(SQLField.USER_SECONDNAME));
-		user.setPhoto(resultSet.getBytes(SQLField.USER_PHOTO));
+		user.setPhoto(resultSet.getString(SQLField.USER_PHOTO));
 		user.setSkype(resultSet.getString(SQLField.USER_SKYPE));
 		user.setContactPhone(resultSet.getInt(SQLField.USER_CONTACT_PHONE));
 		user.setBirthDate(resultSet.getDate(SQLField.USER_BIRTH_DATE));
 		user.setRole((Role.valueOf(resultSet.getString(SQLField.USER_ROLE).toUpperCase())));
 		return user;
+	}
+
+	@Override
+	public int countAllApplicants() throws DAOException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		int countApplicants = 0;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_COUNT_APPLICANTS);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				countApplicants = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find count: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+
+		return countApplicants;
 	}
 
 }

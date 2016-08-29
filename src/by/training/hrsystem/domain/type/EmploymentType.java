@@ -3,12 +3,12 @@ package by.training.hrsystem.domain.type;
 public enum EmploymentType {
 	FULL_TIME {
 		{
-			currencyType = "fulltime";
+			currencyType = "full time";
 		}
 	},
 	PART_TIME {
 		{
-			currencyType = "parttime";
+			currencyType = "part time";
 		}
 	},
 	CONTRACTUAL {

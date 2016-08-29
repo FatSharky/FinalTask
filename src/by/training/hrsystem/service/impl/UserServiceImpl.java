@@ -47,10 +47,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registration(String email, String password, String copyPass, String surname, String name,
 			String secondName, String skype, String contcactPhone, String birth_date, String role)
-			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
-			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
-			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
-			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
+			throws ServiceException {
 		logger.debug(
 				"UserServiceImpl : registration() : user's data is valid (email = {}, password = {}, "
 						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={}, role={})",
@@ -171,6 +168,49 @@ public class UserServiceImpl implements UserService {
 		} catch (ParserException e) {
 			throw new ServiceException("Service layer: can not parse date");
 		}
+
+	}
+
+	@Override
+	public User selectUserByEmail(String email) throws ServiceException {
+		logger.debug("UserServiceImpl : selectUserByEmail() : email = {}", email);
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+			User user = userDAO.getUserByEmail(email);
+			return user;
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: cannot make a selectUserByEmail operation", e);
+		}
+	}
+
+	@Override
+	public User selectUserByIdVacancy(int idVacancy) throws ServiceException {
+		logger.debug("UserServiceImpl : selectUserByIdVacancyl() : idVacancy = {}", idVacancy);
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+			User user = userDAO.getUserByIdVacancy(idVacancy);
+			return user;
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: cannot make a selectUserByIdVacancy operation", e);
+		}
+
+	}
+
+	@Override
+	public int countAllApplicants() throws ServiceException {
+		int countAllApplicants = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+			countAllApplicants = userDAO.countAllApplicants();
+		} catch (DAOException e) {
+
+			throw new ServiceException("Service layer: cant show count of applicants");
+		}
+		logger.debug("UserServiceImpl: countAllApplicants() : count={}", countAllApplicants);
+		return countAllApplicants;
 
 	}
 

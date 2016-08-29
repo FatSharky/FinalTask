@@ -23,7 +23,7 @@ import by.training.hrsystem.service.factory.ServiceFactory;
 public class ShowAllActiveVacancy implements Command {
 
 	private static final Logger logger = LogManager.getRootLogger();
-	private static final int PAGE_NUMBER = 1;
+	private static final int PAGE_NUMBER = 0;
 	private static final int VACANCY_PER_PAGE = 9;
 
 	@Override

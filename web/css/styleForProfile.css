@@ -1,9 +1,6 @@
 .container .btn-success{
     margin-top: 20px;
 }
-.container .btn-danger{
-    margin-top: 20px;
-}
 .left-menu{
     float: right;
 }
@@ -27,5 +24,8 @@
     margin-top: 0px;
 }
 .table .btn-danger{
+    margin-top: 0px;
+}
+.panel-body .bt-danger{
     margin-top: 0px;
 }

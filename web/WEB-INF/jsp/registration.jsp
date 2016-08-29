@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 
 <fmt:setLocale value="EN" />
 <c:if test="${sessionScope.locale!=null}">
@@ -227,7 +229,6 @@
 				<input type="submit" class="btn btn-primary" value="Регистрация">
 				<input type="reset" class="btn btn-default" value="Очистить форму">
 			</div>
-
 		</form>
 	</div>
 

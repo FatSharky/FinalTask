@@ -41,7 +41,7 @@
 			<div class="top-nav clearfix">
 				<ul class="nav nav-tabs nav-justified">
 					<li class="active"><a
-						href="Controller?command=to-applicant-profile">${profile}</a></li>
+						href="Controller?command=to-private-office">${profile}</a></li>
 					<li><a href="Controller?command=to-applicant-list-resume">${resume}</a></li>
 				</ul>
 			</div>

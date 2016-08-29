@@ -13,7 +13,6 @@ import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.resume.ListResumeIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
@@ -52,8 +51,29 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public void updateResume(String name, String military, String idResume) {
-		// TODO Auto-generated method stub
+	public void updateResume(String name, String military, int idResume)
+			throws WrongResumeNameServiceException, ServiceException {
+
+		logger.debug("ResumeServiceImpl: updateResume() : user's data is valid (name = {}, military={}, idResume={}",
+				name, military, idResume);
+
+		if (!Validation.validateStringField(name)) {
+			throw new WrongResumeNameServiceException("wrong resume name");
+		}
+
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			Resume resume = new Resume();
+
+			resume.setName(name);
+			resume.setMilitatyType(Parser.fromStringToMilitaryType(military));
+			resume.setIdResume(idResume);
+			resumeDAO.updateResume(resume);
+
+		} catch (DAOException | ParserException e) {
+			throw new ServiceException("Service layer: cannot make a new resume", e);
+		}
 
 	}
 
@@ -64,21 +84,19 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public List<Resume> selectResumeByEmail(String email, String lang)
-			throws ListResumeIsEmptyServiceException, ServiceException {
-		logger.debug("ResumeServiceImpl: selectResumeByEmail() : email = {}, lang={}", email, lang);
+	public List<Resume> selectResumeByEmail(String email, String lang, int first, int perPage) throws ServiceException {
+		logger.debug("ResumeServiceImpl: selectResumeByEmail() : email = {}, lang={} first={} perpage={}", email, lang,
+				first, perPage);
 		List<Resume> listResume = null;
+
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
-			try {
-				listResume = resumeDAO.selectResumeByApplicant(email, lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ListResumeIsEmptyServiceException("list resume is empty");
-			}
+			listResume = resumeDAO.selectResumeByApplicant(email, lang, first, perPage);
 		} catch (DAOException e) {
-			throw new ServiceException("Service layre: can not show list of rsume");
+			throw new ServiceException("Service layer: ");
 		}
+
 		return listResume;
 	}
 
@@ -92,9 +110,38 @@ public class ResumeServiceImpl implements ResumeService {
 			countResume = resumeDAO.selectCountResume();
 		} catch (DAOException | DataDoesNotExistException e) {
 
-			throw new ServiceException("Service lyer: cant show count of resume");
+			throw new ServiceException("Service layer: cant show count resume");
 		}
 		return countResume;
+	}
+
+	@Override
+	public int countVacancyByEmail(String hrEmail) throws ServiceException {
+		int countResume = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			countResume = resumeDAO.selectCountResumeByEmail(hrEmail);
+		} catch (DAOException | DataDoesNotExistException e) {
+
+			throw new ServiceException("Service layer: cant show count of vacancy");
+		}
+		logger.debug("ResumeServiceImpl: countResumeByEmail() : count={}", countResume);
+		return countResume;
+
+	}
+
+	@Override
+	public Resume selectResumeById(int idResume, String lang) throws ServiceException {
+		logger.debug("ResumeServiceImpl : selectResumeById() : idResume = {}, lang={}", idResume, lang);
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			Resume resume = resumeDAO.selectResumeById(idResume, lang);
+			return resume;
+		} catch (DAOException | DataDoesNotExistException e) {
+			throw new ServiceException("Service layer: cannot make a selectUserByEmail operation", e);
+		}
 	}
 
 }

@@ -7,7 +7,7 @@
     <short-name>paging</short-name>
     <tag>
         <name>paging-links</name>
-        <tag-class>by.training.hrsystem.customtag.PagesTag</tag-class>
+        <tag-class>by.training.hrsystem.customtag.PageTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>page</name>

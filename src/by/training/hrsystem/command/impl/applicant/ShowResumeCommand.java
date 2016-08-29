@@ -21,13 +21,13 @@ import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
-public class ToApplicantEditResumeCommand implements Command {
+public class ShowResumeCommand implements Command {
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		logger.debug("ToApplicantEditResumeCommand:execute() start");
+		logger.debug("ShowResumeCommand:execute() start");
 
 		int idResume = Integer.valueOf(request.getParameter(Attribute.ID_RESUME));
 		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
@@ -41,12 +41,12 @@ public class ToApplicantEditResumeCommand implements Command {
 
 			request.setAttribute(Attribute.RESUME, resume);
 			request.setAttribute(Attribute.APPLICANT, applicant);
-			request.getRequestDispatcher(PageName.APPLICANT_EDIT_RESUME_PAGE).forward(request, response);
+			request.getRequestDispatcher(PageName.APPLICANT_RESUME_PAGE).forward(request, response);
 		} catch (ServiceException e) {
 			throw new CommandException("Command layer");
 		}
 		QueryUtil.saveHttpQuery(request);
-		logger.debug("ToApplicantEditResumeCommand:execute() end");
+		logger.debug("ShowResumeCommand:execute() end");
 
 	}
 
