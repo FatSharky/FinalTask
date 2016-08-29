@@ -9,13 +9,13 @@ import by.training.hrsystem.service.exeption.languagelevel.LanguageNameServiceEx
 import by.training.hrsystem.service.exeption.languagelevel.ListLanguageLevelIsEmptyServiceException;
 
 public interface ResumeLanguageService {
-	void addLanguage(String name, String skillLevel, String idResume)
+	void addLanguage(String name, String skillLevel, int idResume)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException;
 
-	void updateLanguage(String name, String skillLevel, String idLanguage)
+	void updateLanguage(String name, String skillLevel, int idLanguage)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException;
 
-	void deleteLanguage(String idLanguage) throws ServiceException;
+	void deleteLanguage(int idLanguage) throws ServiceException;
 
 	List<ResumeLanguage> selectLanguageByIdResume(String idResume, String lang)
 			throws ListLanguageLevelIsEmptyServiceException, LanguageLevelServiceException;

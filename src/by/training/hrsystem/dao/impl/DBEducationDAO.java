@@ -2,7 +2,9 @@ package by.training.hrsystem.dao.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,6 @@ import java.util.ArrayList;
 import by.training.hrsystem.dao.EducationDAO;
 import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.Education;
@@ -19,8 +20,8 @@ import by.training.hrsystem.domain.type.EducationType;
 import by.training.hrsystem.domain.type.PostgraduateType;
 
 public class DBEducationDAO implements EducationDAO {
+	private static final Logger logger = LogManager.getRootLogger();
 
-	private static final Logger logger = Logger.getLogger(DBEducationDAO.class);
 	private static final String SQL_ADD_EDUCATION = "INSERT INTO education (institution, faculty, department, education, course, grad_year, postgraduate, id_resume) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE_EDUCATION = "UPDATE education SET institution=?, faculty=?, department=?, education=?, course=?, grad_year=?, postgraduate=? WHERE id_education=?;";
@@ -40,6 +41,7 @@ public class DBEducationDAO implements EducationDAO {
 
 	@Override
 	public void addEducation(Education education) throws DAOException {
+		logger.debug("DBEducationDAO.addEducation() - user = {}", education);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -52,7 +54,7 @@ public class DBEducationDAO implements EducationDAO {
 			ps.setString(3, education.getDepartment());
 			ps.setString(4, education.getEducation().getEducationType());
 			ps.setInt(5, education.getCourse());
-			ps.setDate(6, new java.sql.Date(education.getGradYear().getTime()));
+			ps.setInt(6, education.getGradYear());
 			ps.setString(7, education.getPostGraduate().getPostgraduateType());
 			ps.setInt(8, education.getIdResume());
 			ps.executeUpdate();
@@ -73,6 +75,7 @@ public class DBEducationDAO implements EducationDAO {
 
 	@Override
 	public void updateEducation(Education education) throws DAOException {
+		logger.debug("DBEducationDAO.updateEducation() - user = {}", education);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -85,7 +88,7 @@ public class DBEducationDAO implements EducationDAO {
 			ps.setString(3, education.getDepartment());
 			ps.setString(4, education.getEducation().getEducationType());
 			ps.setInt(5, education.getCourse());
-			ps.setDate(6, new java.sql.Date(education.getGradYear().getTime()));
+			ps.setInt(6, education.getGradYear());
 			ps.setString(7, education.getPostGraduate().getPostgraduateType());
 			ps.setInt(8, education.getIdEducation());
 			ps.executeUpdate();
@@ -216,8 +219,7 @@ public class DBEducationDAO implements EducationDAO {
 	}
 
 	@Override
-	public List<Education> getEducationByIdResume(int idResume, String lang)
-			throws DAOException, DataDoesNotExistException {
+	public List<Education> getEducationByIdResume(int idResume, String lang) throws DAOException {
 		List<Education> education = new ArrayList<Education>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -235,10 +237,8 @@ public class DBEducationDAO implements EducationDAO {
 				ps.setInt(2, idResume);
 			}
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				education.add(getEducationFromResultSet(rs));
-			} else {
-				throw new DataDoesNotExistException("Company not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find Company: ", e);
@@ -261,15 +261,15 @@ public class DBEducationDAO implements EducationDAO {
 
 	private Education getEducationFromResultSet(ResultSet set) throws SQLException {
 		Education education = new Education();
-		education.setIdEducation(set.getInt(SQLField.EDUCATION_ID));
-		education.setInstitution(set.getString(SQLField.EDUCATION_INSTITUTION));
-		education.setFaculty(set.getString(SQLField.EDUCATION_FACULTY));
-		education.setDepartment(set.getString(SQLField.EDUCATION_DEPARTMENT));
-		education.setEducation(EducationType.valueOf(set.getString(SQLField.EDUCATION_EDUCATION)));
-		education.setCourse(set.getInt(SQLField.EDUCATION_COURSE));
-		education.setGradYear(set.getDate(SQLField.EDUCATION_GRAND_YEAR));
-		education.setPostGraduate(PostgraduateType.valueOf(set.getString(SQLField.EDUCATION_POSTGRADUATE)));
-		education.setIdResume(set.getInt(SQLField.EDUCATION_ID_RESUME));
+		education.setIdEducation(set.getInt(1));
+		education.setInstitution(set.getString(2));
+		education.setFaculty(set.getString(3));
+		education.setDepartment(set.getString(4));
+		education.setEducation(EducationType.valueOf(set.getString(5).toUpperCase().replace(' ', '_')));
+		education.setCourse(set.getInt(6));
+		education.setGradYear(set.getInt(7));
+		education.setPostGraduate(PostgraduateType.valueOf(set.getString(8).toUpperCase().replace(' ', '_')));
+		education.setIdResume(set.getInt(9));
 		return education;
 	}
 

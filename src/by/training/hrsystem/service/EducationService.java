@@ -22,14 +22,14 @@ public interface EducationService {
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException;
 
 	void updateEducation(String institution, String faculty, String department, String education, String course,
-			String gradYear, String postgraduate, String idEducation)
+			String gradYear, String postgraduate, int idEducation)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
 			WrongPostGraduateServiceException, EducationServiceException, ServiceException;
 
-	void deleteEducation(String idEducation) throws EducationServiceException;
+	void deleteEducation(int idEducation) throws EducationServiceException;
 
-	List<Education> selectEducationbyIdResume(String idResume, String lang)
+	List<Education> selectEducationbyIdResume(int idResume, String lang)
 			throws ListEducationIsEmptyServiceException, EducationServiceException;
 
 }

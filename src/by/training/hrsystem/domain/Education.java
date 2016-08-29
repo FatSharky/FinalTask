@@ -1,8 +1,6 @@
 package by.training.hrsystem.domain;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import by.training.hrsystem.domain.type.EducationType;
 import by.training.hrsystem.domain.type.PostgraduateType;
 
@@ -16,12 +14,11 @@ public class Education implements Serializable {
 	private String department;
 	private EducationType education;
 	private int course;
-	private Date gradYear;
+	private int gradYear;
 	private PostgraduateType postGraduate;
 	private int idResume;
 
 	public Education() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getIdEducation() {
@@ -72,11 +69,11 @@ public class Education implements Serializable {
 		this.course = course;
 	}
 
-	public Date getGradYear() {
+	public int getGradYear() {
 		return gradYear;
 	}
 
-	public void setGradYear(Date gradYear) {
+	public void setGradYear(int gradYear) {
 		this.gradYear = gradYear;
 	}
 
@@ -104,7 +101,7 @@ public class Education implements Serializable {
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((education == null) ? 0 : education.hashCode());
 		result = prime * result + ((faculty == null) ? 0 : faculty.hashCode());
-		result = prime * result + ((gradYear == null) ? 0 : gradYear.hashCode());
+		result = prime * result + gradYear;
 		result = prime * result + idEducation;
 		result = prime * result + idResume;
 		result = prime * result + ((institution == null) ? 0 : institution.hashCode());
@@ -135,10 +132,7 @@ public class Education implements Serializable {
 				return false;
 		} else if (!faculty.equals(other.faculty))
 			return false;
-		if (gradYear == null) {
-			if (other.gradYear != null)
-				return false;
-		} else if (!gradYear.equals(other.gradYear))
+		if (gradYear != other.gradYear)
 			return false;
 		if (idEducation != other.idEducation)
 			return false;

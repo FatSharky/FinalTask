@@ -23,7 +23,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
-	public void addLanguage(String name, String skillLevel, String idResume)
+	public void addLanguage(String name, String skillLevel, int idResume)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException {
 		logger.debug("ResumeLanguageImpl: addLanguage() : user's data is valid (name = {}, skillLevel={}, idResume={}",
 				name, skillLevel, idResume);
@@ -42,7 +42,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 			ResumeLanguage language = new ResumeLanguage();
 			language.setName(name);
 			language.setRaiting(Parser.fromStringToLanguageLevel(skillLevel));
-			language.setIdResume(Parser.parseStringtoInt(idResume));
+			language.setIdResume(idResume);
 
 			resumeLangugaeDAO.addResumeLang(language);
 
@@ -53,7 +53,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public void updateLanguage(String name, String skillLevel, String idLanguage)
+	public void updateLanguage(String name, String skillLevel, int idLanguage)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException {
 		logger.debug(
 				"ResumeLanguageImpl: updateLanguage() : user's data is valid (name = {}, skillLevel={}, idLanguage={}",
@@ -72,7 +72,7 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 			ResumeLanguage language = new ResumeLanguage();
 			language.setName(name);
 			language.setRaiting(Parser.fromStringToLanguageLevel(skillLevel));
-			language.setIdResume(Parser.parseStringtoInt(idLanguage));
+			language.setIdResume(idLanguage);
 
 			resumeLangugaeDAO.updateResumeLang(language);
 
@@ -83,12 +83,12 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public void deleteLanguage(String idLanguage) throws ServiceException {
+	public void deleteLanguage(int idLanguage) throws ServiceException {
 		logger.debug("ResumeLanguageImpl: deleteLanguage() : user's data is valid (idLanguage={}", idLanguage);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeLangugaeDAO resumeLangugaeDAO = daoFactory.getResumeLanguageDAO();
-			resumeLangugaeDAO.deleteResumeLang(Parser.parseStringtoInt(idLanguage));
+			resumeLangugaeDAO.deleteResumeLang(idLanguage);
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: can not delete resumeLanguage");
 		}

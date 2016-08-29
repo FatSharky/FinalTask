@@ -1,17 +1,17 @@
 package by.training.hrsystem.domain.type;
 
 public enum PostgraduateType {
-	NOT_ASIGN {
+	NOT_ASSIGNED {
 		{
 			postgraduateType = "not assigned";
 		}
 	},
-	ASIGN {
+	ASSIGNED {
 		{
 			postgraduateType = "assigned";
 		}
 	},
-	TO_BE_ASIGNED {
+	TO_BE_ASSIGNED {
 		{
 			postgraduateType = "to be assigned";
 		}

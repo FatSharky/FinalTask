@@ -12,8 +12,13 @@ import by.training.hrsystem.command.impl.UserLoginCommand;
 import by.training.hrsystem.command.impl.UserRegistrationCommand;
 import by.training.hrsystem.command.impl.applicant.AddEducationCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeCommand;
+import by.training.hrsystem.command.impl.applicant.AddResumeLanguageCommand;
 import by.training.hrsystem.command.impl.applicant.ApplicantEditProfileCommand;
+import by.training.hrsystem.command.impl.applicant.DeleteEducationCommand;
+import by.training.hrsystem.command.impl.applicant.DeleteResumeLanguageCommand;
+import by.training.hrsystem.command.impl.applicant.EditEducationCommand;
 import by.training.hrsystem.command.impl.applicant.EditResumeCommand;
+import by.training.hrsystem.command.impl.applicant.EditResumeLanguageCommand;
 import by.training.hrsystem.command.impl.applicant.ShowResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantAddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantEditResumeCommand;
@@ -60,6 +65,11 @@ public class CommandHelper {
 		commands.put(CommandName.SHOW_RESUME, new ShowResumeCommand());
 		commands.put(CommandName.EDIT_RESUME, new EditResumeCommand());
 		commands.put(CommandName.ADD_EDUCATION, new AddEducationCommand());
+		commands.put(CommandName.DELETE_EDUCATION, new DeleteEducationCommand());
+		commands.put(CommandName.EDIT_EDUCATION, new EditEducationCommand());
+		commands.put(CommandName.ADD_RESUME_LANGUAGE, new AddResumeLanguageCommand());
+		commands.put(CommandName.DELETE_RESUME_LANGUAGE, new DeleteResumeLanguageCommand());
+		commands.put(CommandName.EDIT_RESUME_LANGUAGE, new EditResumeLanguageCommand());
 
 	}
 

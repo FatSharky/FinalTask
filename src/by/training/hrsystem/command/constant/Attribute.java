@@ -80,6 +80,7 @@ public final class Attribute {
 
 	public static final String RESUME = "resume";
 
+	public static final String EDUCATION_LIST = "educationList";
 	public static final String INSTITUTION = "institution";
 	public static final String FACULTY = "faculty";
 	public static final String DEPARTMENT = "department";
@@ -87,5 +88,10 @@ public final class Attribute {
 	public static final String COURSE = "course";
 	public static final String GRAD_YEAR = "gradYear";
 	public static final String POSTGRAD = "postGrad";
+	public static final String ID_EDUCATION = "idEducation";
 
+	public static final String LANGUAGE_LIST = "resumeLangList";
+	public static final String LANGUAGE_NAME = "languageName";
+	public static final String LANGUAGE_LEVEL = "languageLevel";
+	public static final String ID_LANGUAGE = "idLanguage";
 }
