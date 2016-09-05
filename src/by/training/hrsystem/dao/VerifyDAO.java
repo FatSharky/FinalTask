@@ -3,7 +3,6 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.domain.Verify;
 
 public interface VerifyDAO {
@@ -14,7 +13,7 @@ public interface VerifyDAO {
 
 	void verifyResume(Verify verify) throws DAOException;
 
-	List<Verify> verifyList(int idVacancy) throws DAOException, DataDoesNotExistException;
+	List<Verify> verifyList(int idVacancy) throws DAOException;
 
-	Verify getVerifyById(int idVerify) throws DAOException, DataDoesNotExistException;
+	Verify getVerifyById(int idVerify) throws DAOException;
 }

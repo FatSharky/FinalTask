@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
+import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Resume;
 import by.training.hrsystem.domain.User;
@@ -108,7 +108,7 @@ public class ResumeServiceImpl implements ResumeService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
 			countResume = resumeDAO.selectCountResume();
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 
 			throw new ServiceException("Service layer: cant show count resume");
 		}
@@ -122,7 +122,7 @@ public class ResumeServiceImpl implements ResumeService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
 			countResume = resumeDAO.selectCountResumeByEmail(hrEmail);
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 
 			throw new ServiceException("Service layer: cant show count of vacancy");
 		}
@@ -139,9 +139,40 @@ public class ResumeServiceImpl implements ResumeService {
 			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
 			Resume resume = resumeDAO.selectResumeById(idResume, lang);
 			return resume;
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 			throw new ServiceException("Service layer: cannot make a selectUserByEmail operation", e);
 		}
+	}
+
+	@Override
+	public List<Resume> selectResumeForVacancy(String applicantEmail, String lang) throws ServiceException {
+		logger.debug("ResumeServiceImpl:  selectResumeForVacancy() : email = {}, lang={}", applicantEmail, lang);
+		List<Resume> listResume = null;
+
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			listResume = resumeDAO.selectResumeForVacancy(applicantEmail, lang);
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: ");
+		}
+
+		return listResume;
+	}
+
+	@Override
+	public List<Resume> selectListResumeByVacancy(int idVacancy) throws ServiceException {
+		logger.debug("ResumeServiceImpl: selectListResumeByVacancy() : idVacancy", idVacancy);
+		List<Resume> listResume = null;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			ResumeDAO resumeDAO = daoFactory.getResumeDAO();
+			listResume = resumeDAO.selectListResumeByVacancy(idVacancy);
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: ");
+		}
+		
+		return listResume;
 	}
 
 }

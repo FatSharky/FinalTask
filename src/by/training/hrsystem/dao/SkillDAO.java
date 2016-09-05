@@ -3,7 +3,6 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.domain.Skill;
 
 public interface SkillDAO {
@@ -20,6 +19,6 @@ public interface SkillDAO {
 
 	void deleteTranslateSkill(int idSkill, String lang) throws DAOException;
 
-	List<Skill> getSkillByIdResume(int idResume, String lang) throws DAOException, DataDoesNotExistException;
+	List<Skill> getSkillByIdResume(int idResume, String lang) throws DAOException;
 
 }

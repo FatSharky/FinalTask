@@ -28,8 +28,9 @@
 	var="partTime" />
 <fmt:message bundle="${locale}" key="locale.vacancy.contractual"
 	var="contractual" />
-
-
+<fmt:message bundle="${locale}" key="locale.vacancy.chooseVacancy"
+	var="chooseVacancy" />
+<fmt:message bundle="${locale}" key="locale.vacancy.apply" var="apply" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -137,8 +138,23 @@
 			<strong>${skype}</strong>
 		</p>
 		<p class="visible-xs visible-sm visible-md">${requestScope.hr.contactPhone}</p>
+		<c:if test="${user.role=='APPLICANT'}">
+			<h3>${chooseVacancy}</h3>
+			<form action="Controller" method="post">
+				<input type="hidden" name="command" value="add-resume-to-vacancy">
+				<input type="hidden" value="${requestScope.vacancy.idVacancy}"
+					name="vacancy-id">
+				<div class="panel-body col-xs-6">
+					<select class="form-control" name="idResume">
+						<c:forEach var="resume" items="${requestScope.listResumeByEmail}">
+							<option value="${resume.idResume}">${resume.name}</option>
+						</c:forEach>
+					</select>
+					 <input type="submit" class="btn btn-success" value="${apply}">
+				</div>
+			</form>
+		</c:if>
 
-		<button class="btn btn-success " type="submit">Откликнуться</button>
 	</div>
 
 	<%@include file="/WEB-INF/jspf/footer.jspf"%>

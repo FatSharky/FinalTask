@@ -1,4 +1,4 @@
-package by.training.hrsystem.command.impl.common;
+package by.training.hrsystem.command.impl.hr;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,46 +16,32 @@ import by.training.hrsystem.command.constant.PageName;
 import by.training.hrsystem.command.exception.CommandException;
 import by.training.hrsystem.command.util.QueryUtil;
 import by.training.hrsystem.domain.Resume;
-import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.Vacancy;
-import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.service.ResumeService;
-import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.VacancyService;
 import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
-public class ShowVacancyCommand implements Command {
+public class ToVerifyVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws CommandException, ServletException, IOException {
-		logger.debug("ShowVacancyCommand:execute() start");
+		logger.debug("ToVerifyVacancyCommand:execute() start");
 
 		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
 		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
-		User user = (User) request.getSession().getAttribute(Attribute.USER);
-
 		try {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			VacancyService vacancyService = serviceFactory.getVacancyService();
-			UserService userService = serviceFactory.getUserService();
 			ResumeService resumeService = serviceFactory.getResumeService();
-			User applicantEmail = (User) request.getSession().getAttribute(Attribute.USER);
 
 			Vacancy vacnacy = vacancyService.selectVacancyById(idVacancy, lang);
-			User hr = userService.selectUserByIdVacancy(idVacancy);
-			if (user != null) {
-
-				if (user.getRole() == Role.APPLICANT) {
-					List<Resume> resumeList = resumeService.selectResumeForVacancy(applicantEmail.getEmail(), lang);
-					request.setAttribute(Attribute.LIST_RESUME_BY_EMAIL, resumeList);
-					
-				}
-			}
+			List<Resume> resumeList = resumeService.selectListResumeByVacancy(idVacancy);
+			request.setAttribute(Attribute.LIST_RESUME, resumeList);
 			request.setAttribute(Attribute.VACANCY, vacnacy);
-			request.setAttribute(Attribute.HR, hr);
+
 			request.getRequestDispatcher(PageName.VACANCY_PAGE).forward(request, response);
 		} catch (ServiceException e) {
 			throw new CommandException("Command layer");
@@ -65,5 +51,6 @@ public class ShowVacancyCommand implements Command {
 		logger.debug("ShowVacancyCommand:execute() end");
 
 	}
+	
 
 }

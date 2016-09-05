@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.ResumeLangugaeDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;

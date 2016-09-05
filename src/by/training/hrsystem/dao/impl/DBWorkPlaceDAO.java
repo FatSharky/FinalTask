@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import by.training.hrsystem.dao.WorkPlaceDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;

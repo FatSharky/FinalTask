@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.VacancyDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
+import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Vacancy;
 import by.training.hrsystem.service.VacancyService;
@@ -94,11 +94,9 @@ public class VacancyServiceImpl implements VacancyService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
-			try {
-				listVacancy = vacancyDAO.selectAllVacancy(lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ServiceException("list is empty");
-			}
+
+			listVacancy = vacancyDAO.selectAllVacancy(lang);
+
 		} catch (DAOException e) {
 			throw new ServiceException("Service laye: can not show list of education");
 		}
@@ -115,8 +113,6 @@ public class VacancyServiceImpl implements VacancyService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
 			listVacancy = vacancyDAO.selectAllActiveVacancy(lang, first, perPage);
-		} catch (DataDoesNotExistException e) {
-			throw new ServiceException("list is empty");
 		} catch (DAOException e) {
 			throw new ServiceException("Service laye: can not show list of education");
 		}
@@ -131,7 +127,7 @@ public class VacancyServiceImpl implements VacancyService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
 			countActiveVacancy = vacancyDAO.selectCountActiveVacancy();
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 
 			throw new ServiceException("Service layer: cant show count of vacancy");
 		}
@@ -147,7 +143,7 @@ public class VacancyServiceImpl implements VacancyService {
 			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
 			Vacancy vacancy = vacancyDAO.selectVacancyById(idVacancy, lang);
 			return vacancy;
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 			throw new ServiceException("Service layer: cannot make a selectUserByEmail operation", e);
 		}
 	}
@@ -176,7 +172,7 @@ public class VacancyServiceImpl implements VacancyService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
 			countVacancy = vacancyDAO.selectCountVacancyByHrEmail(hrEmail);
-		} catch (DAOException | DataDoesNotExistException e) {
+		} catch (DAOException | DAODataDoesNotExistException e) {
 
 			throw new ServiceException("Service layer: cant show count of vacancy");
 		}
@@ -233,6 +229,21 @@ public class VacancyServiceImpl implements VacancyService {
 			listVacancy = vacancyDAO.selectAllHotVacancy(lang);
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: can not show list of education");
+		}
+		return listVacancy;
+
+	}
+
+	@Override
+	public List<Vacancy> selectVacancyLike(String vacancyName) throws ServiceException {
+		logger.debug("VacancyServiceImpl: selectVacancyLike() : vacancyName={}", vacancyName);
+		List<Vacancy> listVacancy;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			VacancyDAO vacancyDAO = daoFactory.getVacancyDAO();
+			listVacancy = vacancyDAO.selectVacancyLike(vacancyName);
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: can not show list of vacancy");
 		}
 		return listVacancy;
 

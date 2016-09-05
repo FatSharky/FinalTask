@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.SkillDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Skill;
 import by.training.hrsystem.service.SkillService;
@@ -104,11 +103,9 @@ public class SkillServiceImpl implements SkillService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			SkillDAO skillDAO = daoFactory.getSkillDAO();
-			try {
-				listSkill = skillDAO.getSkillByIdResume(idResume, lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ListSkillIsEmptyServiceException("list is empty");
-			}
+
+			listSkill = skillDAO.getSkillByIdResume(idResume, lang);
+
 		} catch (DAOException e) {
 			throw new SkillServiceException("Service laye: can not show list of education");
 		}

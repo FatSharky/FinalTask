@@ -24,7 +24,7 @@ public class Resume implements Serializable {
 	private List<WorkPlace> workPlaceList;
 
 	public Resume() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getIdResume() {

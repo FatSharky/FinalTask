@@ -10,6 +10,11 @@ public enum PassType {
 		{
 			passType = "not pass";
 		}
+	},
+	UNKNOWN {
+		{
+			passType = "unknown";
+		}
 	};
 	String passType;
 

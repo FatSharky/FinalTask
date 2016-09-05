@@ -14,7 +14,7 @@ public class InterviewMark implements Serializable {
 	private int idInterview;
 
 	public InterviewMark() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public int getIdMark() {

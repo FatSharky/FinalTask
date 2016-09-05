@@ -14,7 +14,7 @@ public class Skill implements Serializable {
 	private int idResume;
 
 	public Skill() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getIdSkill() {

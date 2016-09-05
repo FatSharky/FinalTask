@@ -23,7 +23,8 @@
 	var="enterVacancyName" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.wrongVacancyName"
 	var="wrongVacancyName" />
-<fmt:message bundle="${locale}" key="locale.addVacancy.salary" var="salary" />
+<fmt:message bundle="${locale}" key="locale.addVacancy.salary"
+	var="salary" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.enterSalary"
 	var="enterSalary" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.wrongSalary"
@@ -31,7 +32,8 @@
 <fmt:message bundle="${locale}" key="locale.addVacancy.currency"
 	var="currency" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.rub" var="rub" />
-<fmt:message bundle="${locale}" key="locale.addVacancy.dolar" var="dolar" />
+<fmt:message bundle="${locale}" key="locale.addVacancy.dolar"
+	var="dolar" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.description"
 	var="description" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.wrongDescription"
@@ -41,15 +43,15 @@
 <fmt:message bundle="${locale}" key="locale.addVacancy.wrongConditions"
 	var="wrongConditions" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.employmentType"
-	var="employmentType"/>
+	var="employmentType" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.fullTime"
-	var="fullTime"/>
+	var="fullTime" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.partTime"
-	var="partTime"/>
+	var="partTime" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.contractual"
-	var="contractual"/>
+	var="contractual" />
 <fmt:message bundle="${locale}" key="locale.addVacancy.addVacancy"
-	var="add"/>
+	var="add" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
 <head>
@@ -81,7 +83,7 @@
 				<li><a href="#">${profile}</a></li>
 				<li class="active"><a
 					href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
-				<li><a href="#">${vacancyVerify}</a></li>
+				<li><a href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
 				<li><a href="#">${interview}</a></li>
 			</ul>
 		</div>
@@ -159,8 +161,7 @@
 						</div>
 					</div>
 					<div class="left-menu clearfix">
-						<input type="submit" class="btn btn-success btn-lg"
-							value="${add}">
+						<input type="submit" class="btn btn-success btn-lg" value="${add}">
 					</div>
 				</form>
 			</div>

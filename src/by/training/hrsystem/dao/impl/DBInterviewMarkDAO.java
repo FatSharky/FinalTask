@@ -10,9 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import by.training.hrsystem.dao.InterviewMarkDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
+import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.InterviewMark;
@@ -109,7 +108,7 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 	}
 
 	@Override
-	public List<InterviewMark> selectMarkByIdInterview(int idInterview) throws DAOException, DataDoesNotExistException {
+	public List<InterviewMark> selectMarkByIdInterview(int idInterview) throws DAOException, DAODataDoesNotExistException {
 		List<InterviewMark> mark = new ArrayList<InterviewMark>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -124,7 +123,7 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			if (rs.next()) {
 				mark.add(getMarkFromResultSet(rs));
 			} else {
-				throw new DataDoesNotExistException("Company not found!");
+				throw new DAODataDoesNotExistException("Company not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find Languages: ", e);

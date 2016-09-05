@@ -7,6 +7,7 @@ import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.SkillService;
 import by.training.hrsystem.service.UserService;
 import by.training.hrsystem.service.VacancyService;
+import by.training.hrsystem.service.VerifyService;
 import by.training.hrsystem.service.WorkPlaceService;
 import by.training.hrsystem.service.impl.EducationServiceImpl;
 import by.training.hrsystem.service.impl.InitConnectionServiceImpl;
@@ -15,6 +16,7 @@ import by.training.hrsystem.service.impl.ResumeServiceImpl;
 import by.training.hrsystem.service.impl.SkillServiceImpl;
 import by.training.hrsystem.service.impl.UserServiceImpl;
 import by.training.hrsystem.service.impl.VacancyServiceImpl;
+import by.training.hrsystem.service.impl.VerifyServiceImpl;
 import by.training.hrsystem.service.impl.WorkPlaceServiceImpl;
 
 public class ServiceFactory {
@@ -28,6 +30,7 @@ public class ServiceFactory {
 	private final VacancyService vacancyService = new VacancyServiceImpl();
 	private final WorkPlaceService workPlaceService = new WorkPlaceServiceImpl();
 	private final ResumeService resumeService = new ResumeServiceImpl();
+	private final VerifyService verifyService = new VerifyServiceImpl();
 
 	private ServiceFactory() {
 	}
@@ -66,5 +69,9 @@ public class ServiceFactory {
 
 	public ResumeService getResumeService() {
 		return resumeService;
+	}
+
+	public VerifyService gerVerifyService() {
+		return verifyService;
 	}
 }

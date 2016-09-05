@@ -28,18 +28,18 @@ public interface VacancyService {
 
 	Vacancy selectVacancyById(int idVacancy, String lang) throws ServiceException;
 
-	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int first, int perPage)
-			throws ServiceException;
+	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int first, int perPage) throws ServiceException;
+
+	List<Vacancy> selectVacancyLike(String vacancyName) throws ServiceException;
 
 	int countVacancyByHrEmail(String hrEmail) throws ServiceException;
-	
 
 	void activateVacancy(int idVacancy) throws ServiceException;
 
 	void deactivateVacancy(int idVacancy) throws ServiceException;
-	
+
 	void hotVacancy(int idVacancy) throws ServiceException;
 
 	List<Vacancy> selectHotVacancy(String lang) throws ServiceException;
-	
+
 }

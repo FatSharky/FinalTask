@@ -3,7 +3,6 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.domain.WorkPlace;
 
 public interface WorkPlaceDAO {
@@ -19,6 +18,6 @@ public interface WorkPlaceDAO {
 
 	void deleteTranslateWorkPlace(int idWorkplace, String lang) throws DAOException;
 
-	List<WorkPlace> getWorkPlaceByIdResume(int idResume, String lang) throws DAOException, DataDoesNotExistException;
+	List<WorkPlace> getWorkPlaceByIdResume(int idResume, String lang) throws DAOException;
 
 }

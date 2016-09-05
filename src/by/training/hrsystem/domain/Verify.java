@@ -15,7 +15,7 @@ public class Verify implements Serializable {
 	private Resume resume;
 
 	public Verify() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getIdVerify() {

@@ -17,7 +17,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 
 public final class Parser {
 
-	private static final String DATE_FULL_PATTERN = "dd.MM.yyyy";
+	private static final String DATE_FULL_PATTERN = "yyyy-MM-dd";
 	private static final String DATE_YEAR_PATTERN = "yyyy";
 
 	private Parser() {
@@ -27,7 +27,7 @@ public final class Parser {
 		Date date = null;
 		try {
 			DateFormat df = new SimpleDateFormat(datePattern);
-			date = df.parse(field); 
+			date = df.parse(field);
 		} catch (ParseException e) {
 			throw new ParserException("Can't parse string to date");
 		}

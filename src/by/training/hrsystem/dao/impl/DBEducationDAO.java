@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import by.training.hrsystem.dao.EducationDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
@@ -93,7 +92,7 @@ public class DBEducationDAO implements EducationDAO {
 			ps.setInt(8, education.getIdEducation());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new DAOException("Faild to update Education: ", e);
+			throw new DAOException("Faild to update education: ", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
@@ -108,6 +107,7 @@ public class DBEducationDAO implements EducationDAO {
 
 	@Override
 	public void deleteEducation(int idEducation) throws DAOException {
+		logger.debug("DBEducationDAO.deleteEducation() - idEducation = {}", idEducation);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -118,7 +118,7 @@ public class DBEducationDAO implements EducationDAO {
 			ps.setInt(1, idEducation);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new DAOException("Faild delete Education: ", e);
+			throw new DAOException("Faild delete education: ", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
@@ -220,6 +220,7 @@ public class DBEducationDAO implements EducationDAO {
 
 	@Override
 	public List<Education> getEducationByIdResume(int idResume, String lang) throws DAOException {
+		logger.debug("DBEducationDAO.getEducationByIdResume() - idResume = {}, lang={}", idResume, lang);
 		List<Education> education = new ArrayList<Education>();
 		Connection conn = null;
 		PreparedStatement ps = null;

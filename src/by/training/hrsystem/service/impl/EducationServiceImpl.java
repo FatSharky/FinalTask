@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.EducationDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Education;
 import by.training.hrsystem.service.EducationService;
@@ -154,11 +153,9 @@ public class EducationServiceImpl implements EducationService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
-			try {
-				listEducation = educationDAO.getEducationByIdResume(idResume, lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ListEducationIsEmptyServiceException("list is empty");
-			}
+
+			listEducation = educationDAO.getEducationByIdResume(idResume, lang);
+
 		} catch (DAOException e) {
 			throw new EducationServiceException("Service laye: can not show list of education");
 		}

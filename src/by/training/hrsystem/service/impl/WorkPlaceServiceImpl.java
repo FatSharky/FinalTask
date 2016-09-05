@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.WorkPlaceDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.WorkPlace;
 import by.training.hrsystem.service.WorkPlaceService;
@@ -148,11 +147,9 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
-			try {
-				listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(idResume, lang);
-			} catch (DataDoesNotExistException e) {
-				throw new ListWorkPlaceIsEmptyServiceException("list is empty");
-			}
+
+			listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(idResume, lang);
+
 		} catch (DAOException e) {
 			throw new ServiceException("Service laye: can not show list of workPlace");
 		}

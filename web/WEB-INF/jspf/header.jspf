@@ -28,11 +28,11 @@
 		</form>
 	</div>
 	<div class="count-workplace visible-lg visible-md">
-		<h2>${requestScope.countResume}</h2>
+		<h2>${sessionScope.countResume}</h2>
 		<p>${resume}</p>
-		<h2>${requestScope.countVacancy}</h2>
+		<h2>${sessionScope.countVacancy}</h2>
 		<p>${vacancy}</p>
-		<h2>${requestScope.countApplicants}</h2>
+		<h2>${sessionScope.countApplicants}</h2>
 		<p>${applicants}</p>
 	</div>
 </div>

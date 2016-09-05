@@ -106,4 +106,10 @@ public final class Attribute {
 	public static final String WORKPLACE_DATE_BEGIN = "dateBegin";
 	public static final String WORKPLACE_DATE_END = "dateEnd";
 	public static final String ID_WORKPLACE = "idWorkPlace";
+
+	public static final String VERIFY_LIST = "verifyList";
+	public static final String VERIFY = "verify";
+
+	public static final String LIST_VERIFY = "verifyList";
+	public static final String LIST_RESUME = "resumeList";
 }

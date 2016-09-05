@@ -32,10 +32,9 @@ public class UserLoginCommand implements Command {
 		String email = request.getParameter(Attribute.EMAIL);
 		String password = request.getParameter(Attribute.PASSWORD);
 
-		ServiceFactory serviceFactory = ServiceFactory.getInstance();
-		HttpSession session = request.getSession(true);
-
 		try {
+			ServiceFactory serviceFactory = ServiceFactory.getInstance();
+			HttpSession session = request.getSession(true);
 			UserService userService = serviceFactory.getUserService();
 			User user = userService.login(email, password);
 			session.setAttribute(Attribute.USER, user);

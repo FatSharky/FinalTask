@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
 				"UserServiceImpl : registration() : user's data is valid (email = {}, password = {}, "
 						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={}, role={})",
 				email, password, surname, name, secondName, skype, contcactPhone, birth_date, role);
+		
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
 		}

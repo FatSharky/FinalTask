@@ -13,9 +13,9 @@ import by.training.hrsystem.command.impl.UserRegistrationCommand;
 import by.training.hrsystem.command.impl.applicant.AddEducationCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.AddResumeLanguageCommand;
+import by.training.hrsystem.command.impl.applicant.AddResumeToVacancyCommand;
 import by.training.hrsystem.command.impl.applicant.AddSkillCommand;
 import by.training.hrsystem.command.impl.applicant.AddWorkplaceCommand;
-import by.training.hrsystem.command.impl.applicant.ApplicantEditProfileCommand;
 import by.training.hrsystem.command.impl.applicant.DeleteEducationCommand;
 import by.training.hrsystem.command.impl.applicant.DeleteResumeLanguageCommand;
 import by.training.hrsystem.command.impl.applicant.DeleteSkillCommand;
@@ -29,6 +29,8 @@ import by.training.hrsystem.command.impl.applicant.ShowResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantAddResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantEditResumeCommand;
 import by.training.hrsystem.command.impl.applicant.ToApplicantListResumeCommand;
+import by.training.hrsystem.command.impl.common.ApplicantEditProfileCommand;
+import by.training.hrsystem.command.impl.common.SearchVacancyByNameCommand;
 import by.training.hrsystem.command.impl.common.ShowVacancyCommand;
 import by.training.hrsystem.command.impl.common.ToEditProfileCommand;
 import by.training.hrsystem.command.impl.common.ToPrivateOfficeCommand;
@@ -38,8 +40,10 @@ import by.training.hrsystem.command.impl.hr.DeactivateVacancyCommand;
 import by.training.hrsystem.command.impl.hr.DeleteVacancyCommand;
 import by.training.hrsystem.command.impl.hr.HotVacancyCommand;
 import by.training.hrsystem.command.impl.hr.HrPrivateOfficeShowVacancy;
+import by.training.hrsystem.command.impl.hr.ShowApplicantsWhoLeaveResume;
 import by.training.hrsystem.command.impl.hr.ToHrAddVacancyCommand;
 import by.training.hrsystem.command.impl.hr.ToHrListVacancyCommand;
+import by.training.hrsystem.command.impl.hr.ToVerifyListCommand;
 
 public class CommandHelper {
 	private static final CommandHelper INSTANCE = new CommandHelper();
@@ -82,6 +86,10 @@ public class CommandHelper {
 		commands.put(CommandName.ADD_WORKPLACE, new AddWorkplaceCommand());
 		commands.put(CommandName.EDIT_WORKPLACE, new EditWorkPlaceCommand());
 		commands.put(CommandName.DELETE_WORKPLACE, new DeleteWorkPlaceCommand());
+		commands.put(CommandName.SEARCH_VACANCY, new SearchVacancyByNameCommand());
+		commands.put(CommandName.ADD_RESUME_TO_VACANCY, new AddResumeToVacancyCommand());
+		commands.put(CommandName.TO_VERIFY_LIST, new ToVerifyListCommand());
+		commands.put(CommandName.SHOW_APPLICANT_WHO_LEAVE_RESUME, new ShowApplicantsWhoLeaveResume());
 
 	}
 

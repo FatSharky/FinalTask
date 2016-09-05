@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.SkillDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
@@ -62,6 +61,7 @@ public class DBSkillDAO implements SkillDAO {
 
 	@Override
 	public void updateSkill(Skill skill) throws DAOException {
+		logger.debug("DBSkillDAO.updateSkill() - skill = {}", skill);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -238,10 +238,10 @@ public class DBSkillDAO implements SkillDAO {
 
 	private Skill getSkillFromResultSet(ResultSet set) throws SQLException {
 		Skill skill = new Skill();
-		skill.setIdSkill(set.getInt(SQLField.SKILL_ID));
-		skill.setName(set.getString(SQLField.SKILL_NAME));
-		skill.setRaiting(SkillType.valueOf(set.getString(SQLField.SKILL_RAITING).toUpperCase()));
-		skill.setIdResume(set.getInt(SQLField.SKILL_ID_RESUME));
+		skill.setIdSkill(set.getInt(1));
+		skill.setName(set.getString(2));
+		skill.setRaiting(SkillType.valueOf(set.getString(3).toUpperCase()));
+		skill.setIdResume(set.getInt(4));
 		return skill;
 
 	}

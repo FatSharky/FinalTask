@@ -15,7 +15,7 @@ public class WorkPlace implements Serializable {
 	private int idResume;
 
 	public WorkPlace() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int getIdWorkPlace() {

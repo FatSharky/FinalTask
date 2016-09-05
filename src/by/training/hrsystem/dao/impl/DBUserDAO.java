@@ -1,7 +1,6 @@
 package by.training.hrsystem.dao.impl;
 
 import by.training.hrsystem.dao.UserDAO;
-import by.training.hrsystem.dao.constant.SQLField;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
@@ -227,21 +226,6 @@ public class DBUserDAO implements UserDAO {
 
 	}
 
-	private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
-		User user = new User();
-		user.setEmail(resultSet.getString(SQLField.USER_EMAIL));
-		user.setPassword(resultSet.getString(SQLField.USER_PASSWORD));
-		user.setSurname(resultSet.getString(SQLField.USER_SURNAME));
-		user.setName(resultSet.getString(SQLField.USER_NAME));
-		user.setSecondName(resultSet.getString(SQLField.USER_SECONDNAME));
-		user.setPhoto(resultSet.getString(SQLField.USER_PHOTO));
-		user.setSkype(resultSet.getString(SQLField.USER_SKYPE));
-		user.setContactPhone(resultSet.getInt(SQLField.USER_CONTACT_PHONE));
-		user.setBirthDate(resultSet.getDate(SQLField.USER_BIRTH_DATE));
-		user.setRole((Role.valueOf(resultSet.getString(SQLField.USER_ROLE).toUpperCase())));
-		return user;
-	}
-
 	@Override
 	public int countAllApplicants() throws DAOException {
 		Connection conn = null;
@@ -271,6 +255,21 @@ public class DBUserDAO implements UserDAO {
 		}
 
 		return countApplicants;
+	}
+
+	private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+		User user = new User();
+		user.setEmail(resultSet.getString(1));
+		user.setPassword(resultSet.getString(2));
+		user.setSurname(resultSet.getString(3));
+		user.setName(resultSet.getString(4));
+		user.setSecondName(resultSet.getString(5));
+		user.setPhoto(resultSet.getString(6));
+		user.setSkype(resultSet.getString(7));
+		user.setContactPhone(resultSet.getInt(8));
+		user.setBirthDate(resultSet.getDate(9));
+		user.setRole((Role.valueOf(resultSet.getString(10).toUpperCase())));
+		return user;
 	}
 
 }

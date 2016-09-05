@@ -21,6 +21,6 @@ public interface UserDAO {
 	User getUserByEmail(String email) throws DAOException;
 
 	User getUserByIdVacancy(int idVcancy) throws DAOException, DAOException;
-	
+
 	int countAllApplicants() throws DAOException;
 }

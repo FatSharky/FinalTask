@@ -3,7 +3,7 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
+import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.domain.Vacancy;
 
 public interface VacancyDAO {
@@ -19,23 +19,22 @@ public interface VacancyDAO {
 
 	void deleteTranslateVacancy(int idVacancy, String lang) throws DAOException;
 
-	int selectCountVacancy() throws DAOException, DataDoesNotExistException;
+	int selectCountVacancy() throws DAOException, DAODataDoesNotExistException;
 
-	int selectCountActiveVacancy() throws DAOException, DataDoesNotExistException;
+	int selectCountActiveVacancy() throws DAOException, DAODataDoesNotExistException;
 
-	Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException, DataDoesNotExistException;
+	Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException, DAODataDoesNotExistException;
 
-	List<Vacancy> selectAllVacancy(String lang) throws DAOException, DataDoesNotExistException;
+	List<Vacancy> selectAllVacancy(String lang) throws DAOException;
 
-	List<Vacancy> selectAllActiveVacancy(String lang, int pageNum, int amountPerPage)
-			throws DataDoesNotExistException, DAOException;
+	List<Vacancy> selectAllActiveVacancy(String lang, int pageNum, int amountPerPage) throws DAOException;
 
-	List<Vacancy> selectVacancyLike(String name, String lang) throws DAOException, DataDoesNotExistException;
+	List<Vacancy> selectVacancyLike(String name) throws DAOException;
 
 	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int pageNum, int amountPerPage)
 			throws DAOException;
 
-	int selectCountVacancyByHrEmail(String hrEmail) throws DAOException, DataDoesNotExistException;
+	int selectCountVacancyByHrEmail(String hrEmail) throws DAOException, DAODataDoesNotExistException;
 
 	void activateVacancy(int idVacancy) throws DAOException;
 

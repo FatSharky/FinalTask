@@ -55,79 +55,51 @@
 				<div class="top-nav clearfix">
 					<ul class="nav nav-tabs nav-justified">
 						<li><a href="Controller?command=to-private-office">${profile}</a></li>
+						<li><a href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
 						<li class="active"><a
-							href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
-						<li><a href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
+							href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
 						<li><a href="#">${interview}</a></li>
 					</ul>
 				</div>
-				<form action="Controller" method="post">
-					<input type="hidden" name="command" value="to-hr-add-vacancy-page">
-					<div class="left-menu clearfix">
-						<input type="submit" class="btn btn-success btn-lg" value="${add}">
-					</div>
-				</form>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">${listVacancy}</h3>
 					</div>
 					<div class="panel-body">
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="delete-vacancy">
-							<c:forEach items="${requestScope.vacancies}" var="vacancy">
-								<div class="panel-body">
-									<div class="thumbnail">
-										<div class="caption">
-											<h3>${vacancy.name}
-												<c:choose>
-													<c:when test="${vacancy.hotType == 'HOT'}">
-														<span class="glyphicon glyphicon-ok"></span>
-														<span class="glyphicon glyphicon-fire"></span>
-													</c:when>
-													<c:when test="${vacancy.active == 'ACTIVE'}">
-														<span class="glyphicon glyphicon-ok"></span>
-													</c:when>
-												</c:choose>
-											</h3>
-											<p>${publishDate}${vacancy.publishDate}</p>
-											<p>
-												<a
-													href="Controller?command=hr-private-office-show-vacancy&vacancy-id=${vacancy.idVacancy}"
-													class="btn btn-info" role="button">${open}</a> <a href="#"
-													class="btn btn-default" role="button">${edit}</a> <input
-													type="hidden" value="${vacancy.idVacancy}"
-													name="vacancy-id"> <input type="submit"
-													class="btn btn-default" value="${remove}">
-												<c:choose>
-													<c:when test="${vacancy.active == 'ACTIVE'}">
-														<a
-															href="Controller?command=deactivate-vacancy&vacancy-id=${vacancy.idVacancy}"
-															class="btn btn-danger" role="button">${deactive}</a>
-														<c:if test="${vacancy.hotType == 'NON_HOT'}">
-															<a
-																href="Controller?command=hot-vacancy&vacancy-id=${vacancy.idVacancy}"
-																class="btn btn-warning" role="button">${hot}</a>
-														</c:if>
-													</c:when>
-													<c:when test="${vacancy.active == 'NON_ACTIVE'}">
-														<a
-															href="Controller?command=activate-vacancy&vacancy-id=${vacancy.idVacancy}"
-															class="btn btn-primary" role="button">${active}</a>
-													</c:when>
+						<div class="panel-body">
+							<div class="thumbnail">
+								<div class="caption">
+									<h3>${requestScope.vacancy.name}</h3>
+									<p>${publishDate}${requestScope.vacancy.publishDate}</p>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>email</th>
+												<th>VacancyName</th>
+												<th>Verify</th>
+											</tr>
+										</thead>
+										<tbody>
 
-												</c:choose>
-
-
-											</p>
-										</div>
-									</div>
+											<c:forEach items="${requestScope.verifyList}" var="verify">
+												<tr>
+													<td>${verify.resume.applicant.email}</td>
+													<td><a href="#">${verify.resume.name}</a></td>
+													<td><button type="button" class="btn btn-success">Отправить
+															на собесодование</button>
+														<button type="button" class="btn btn-danger">Удалить</button></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
 								</div>
-							</c:forEach>
-						</form>
+							</div>
+						</div>
+
 					</div>
 					<pt:paging-links page="${requestScope.page}"
 						pageAmount="${requestScope.pageAmount}"
-						href="Controller?command=to-hr-list-vacancy" />
+						href="Controller?command=to-verify-list" />
 				</div>
 			</div>
 		</div>

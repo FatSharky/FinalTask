@@ -3,7 +3,6 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DataDoesNotExistException;
 import by.training.hrsystem.domain.Education;
 
 public interface EducationDAO {
@@ -19,6 +18,6 @@ public interface EducationDAO {
 
 	void deleteTranslateEduc(int idEducation, String lang) throws DAOException;
 
-	List<Education> getEducationByIdResume(int idResume, String lang) throws DAOException, DataDoesNotExistException;
+	List<Education> getEducationByIdResume(int idResume, String lang) throws DAOException;
 
 }

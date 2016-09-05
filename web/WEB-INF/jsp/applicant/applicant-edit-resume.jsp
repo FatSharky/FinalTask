@@ -250,128 +250,28 @@
 				</div>
 
 			</form>
-
-			<div class="panel-group col-xs-8 clearfix">
-				<div class="panel panel-primary clearfix">
-					<div class="panel-heading clearfix">
-						<h3 class="panel-title pull-left">${education}</h3>
-						<a class="btn btn-default  pull-right" data-toggle="collapse"
-							href="#collapseOne">${addField}</a>
-
-					</div>
-					<div id="collapseOne" class="collapse">
-
-						<div class="panel-body">
-							<form class="form-horizontal" action="Controller" method="post">
-								<input type="hidden" name="command" value="add-education">
-								<input type="hidden" value="${requestScope.resume.idResume}"
-									name="idResume">
-
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="institution">${institution}*:</label>
-									<div class="col-xs-6">
-										<input type="text" class="form-control" name="institution"
-											placeholder="${enterInstitution}" required>
-									</div>
-									<c:if test="${requestScope.errorInstitution}">
-										<div class="col-xs-2">
-											<p class="text-danger">${wrongInstitution}</p>
-										</div>
-									</c:if>
-								</div>
-
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="faculty">${faculty}*:</label>
-									<div class="col-xs-6">
-										<input type="text" class="form-control" name="faculty"
-											placeholder="${enterFaculty}" required>
-									</div>
-									<c:if test="${requestScope.errorFaculty}">
-										<div class="col-xs-2">
-											<p class="text-danger">${wrongFaculty}</p>
-										</div>
-									</c:if>
-								</div>
-
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="department">${department}*:</label>
-									<div class="col-xs-6">
-										<input type="text" class="form-control" name="department"
-											placeholder="${enterDepartment}" required>
-									</div>
-									<c:if test="${requestScope.errorDepartment}">
-										<div class="col-xs-2">
-											<p class="text-danger">${wrongDepartment}</p>
-										</div>
-									</c:if>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="educField">${educField}</label>
-									<div class="col-xs-6">
-										<select class="form-control" name="educField">
-											<option value="not specified">${notSpecified}</option>
-											<option value="university incomplete">${incomplete}</option>
-											<option value="higher">${higher}</option>
-											<option value="master">${master}</option>
-											<option value="PhD">${phD}</option>
-											<option value="secondary">${secondary}</option>
-											<option value="technical school">${techSchool}</option>
-											<option value="PhD candidate">${phDCandidate}</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="gradYear">${gradYear}*:</label>
-									<div class="col-xs-6">
-										<input type="text" class="form-control" name="gradYear"
-											placeholder="${enterGradYear}" required>
-									</div>
-									<c:if test="${requestScope.errorGandYear}">
-										<div class="col-xs-2">
-											<p class="text-danger">${wrongGradYear}</p>
-										</div>
-									</c:if>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-xs-2" for="postGrad">${postGrad}*:</label>
-									<div class="col-xs-6">
-										<select class="form-control" name="postGrad">
-											<option value="not assigned">${notAssigned}</option>
-											<option value="assigned">${assigned}</option>
-											<option value="to be assigned">${toBeAssigned}</option>
-										</select>
-									</div>
-								</div>
-								<div class="left-menu clearfix">
-									<input type="submit" class="btn btn-success btn-lg"
-										value="${addResume}">
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<c:forEach items="${requestScope.educationList}" var="education">
+			<div>
 				<div class="panel-group col-xs-8 clearfix">
-					<div class="panel panel-default clearfix">
+					<div class="panel panel-primary clearfix">
 						<div class="panel-heading clearfix">
-							<h3 class="panel-title pull-left">${education.institution},${education.faculty},${education.department}</h3>
-							<a class="btn btn-danger  pull-right"
-								href="Controller?command=delete-education&idEducation=${education.idEducation}">${remove}</a>
+							<h3 class="panel-title pull-left">${education}</h3>
 							<a class="btn btn-default  pull-right" data-toggle="collapse"
-								href="#${education.idEducation}">${edit}</a>
+								href="#collapseOne">${addField}</a>
+
 						</div>
-						<div id="${education.idEducation }" class="collapse">
-							<form class="form-horizontal" action="Controller" method="post">
-								<input type="hidden" name="command" value="edit-education">
-								<input type="hidden" value="${education.idEducation}"
-									name="idEducation">
-								<div class="panel-body">
+						<div id="collapseOne" class="collapse">
+
+							<div class="panel-body">
+								<form class="form-horizontal" action="Controller" method="post">
+									<input type="hidden" name="command" value="add-education">
+									<input type="hidden" value="${requestScope.resume.idResume}"
+										name="idResume">
+
 									<div class="form-group">
 										<label class="control-label col-xs-2" for="institution">${institution}*:</label>
 										<div class="col-xs-6">
 											<input type="text" class="form-control" name="institution"
-												value="${education.institution}">
+												placeholder="${enterInstitution}" required>
 										</div>
 										<c:if test="${requestScope.errorInstitution}">
 											<div class="col-xs-2">
@@ -384,7 +284,7 @@
 										<label class="control-label col-xs-2" for="faculty">${faculty}*:</label>
 										<div class="col-xs-6">
 											<input type="text" class="form-control" name="faculty"
-												value="${education.faculty}">
+												placeholder="${enterFaculty}" required>
 										</div>
 										<c:if test="${requestScope.errorFaculty}">
 											<div class="col-xs-2">
@@ -397,7 +297,7 @@
 										<label class="control-label col-xs-2" for="department">${department}*:</label>
 										<div class="col-xs-6">
 											<input type="text" class="form-control" name="department"
-												value="${education.department}">
+												placeholder="${enterDepartment}" required>
 										</div>
 										<c:if test="${requestScope.errorDepartment}">
 											<div class="col-xs-2">
@@ -424,7 +324,7 @@
 										<label class="control-label col-xs-2" for="gradYear">${gradYear}*:</label>
 										<div class="col-xs-6">
 											<input type="text" class="form-control" name="gradYear"
-												value="${education.gradYear}">
+												placeholder="${enterGradYear}" required>
 										</div>
 										<c:if test="${requestScope.errorGandYear}">
 											<div class="col-xs-2">
@@ -444,16 +344,118 @@
 									</div>
 									<div class="left-menu clearfix">
 										<input type="submit" class="btn btn-success btn-lg"
-											value="${edit}">
+											value="${addResume}">
 									</div>
-								</div>
-							</form>
-
+								</form>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
 
+
+					<c:forEach items="${requestScope.educationList}" var="education">
+
+						<div class="panel panel-default clearfix">
+							<div class="panel-heading clearfix">
+								<h3 class="panel-title pull-left">${education.institution},${education.faculty},${education.department}</h3>
+								<a class="btn btn-danger  pull-right"
+									href="Controller?command=delete-education&idEducation=${education.idEducation}">${remove}</a>
+								<a class="btn btn-default  pull-right" data-toggle="collapse"
+									href="#${education.idEducation}">${edit}</a>
+							</div>
+							<div id="${education.idEducation }" class="collapse">
+								<form class="form-horizontal" action="Controller" method="post">
+									<input type="hidden" name="command" value="edit-education">
+									<input type="hidden" value="${education.idEducation}"
+										name="idEducation">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="institution">${institution}*:</label>
+											<div class="col-xs-6">
+												<input type="text" class="form-control" name="institution"
+													value="${education.institution}">
+											</div>
+											<c:if test="${requestScope.errorInstitution}">
+												<div class="col-xs-2">
+													<p class="text-danger">${wrongInstitution}</p>
+												</div>
+											</c:if>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="faculty">${faculty}*:</label>
+											<div class="col-xs-6">
+												<input type="text" class="form-control" name="faculty"
+													value="${education.faculty}">
+											</div>
+											<c:if test="${requestScope.errorFaculty}">
+												<div class="col-xs-2">
+													<p class="text-danger">${wrongFaculty}</p>
+												</div>
+											</c:if>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="department">${department}*:</label>
+											<div class="col-xs-6">
+												<input type="text" class="form-control" name="department"
+													value="${education.department}">
+											</div>
+											<c:if test="${requestScope.errorDepartment}">
+												<div class="col-xs-2">
+													<p class="text-danger">${wrongDepartment}</p>
+												</div>
+											</c:if>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="educField">${educField}</label>
+											<div class="col-xs-6">
+												<select class="form-control" name="educField">
+													<option value="not specified">${notSpecified}</option>
+													<option value="university incomplete">${incomplete}</option>
+													<option value="higher">${higher}</option>
+													<option value="master">${master}</option>
+													<option value="PhD">${phD}</option>
+													<option value="secondary">${secondary}</option>
+													<option value="technical school">${techSchool}</option>
+													<option value="PhD candidate">${phDCandidate}</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="gradYear">${gradYear}*:</label>
+											<div class="col-xs-6">
+												<input type="text" class="form-control" name="gradYear"
+													value="${education.gradYear}">
+											</div>
+											<c:if test="${requestScope.errorGandYear}">
+												<div class="col-xs-2">
+													<p class="text-danger">${wrongGradYear}</p>
+												</div>
+											</c:if>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-2" for="postGrad">${postGrad}*:</label>
+											<div class="col-xs-6">
+												<select class="form-control" name="postGrad">
+													<option value="not assigned">${notAssigned}</option>
+													<option value="assigned">${assigned}</option>
+													<option value="to be assigned">${toBeAssigned}</option>
+												</select>
+											</div>
+										</div>
+										<div class="left-menu clearfix">
+											<input type="submit" class="btn btn-success btn-lg"
+												value="${edit}">
+										</div>
+									</div>
+								</form>
+
+							</div>
+						</div>
+
+					</c:forEach>
+				</div>
+			</div>
 			<div class="panel-group col-xs-8 clearfix">
 				<div class="panel panel-primary clearfix">
 					<div class="panel-heading clearfix">
@@ -510,10 +512,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<c:forEach items="${requestScope.resumeLangList}" var="resumeLang">
-				<div class="panel-group col-xs-8 clearfix">
+
+				<c:forEach items="${requestScope.resumeLangList}" var="resumeLang">
+
 					<div class="panel panel-default clearfix">
 						<div class="panel-heading clearfix">
 							<h3 class="panel-title pull-left">${resumeLang.name}:
@@ -569,10 +571,10 @@
 							</form>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
 
+				</c:forEach>
 
+			</div>
 			<div class="panel-group col-xs-8 clearfix">
 				<div class="panel panel-primary clearfix">
 					<div class="panel-heading clearfix">
@@ -620,10 +622,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<c:forEach items="${requestScope.skillList}" var="skill">
-				<div class="panel-group col-xs-8 clearfix">
+
+				<c:forEach items="${requestScope.skillList}" var="skill">
+
 					<div class="panel panel-default clearfix">
 						<div class="panel-heading clearfix">
 							<h3 class="panel-title pull-left">${skill.name}:
@@ -672,11 +674,11 @@
 							</form>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
+
+				</c:forEach>
 
 
-
+			</div>
 
 			<div class="panel-group col-xs-8 clearfix">
 				<div class="panel panel-primary clearfix">
@@ -756,10 +758,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<c:forEach items="${requestScope.workPlaceList}" var="workPlace">
-				<div class="panel-group col-xs-8 clearfix">
+
+				<c:forEach items="${requestScope.workPlaceList}" var="workPlace">
+
 					<div class="panel panel-default clearfix">
 						<div class="panel-heading clearfix">
 							<h3 class="panel-title pull-left">${workPlace.companyName}:
@@ -838,9 +840,9 @@
 							</form>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
 
+				</c:forEach>
+			</div>
 
 
 

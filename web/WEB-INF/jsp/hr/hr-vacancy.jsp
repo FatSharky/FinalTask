@@ -66,10 +66,10 @@
 	<div class="container">
 		<div class="top-nav clearfix">
 			<ul class="nav nav-tabs nav-justified">
-				<li><a href="#">${profile}</a></li>
+				<li><a href="Controller?command=to-private-office">${profile}</a></li>
 				<li class="active"><a
 					href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
-				<li><a href="#">${vacancyVerify}</a></li>
+				<li><a href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
 				<li><a href="#">${interview}</a></li>
 			</ul>
 		</div>

@@ -18,10 +18,14 @@ public interface ResumeService {
 	List<Resume> selectResumeByEmail(String email, String lang, int first, int perPage)
 			throws ListResumeIsEmptyServiceException, ServiceException;
 
+	List<Resume> selectResumeForVacancy(String applicantEmail, String lang) throws ServiceException;
+
 	int countAllResume() throws ServiceException;
 
 	int countVacancyByEmail(String hrEmail) throws ServiceException;
 
 	Resume selectResumeById(int idResume, String lang) throws ServiceException;
+
+	List<Resume> selectListResumeByVacancy(int idVacancy) throws ServiceException;
 
 }
