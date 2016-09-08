@@ -18,7 +18,7 @@ public class Interview implements Serializable {
 	private Verify verify;
 
 	public Interview() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getIdInterview() {

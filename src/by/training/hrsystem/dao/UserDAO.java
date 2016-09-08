@@ -22,5 +22,7 @@ public interface UserDAO {
 
 	User getUserByIdVacancy(int idVcancy) throws DAOException, DAOException;
 
+	User getUserByIdResume(int idResume) throws DAOException, DAOException;
+
 	int countAllApplicants() throws DAOException;
 }

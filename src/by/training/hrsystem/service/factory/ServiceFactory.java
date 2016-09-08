@@ -2,6 +2,8 @@ package by.training.hrsystem.service.factory;
 
 import by.training.hrsystem.service.EducationService;
 import by.training.hrsystem.service.InitConnectionService;
+import by.training.hrsystem.service.InterviewMarkService;
+import by.training.hrsystem.service.InterviewService;
 import by.training.hrsystem.service.ResumeLanguageService;
 import by.training.hrsystem.service.ResumeService;
 import by.training.hrsystem.service.SkillService;
@@ -11,6 +13,8 @@ import by.training.hrsystem.service.VerifyService;
 import by.training.hrsystem.service.WorkPlaceService;
 import by.training.hrsystem.service.impl.EducationServiceImpl;
 import by.training.hrsystem.service.impl.InitConnectionServiceImpl;
+import by.training.hrsystem.service.impl.InterviewMarkServiceImpl;
+import by.training.hrsystem.service.impl.InterviewServiceImpl;
 import by.training.hrsystem.service.impl.ResumeLanguageServiceImpl;
 import by.training.hrsystem.service.impl.ResumeServiceImpl;
 import by.training.hrsystem.service.impl.SkillServiceImpl;
@@ -31,6 +35,8 @@ public class ServiceFactory {
 	private final WorkPlaceService workPlaceService = new WorkPlaceServiceImpl();
 	private final ResumeService resumeService = new ResumeServiceImpl();
 	private final VerifyService verifyService = new VerifyServiceImpl();
+	private final InterviewService interviewService = new InterviewServiceImpl();
+	private final InterviewMarkService interviewMarkService = new InterviewMarkServiceImpl();
 
 	private ServiceFactory() {
 	}
@@ -73,5 +79,13 @@ public class ServiceFactory {
 
 	public VerifyService gerVerifyService() {
 		return verifyService;
+	}
+
+	public InterviewService getInterviewService() {
+		return interviewService;
+	}
+
+	public InterviewMarkService getInterviewMarkService() {
+		return interviewMarkService;
 	}
 }

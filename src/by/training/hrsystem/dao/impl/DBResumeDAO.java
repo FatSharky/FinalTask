@@ -275,7 +275,6 @@ public class DBResumeDAO implements ResumeDAO {
 
 	@Override
 	public Resume selectResumeById(int idResume, String lang) throws DAOException, DAODataDoesNotExistException {
-
 		Resume resume = null;
 		Connection conn = null;
 		PreparedStatement ps = null;

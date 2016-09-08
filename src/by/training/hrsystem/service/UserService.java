@@ -15,6 +15,8 @@ public interface UserService {
 	User selectUserByEmail(String email) throws ServiceException;
 
 	User selectUserByIdVacancy(int idVacancy) throws ServiceException;
-	
+
+	User selectUserByIdResume(int idResume) throws ServiceException;
+
 	int countAllApplicants() throws ServiceException;;
 }

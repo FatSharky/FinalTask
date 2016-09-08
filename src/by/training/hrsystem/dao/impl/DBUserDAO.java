@@ -23,8 +23,10 @@ public class DBUserDAO implements UserDAO {
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
-	private static final String SQL_SELECT_USER_BY_ID_RESUME = "SELECT user.surname, user.name, user.secondname,user.skype,user.contact_phone,user.photo "
+	private static final String SQL_SELECT_USER_BY_ID_VACANCY = "SELECT user.email, user.surname, user.name, user.secondname, user.birth_date, user.skype,user.contact_phone,user.photo "
 			+ "FROM user LEFT JOIN vacancy on user.email= vacancy.email WHERE vacancy.id_vacancy=?;";
+	private static final String SQL_SELECT_USER_BY_ID_RESUME = "SELECT user.email, user.surname, user.name, user.secondname, user.birth_date, user.skype,user.contact_phone,user.photo "
+			+ "FROM user LEFT JOIN resume on user.email= resume.email WHERE resume.id_resume=?;";
 	private static final String SQL_SELECT_COUNT_APPLICANTS = "SELECT COUNT(email) FROM user WHERE role='applicant';";
 
 	@Override
@@ -198,16 +200,18 @@ public class DBUserDAO implements UserDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_SELECT_USER_BY_ID_RESUME);
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_ID_VACANCY);
 			ps.setInt(1, idVcancy);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User();
-				user.setSurname(rs.getString(1));
-				user.setName(rs.getString(2));
-				user.setSecondName(rs.getString(3));
-				user.setSkype(rs.getString(4));
-				user.setContactPhone(rs.getInt(5));
+				user.setEmail(rs.getString(1));
+				user.setSurname(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setSecondName(rs.getString(4));
+				user.setBirthDate(rs.getDate(5));
+				user.setSkype(rs.getString(6));
+				user.setContactPhone(rs.getInt(7));
 			}
 			return user;
 		} catch (SQLException e) {
@@ -272,4 +276,43 @@ public class DBUserDAO implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public User getUserByIdResume(int idResume) throws DAOException, DAOException {
+		logger.debug("DBUserDAO. getUserByIdResume - idResume = {}", idResume);
+		User user = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_ID_RESUME);
+			ps.setInt(1, idResume);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setEmail(rs.getString(1));
+				user.setSurname(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setSecondName(rs.getString(4));
+				user.setBirthDate(rs.getDate(5));
+				user.setSkype(rs.getString(6));
+				user.setContactPhone(rs.getInt(7));
+			}
+			return user;
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find user: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+	}
 }

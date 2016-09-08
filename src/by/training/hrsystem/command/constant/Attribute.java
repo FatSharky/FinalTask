@@ -112,4 +112,18 @@ public final class Attribute {
 
 	public static final String LIST_VERIFY = "verifyList";
 	public static final String LIST_RESUME = "resumeList";
+
+	public static final String ID_VERIFY = "idVerify";
+
+	public static final String DATE_INTERVIEW = "interviewDate";
+	public static final String TYPE_INTERVIEW = "interviewType";
+
+	public static final String LIST_INTERVIEW = "interviewList";
+
+	public static final String INTERVIEW_SKILL = "skill";
+	public static final String INTERVIEW_MARK = "mark";
+	public static final String ID_INTERVIEW = "idInterview";
+
+	public static final String MARK_TECHICAL = "listMarkTechnical";
+	public static final String MARK_PRELIMINARY = "listMarkPreliminary";
 }

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import by.training.hrsystem.dao.InterviewMarkDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.InterviewMark;
@@ -22,8 +21,10 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 	private static final String SQL_ADD_INTERVIEW_MARK = "INSERT INTO interview_mark (skill, mark, id_interview) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_INERVIEW_MARK = "UPDATE interview_mark SET  skill=?,  mark=?, WHERE id_mark=?;";
 	private static final String SQL_DELETE_INTERVIEW_MARK = "DELETE interview_mark WHERE id_mark=?";
-	private static final String SQL_SELECT_MARK_BY_ID_INTERVIEW = "SELECT * FROM interview_mark "
-			+ "WHERE id_interview=?";
+	private static final String SQL_SELECT_MARK_OF_TECHNICAL_INTERVIEW = "SELECT im.id_mark, im.skill, im.mark, im.id_interview FROM interview_mark as im JOIN interview as i "
+			+ "ON im.id_interview=i.id_interview WHERE i.id_verify=? and i.type='techical';";
+	private static final String SQL_SELECT_MARK_OF_PRELIMINARY_INTERVIEW = "SELECT im.id_mark, im.skill, im.mark, im.id_interview FROM interview_mark as im JOIN interview as i "
+			+ "ON im.id_interview=i.id_interview WHERE i.id_verify=? and i.type='preliminary';";
 
 	@Override
 	public void addMark(InterviewMark mark) throws DAOException {
@@ -108,7 +109,7 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 	}
 
 	@Override
-	public List<InterviewMark> selectMarkByIdInterview(int idInterview) throws DAOException, DAODataDoesNotExistException {
+	public List<InterviewMark> selectMarkOfTechicalInterview(int idVerify) throws DAOException {
 		List<InterviewMark> mark = new ArrayList<InterviewMark>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -117,16 +118,46 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_SELECT_MARK_BY_ID_INTERVIEW);
-			ps.setInt(1, idInterview);
+			ps = conn.prepareStatement(SQL_SELECT_MARK_OF_TECHNICAL_INTERVIEW);
+			ps.setInt(1, idVerify);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				mark.add(getMarkFromResultSet(rs));
-			} else {
-				throw new DAODataDoesNotExistException("Company not found!");
 			}
 		} catch (SQLException e) {
-			throw new DAOException("Faild to find Languages: ", e);
+			throw new DAOException("Faild to find mark: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+				rs.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps or rs", e);
+			}
+		}
+		return mark;
+	}
+
+	@Override
+	public List<InterviewMark> selectMarkOfPreliminaryInterview(int idVerify) throws DAOException {
+		List<InterviewMark> mark = new ArrayList<InterviewMark>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_MARK_OF_PRELIMINARY_INTERVIEW);
+			ps.setInt(1, idVerify);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				mark.add(getMarkFromResultSet(rs));
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find mark: ", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
@@ -143,10 +174,10 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 
 	private InterviewMark getMarkFromResultSet(ResultSet set) throws SQLException {
 		InterviewMark skill = new InterviewMark();
-		skill.setIdMark(set.getInt(SQLField.IMARK_ID));
-		skill.setSkill(set.getString(SQLField.IMARK_SKILL));
-		skill.setMark(SkillType.valueOf(set.getString(SQLField.IMARK_MARK)));
-		skill.setIdInterview(set.getInt(SQLField.IMARK_ID_INERVIEW));
+		skill.setIdMark(set.getInt(1));
+		skill.setSkill(set.getString(2));
+		skill.setMark(SkillType.valueOf(set.getString(3).toUpperCase()));
+		skill.setIdInterview(set.getInt(4));
 		return skill;
 
 	}

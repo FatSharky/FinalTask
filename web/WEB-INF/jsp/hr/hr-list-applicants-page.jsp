@@ -80,13 +80,14 @@
 											</tr>
 										</thead>
 										<tbody>
-
 											<c:forEach items="${requestScope.verifyList}" var="verify">
 												<tr>
 													<td>${verify.resume.applicant.email}</td>
-													<td><a href="#">${verify.resume.name}</a></td>
-													<td><button type="button" class="btn btn-success">Отправить
-															на собесодование</button>
+													<td><a
+														href="Controller?command=show-resume&idResume=${verify.resume.idResume}">${verify.resume.name}</a></td>
+													<td><a
+														href="Controller?command=show-resume&idResume=${verify.resume.idResume}"
+														class="btn btn-warning" role="button">${hot}</a>
 														<button type="button" class="btn btn-danger">Удалить</button></td>
 												</tr>
 											</c:forEach>

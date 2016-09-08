@@ -66,26 +66,41 @@
 						<h3 class="panel-title">${listVacancy}</h3>
 					</div>
 					<div class="panel-body">
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="delete-vacancy">
-							<c:forEach items="${requestScope.vacancies}" var="vacancy">
-								<input type="hidden" value="${vacancy.idVacancy}"
-									name="vacancy-id">
-								<div class="panel-body">
-									<div class="thumbnail">
-										<div class="caption">
-											<h3>${vacancy.name}</h3>
-											<p>${publishDate}${vacancy.publishDate}</p>
-											<a
-												href="Controller?command=show-applicant-who-leave-resume&vacancy-id=${vacancy.idVacancy}"
-												class="btn btn-primary" role="button">${active}</a> <a
-												href="Controller?command=to-pass-verify-applicant&vacancy-id=${vacancy.idVacancy}"
-												class="btn btn-primary" role="button">${active}</a>
-										</div>
-									</div>
+						<div class="panel-body">
+							<div class="thumbnail">
+								<div class="caption">
+									<h3>${requestScope.vacancy.name}</h3>
+									<p>${publishDate}${requestScope.vacancy.publishDate}</p>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>email</th>
+												<th>Surname</th>
+												<th>name</th>
+												<th>SecondName</th>
+												<th>ContactPhone</th>
+												<th>Interview</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${requestScope.verifyList}" var="verify">
+												<tr>
+													<td>${verify.resume.applicant.email}</td>
+													<td>${verify.resume.applicant.surname}</td>
+													<td>${verify.resume.applicant.name}</td>
+													<td>${verify.resume.applicant.secondName}</td>
+													<td>${verify.resume.applicant.contactPhone}</td>
+													<td><a
+														href="Controller?command=to-applicant-interview&idVerify=${verify.idVerify}"
+														class="btn btn-info" role="button">${open}</a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
 								</div>
-							</c:forEach>
-						</form>
+							</div>
+						</div>
+
 					</div>
 					<pt:paging-links page="${requestScope.page}"
 						pageAmount="${requestScope.pageAmount}"

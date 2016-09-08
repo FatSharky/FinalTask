@@ -18,6 +18,7 @@ public final class Validation {
 	private static final String DATE_SHORT = "\\d{5}";
 	private static final String SALARY_PATTERN = "[0-9]{0,15}";
 	private static final String TEXT_PATTERN = "^[à-ÿÀ-ß¸¨a-zA-Z0-9]+$";
+	private static final String DATE_TIME_PATTERN = "^[\\d]{4}-[\\d]{2}-[\\d]{2} [\\d]{2}:[\\d]{2}:[\\d]{2}$";
 
 	private static boolean checkStringField(String patternStr, String field) {
 		Pattern pattern = Pattern.compile(patternStr);
@@ -60,6 +61,10 @@ public final class Validation {
 
 	public static boolean validateTextField(String value) {
 		return checkStringField(TEXT_PATTERN, value);
+	}
+
+	public static boolean validateDateTime(String value) {
+		return checkStringField(DATE_TIME_PATTERN, value);
 	}
 
 	public static boolean validateDate(Date checkStartDate, Date checkTillDate) {

@@ -10,4 +10,8 @@ public interface VerifyService {
 
 	List<Verify> verifyList(int idVacancy) throws ServiceException;
 
+	List<Verify> passVerifyList(int idVacancy) throws ServiceException;
+
+	Verify selectVerifyById(int idVerify) throws ServiceException;
+
 }

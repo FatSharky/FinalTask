@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 				"UserServiceImpl : registration() : user's data is valid (email = {}, password = {}, "
 						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={}, role={})",
 				email, password, surname, name, secondName, skype, contcactPhone, birth_date, role);
-		
+
 		if (!Validation.validateEmail(email)) {
 			throw new WrongEmailServiceException("Wrong email");
 		}
@@ -213,6 +213,19 @@ public class UserServiceImpl implements UserService {
 		logger.debug("UserServiceImpl: countAllApplicants() : count={}", countAllApplicants);
 		return countAllApplicants;
 
+	}
+
+	@Override
+	public User selectUserByIdResume(int idResume) throws ServiceException {
+		logger.debug("UserServiceImpl :selectUserByIdResume() : idResume = {}", idResume);
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+			User user = userDAO.getUserByIdResume(idResume);
+			return user;
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: cannot make a selectUserByIdVacancy operation", e);
+		}
 	}
 
 }

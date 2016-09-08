@@ -2,12 +2,12 @@ package by.training.hrsystem.command.constant;
 
 public final class PageName {
 	private PageName() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public static final String INDEX_PAGE = "hr-system.jsp";
 	public static final String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
-
+	public static final String FIRST_PAGE = "index.jsp";
 	public static final String ERROR_ACCESS_PAGE = "WEB-INF/jsp/access-error.jsp";
 
 	public static final String APPLICANT_OFFICE_PAGE = "WEB-INF/jsp/applicant/private-office-applicant.jsp";
@@ -25,6 +25,9 @@ public final class PageName {
 	public static final String HR_VACANCY_PAGE = "WEB-INF/jsp/hr/hr-vacancy.jsp";
 	public static final String HR_VERIFY_PAGE = "WEB-INF/jsp/hr/hr-verify-page.jsp";
 	public static final String HR_LIST_APPLICANTS_PAGE = "WEB-INF/jsp/hr/hr-list-applicants-page.jsp";
+	public static final String HR_APPLICANT_RESUME_PAGE = "WEB-INF/jsp/hr/hr-applicant-resume-page.jsp";
+	public static final String HR_APPLICANT_WHO_PASS_PAGE = "WEB-INF/jsp/hr/hr-applicant-who-pass-page.jsp";
+	public static final String HR_APPLICANT_INTERVIEW_PAGE = "WEB-INF/jsp/hr/hr-applicant-interview-page.jsp";
 
 	public static final String REGISTRATION_PAGE = "WEB-INF/jsp/registration.jsp";
 	public static final String ABOUT_PAGE = "about.jsp";

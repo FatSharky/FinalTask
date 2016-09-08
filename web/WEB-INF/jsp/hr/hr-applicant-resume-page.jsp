@@ -67,71 +67,15 @@
 		<div class="top-nav clearfix">
 			<ul class="nav nav-tabs nav-justified">
 				<li><a href="Controller?command=to-private-office">${profile}</a></li>
-				<li class="active"><a
-					href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
-				<li><a href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
+				<li><a href="Controller?command=to-hr-list-vacancy">${vacancy}</a></li>
+				<li class="active"><a href="Controller?command=to-verify-list">${vacancyVerify}</a></li>
 				<li><a href="#">${interview}</a></li>
 			</ul>
 		</div>
 		<div class="left-menu clearfix">
 			<input type="submit" class="btn btn-success btn-lg" value="${edit}">
 		</div>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">${vacancy}</h3>
-			</div>
-			<div class="panel-body">
-				<h1>${requestScope.vacancy.name}:</h1>
-				<p>${wage}${requestScope.vacancy.salary}
-					<c:choose>
-						<c:when test="${requestScope.vacancy.currency=='RUB'}">
-							${rub}
-						</c:when>
-						<c:when test="${requestScope.vacancy.currency=='DOLAR'}">
-							${dolar}
-						</c:when>
-					</c:choose>
-				</p>
-				<p>
-					<strong>${description}</strong>
-				</p>
-				<p>${requestScope.vacancy.description}</p>
-				<p>
-					<strong>${terms}</strong>
-				</p>
-				<p>${requestScope.vacancy.condition}</p>
-				<p>
-					<strong>${typeOfEmployment}</strong>
-				</p>
-				<c:choose>
-					<c:when
-						test="${requestScope.vacancy.employmentType == 'FULL_TIME'}">
-						<p>${fullTime}</p>
-					</c:when>
-					<c:when
-						test="${requestScope.vacancy.employmentType == 'PART_TIME'}">
-						<p>${partTime}</p>
-					</c:when>
-					<c:when
-						test="${requestScope.vacancy.employmentType == 'CONTRACTUAL'}">
-						<p>${contractual}</p>
-					</c:when>
-				</c:choose>
-				<p>
-					<strong>${contactPerson}:</strong>
-				</p>
-				<p>${requestScope.hr.surname}${requestScope.hr.name}
-					${requestScope.hr.secondName}</p>
-				<p>
-					<strong>${contactPhone}</strong>
-				</p>
-				<p>${requestScope.hr.contactPhone}</p>
-				<p>
-					<strong>${skype}</strong>
-				</p>
-				<p>${requestScope.hr.contactPhone}</p>
-			</div>
-		</div>
+		<%@include file="/WEB-INF/jspf/resume.jspf"%>
 	</div>
 	<%@include file="/WEB-INF/jspf/footer.jspf"%>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -139,6 +83,5 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 </html>

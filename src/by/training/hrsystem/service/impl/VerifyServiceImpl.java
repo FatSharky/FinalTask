@@ -52,4 +52,31 @@ public class VerifyServiceImpl implements VerifyService {
 		}
 		return listVerify;
 	}
+
+	@Override
+	public List<Verify> passVerifyList(int idVacancy) throws ServiceException {
+		logger.debug("VerifyServiceImpl: passVerifyList() : idVacancy = {}", idVacancy);
+		List<Verify> listVerify = null;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			VerifyDAO verifyDAO = daoFactory.getVerifyDAO();
+			listVerify = verifyDAO.passVerifyList(idVacancy);
+		} catch (DAOException e) {
+			throw new EducationServiceException("Service laye: can not show list of education");
+		}
+		return listVerify;
+	}
+
+	@Override
+	public Verify selectVerifyById(int idVerify) throws ServiceException {
+		logger.debug("VerifyServiceImpl : selectVerifyById() : idVerify = {}", idVerify);
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			VerifyDAO verifyDAO = daoFactory.getVerifyDAO();
+			Verify verify = verifyDAO.getVerifyById(idVerify);
+			return verify;
+		} catch (DAOException e) {
+			throw new ServiceException("Service layer: cannot make a selectVerifyById operation", e);
+		}
+	}
 }

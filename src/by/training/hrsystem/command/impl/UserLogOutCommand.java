@@ -27,7 +27,7 @@ public class UserLogOutCommand implements Command {
 		if (session != null) {
 			session.invalidate();
 			try {
-				request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+				request.getRequestDispatcher(PageName.FIRST_PAGE).forward(request, response);
 			} catch (IOException | ServletException ex) {
 				throw new CommandException(ex);
 			}

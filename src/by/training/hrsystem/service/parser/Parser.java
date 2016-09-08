@@ -9,6 +9,7 @@ import by.training.hrsystem.domain.role.Role;
 import by.training.hrsystem.domain.type.CurrencyType;
 import by.training.hrsystem.domain.type.EducationType;
 import by.training.hrsystem.domain.type.EmploymentType;
+import by.training.hrsystem.domain.type.InterviewType;
 import by.training.hrsystem.domain.type.LanguageLevelType;
 import by.training.hrsystem.domain.type.MilitaryType;
 import by.training.hrsystem.domain.type.PostgraduateType;
@@ -19,6 +20,7 @@ public final class Parser {
 
 	private static final String DATE_FULL_PATTERN = "yyyy-MM-dd";
 	private static final String DATE_YEAR_PATTERN = "yyyy";
+	private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	private Parser() {
 	}
@@ -125,12 +127,27 @@ public final class Parser {
 		throw new ParserException("Can't find such military type");
 	}
 
+	public static InterviewType fromStringToInterviewType(String value) throws ParserException {
+		if (value != null) {
+			for (InterviewType it : InterviewType.values()) {
+				if (value.equalsIgnoreCase(it.getInterviewType())) {
+					return it;
+				}
+			}
+		}
+		throw new ParserException("Can't find such interview type");
+	}
+
 	public static Date parseToFullDate(String field) throws ParserException {
 		return parseStringtoDate(field, DATE_FULL_PATTERN);
 	}
 
 	public static Date parseToShorterForm(String field) throws ParserException {
 		return parseStringtoDate(field, DATE_YEAR_PATTERN);
+	}
+
+	public static Date parseToDateTime(String field) throws ParserException {
+		return parseStringtoDate(field, DATE_TIME_PATTERN);
 	}
 
 	public static Integer parseStringtoInt(String field) {

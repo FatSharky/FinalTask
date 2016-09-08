@@ -3,7 +3,6 @@ package by.training.hrsystem.dao;
 import java.util.List;
 
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.domain.InterviewMark;
 
 public interface InterviewMarkDAO {
@@ -13,6 +12,7 @@ public interface InterviewMarkDAO {
 
 	void deleteMark(int idMark) throws DAOException;
 
-	List<InterviewMark> selectMarkByIdInterview(int idInterview) throws DAOException, DAODataDoesNotExistException;
+	List<InterviewMark> selectMarkOfTechicalInterview(int idVerify) throws DAOException;
 
+	List<InterviewMark> selectMarkOfPreliminaryInterview(int idVerify) throws DAOException;
 }
