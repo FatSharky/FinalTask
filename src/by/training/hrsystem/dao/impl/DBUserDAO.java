@@ -24,6 +24,7 @@ public class DBUserDAO implements UserDAO {
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 	private static final String SQL_ADD_TRANSL_USER = "INSERT INTO tuser (email, lang, surname, name, secondname) VALUES (?, ?, ?, ?, ?);";
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
+	private static final String SQL_DELETE_USER = "DELETE FROM user WHERE email=?;";
 	private static final String SQL_SELECT_USER_BY_ID_VACANCY = "SELECT user.email, user.surname, user.name, user.secondname, user.birth_date, user.skype,user.contact_phone,user.photo "
 			+ "FROM user LEFT JOIN vacancy on user.email= vacancy.email WHERE vacancy.id_vacancy=?;";
 	private static final String SQL_SELECT_USER_BY_ID_RESUME = "SELECT user.email, user.surname, user.name, user.secondname, user.birth_date, user.skype,user.contact_phone,user.photo "
@@ -99,7 +100,28 @@ public class DBUserDAO implements UserDAO {
 
 	@Override
 	public void deleteUser(String email) throws DAOException {
-		// TODO Auto-generated method stub
+		logger.debug("DBUserDAO.delete() - email = {}", email);
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_DELETE_USER);
+			ps.setString(1, email);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DAOException("Faild delete new User: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				ConnectionPool.getInstance().closeConnection(conn);
+				ps.close();
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
 
 	}
 

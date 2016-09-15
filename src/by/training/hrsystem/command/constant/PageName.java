@@ -6,9 +6,9 @@ public final class PageName {
 
 	public static final String INDEX_PAGE = "hr-system.jsp";
 	public static final String SEARCH_PAGE = "search-page.jsp";
-	public static final String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
+	public static final String ERROR_PAGE = "WEB-INF/jsp/error/error.jsp";
 	public static final String FIRST_PAGE = "index.jsp";
-	public static final String ERROR_TIME_OUT_PAGE = "WEB-INF/jsp/error-timeout.jsp";
+	public static final String ERROR_TIME_OUT_PAGE = "WEB-INF/jsp/error/error-timeout.jsp";
 
 	public static final String APPLICANT_OFFICE_PAGE = "WEB-INF/jsp/applicant/private-office-applicant.jsp";
 	public static final String APPLICANT_EDIT_PROFILE_PAGE = "WEB-INF/jsp/applicant/applicant-edit-profile.jsp";

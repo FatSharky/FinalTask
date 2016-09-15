@@ -36,11 +36,11 @@
 	</filter-mapping>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
+		<location>/WEB-INF/jsp/error/error400.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
+		<location>/WEB-INF/jsp/error/error500.jsp</location>
 	</error-page>
 	<jsp-config>
 		<taglib>

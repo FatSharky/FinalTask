@@ -15,7 +15,9 @@
 <fmt:message bundle="${locale}" key="locale.header.applicants"
 	var="applicants" />
 
+<br><br>
 <div class="jumbotron clearfix">
+
 	<div class="about-work">
 		<h1>${findJob}</h1>
 		<form action="Controller">
