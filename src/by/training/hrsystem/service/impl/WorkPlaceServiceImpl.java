@@ -23,7 +23,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class WorkPlaceServiceImpl implements WorkPlaceService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(WorkPlaceServiceImpl.class);
 
 	@Override
 	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idResume)

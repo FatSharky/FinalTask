@@ -22,7 +22,7 @@ import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class EditResumeCommand implements Command {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(EditResumeCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

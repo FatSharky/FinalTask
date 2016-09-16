@@ -17,7 +17,7 @@ import by.training.hrsystem.service.exeption.education.EducationServiceException
 
 public class VerifyServiceImpl implements VerifyService {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(VerifyServiceImpl.class);
 
 	@Override
 	public void addResumeToVacancy(int idVacancy, int idResume) throws ServiceException {

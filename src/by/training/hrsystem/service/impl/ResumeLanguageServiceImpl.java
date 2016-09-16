@@ -19,7 +19,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class ResumeLanguageServiceImpl implements ResumeLanguageService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ResumeLanguageServiceImpl.class);
 
 	@Override
 	public void addLanguage(String name, String skillLevel, int idResume)

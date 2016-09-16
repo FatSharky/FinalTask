@@ -18,7 +18,7 @@ import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.role.Role;
 
 public class ToApplicantAddResumeCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ToApplicantAddResumeCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

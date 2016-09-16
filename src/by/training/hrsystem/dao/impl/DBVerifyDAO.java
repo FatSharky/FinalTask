@@ -22,7 +22,7 @@ import by.training.hrsystem.domain.type.PassType;
 
 public class DBVerifyDAO implements VerifyDAO {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DBVerifyDAO.class);
 
 	private static final String SQL_ADD_RESUME_TO_VACANCY = "INSERT INTO verify (id_vacancy, id_resume) VALUES (?, ?);";
 	private static final String SQL_VERIFY_RESUME_PASS = "UPDATE verify SET pass='pass' WHERE id_verify=?;";
@@ -55,8 +55,8 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -82,8 +82,8 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -109,8 +109,8 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -141,17 +141,14 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}
-
 		}
-
 		return verifyList;
-
 	}
 
 	@Override
@@ -176,9 +173,9 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -228,9 +225,9 @@ public class DBVerifyDAO implements VerifyDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}

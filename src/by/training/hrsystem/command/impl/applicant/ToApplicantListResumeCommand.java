@@ -24,7 +24,7 @@ import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class ToApplicantListResumeCommand implements Command {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ToApplicantListResumeCommand.class);
 	private static final int PAGE_NUMBER = 1;
 	private static final int RESUME_PER_PAGE = 4;
 

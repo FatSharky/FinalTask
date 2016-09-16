@@ -25,7 +25,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class UserServiceImpl implements UserService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	@Override
 	public User login(String email, String password)

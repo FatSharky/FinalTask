@@ -19,7 +19,7 @@ import by.training.hrsystem.domain.type.EducationType;
 import by.training.hrsystem.domain.type.PostgraduateType;
 
 public class DBEducationDAO implements EducationDAO {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DBEducationDAO.class);
 
 	private static final String SQL_ADD_EDUCATION = "INSERT INTO education (institution, faculty, department, education, course, grad_year, postgraduate, id_resume) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -63,8 +63,8 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -97,8 +97,8 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -152,8 +152,8 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -182,8 +182,8 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -209,8 +209,8 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -247,9 +247,14 @@ public class DBEducationDAO implements EducationDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
+				if(rs!=null){
+					rs.close();
+				}
+				if(ps!=null){
+					ps.close();
+				}
 				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
-				rs.close();
+				
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}

@@ -22,7 +22,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class VacancyServiceImpl implements VacancyService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(VacancyServiceImpl.class);
 
 	@Override
 	public void addVacancy(String vacancyName, String salary, String currency, String description, String duties,

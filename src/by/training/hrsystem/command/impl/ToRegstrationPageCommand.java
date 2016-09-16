@@ -15,7 +15,7 @@ import by.training.hrsystem.command.util.QueryUtil;
 
 public class ToRegstrationPageCommand implements Command {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ToRegstrationPageCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

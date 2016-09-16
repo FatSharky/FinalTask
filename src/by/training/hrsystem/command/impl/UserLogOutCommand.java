@@ -15,7 +15,7 @@ import by.training.hrsystem.command.constant.PageName;
 
 public class UserLogOutCommand implements Command {
 
-	private static final Logger LOGGER = LogManager.getRootLogger();
+	private static final Logger LOGGER = LogManager.getLogger(UserLogOutCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

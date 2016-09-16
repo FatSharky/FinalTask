@@ -58,8 +58,8 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -116,8 +116,8 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -156,8 +156,8 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -194,9 +194,9 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}
@@ -227,9 +227,10 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
+	
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -268,9 +269,9 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -299,8 +300,8 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);		
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -357,9 +358,9 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);			
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -389,9 +390,9 @@ public class DBUserDAO implements UserDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}

@@ -25,7 +25,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class EducationServiceImpl implements EducationService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(EducationServiceImpl.class);
 
 	@Override
 	public void addEducation(String institution, String faculty, String department, String education, String course,

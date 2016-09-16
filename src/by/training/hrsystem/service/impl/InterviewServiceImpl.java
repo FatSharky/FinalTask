@@ -19,7 +19,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class InterviewServiceImpl implements InterviewService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(InterviewServiceImpl.class);
 
 	@Override
 	public void addInterviewService(String interivewType, String dateInterview, String idVerify)

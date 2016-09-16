@@ -22,7 +22,7 @@ import by.training.hrsystem.domain.type.ActiveType;
 import by.training.hrsystem.domain.type.MilitaryType;
 
 public class DBResumeDAO implements ResumeDAO {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DBResumeDAO.class);
 
 	private static final String SQL_ADD_RESUME = "INSERT INTO resume (name, publish_date, military, email) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME = "UPDATE resume SET name=?, publish_date=?, military=? WHERE id_resume=?;";
@@ -66,8 +66,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -96,8 +96,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -123,8 +123,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -151,8 +151,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -206,8 +206,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -238,8 +238,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -265,8 +265,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -303,9 +303,9 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -349,9 +349,9 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -384,8 +384,8 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -436,9 +436,10 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
+
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -469,9 +470,10 @@ public class DBResumeDAO implements ResumeDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
+
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}

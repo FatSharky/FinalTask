@@ -21,7 +21,7 @@ import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class DeleteWorkPlaceCommand implements Command {
 
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DeleteWorkPlaceCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

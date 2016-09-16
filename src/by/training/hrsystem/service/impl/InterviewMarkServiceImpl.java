@@ -16,7 +16,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class InterviewMarkServiceImpl implements InterviewMarkService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(InterviewServiceImpl.class);
 
 	@Override
 	public void addMark(String skill, String mark, String idInterview) throws ServiceException {

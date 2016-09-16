@@ -21,7 +21,7 @@ import by.training.hrsystem.service.exeption.resume.WrongResumeNameServiceExcept
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class AddResumeCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(AddResumeCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

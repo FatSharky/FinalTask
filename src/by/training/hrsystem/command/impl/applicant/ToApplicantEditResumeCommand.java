@@ -32,7 +32,7 @@ import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class ToApplicantEditResumeCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ToApplicantEditResumeCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

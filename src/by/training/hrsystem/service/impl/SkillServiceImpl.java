@@ -20,7 +20,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class SkillServiceImpl implements SkillService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(SkillServiceImpl.class);
 
 	@Override
 	public void addSkill(String name, String raiting, int idResume)

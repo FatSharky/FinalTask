@@ -19,7 +19,7 @@ import by.training.hrsystem.domain.Verify;
 import by.training.hrsystem.domain.type.InterviewType;
 
 public class DBInterviewDAO implements InterviewDAO {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DBInterviewDAO.class);
 	private static final String SQL_ADD_INTERVIEW = "INSERT INTO interview (type, date_begin, id_verify) VALUES (?, ?, ?);";
 	private static final String SQL_DELETE_INTERVIEW = "DELETE FROM interview WHERE id_interview=?;";
 	private static final String SQL_SELECT_INTERVIEW_BY_ID_VERIFY = "SELECT * FROM interview WHERE id_verify=?;";
@@ -44,8 +44,8 @@ public class DBInterviewDAO implements InterviewDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -71,8 +71,8 @@ public class DBInterviewDAO implements InterviewDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -103,9 +103,9 @@ public class DBInterviewDAO implements InterviewDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}

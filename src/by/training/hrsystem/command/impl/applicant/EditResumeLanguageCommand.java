@@ -22,7 +22,7 @@ import by.training.hrsystem.service.exeption.languagelevel.LanguageNameServiceEx
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class EditResumeLanguageCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(EditResumeLanguageCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

@@ -26,7 +26,7 @@ import by.training.hrsystem.service.exeption.education.WrongInstitutionServiceEx
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class EditEducationCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(EditEducationCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

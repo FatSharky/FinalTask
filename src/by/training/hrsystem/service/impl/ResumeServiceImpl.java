@@ -19,7 +19,7 @@ import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
 
 public class ResumeServiceImpl implements ResumeService {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ResumeServiceImpl.class);
 
 	@Override
 	public void addResume(String name, String military, String email)

@@ -19,7 +19,7 @@ import by.training.hrsystem.domain.InterviewMark;
 import by.training.hrsystem.domain.type.SkillType;
 
 public class DBInterviewMarkDAO implements InterviewMarkDAO {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(DBInterviewMarkDAO.class);
 	private static final String SQL_ADD_INTERVIEW_MARK = "INSERT INTO interview_mark (skill, mark, id_interview) VALUES (?, ?, ?);";
 	private static final String SQL_DELETE_INTERVIEW_MARK = "DELETE FROM interview_mark WHERE id_mark=?;";
 	private static final String SQL_SELECT_MARK_OF_TECHNICAL_INTERVIEW = "SELECT im.id_mark, im.skill, im.mark, im.id_interview FROM interview_mark as im JOIN interview as i "
@@ -46,8 +46,8 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -73,8 +73,8 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -104,9 +104,9 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}
@@ -136,9 +136,9 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
 				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}

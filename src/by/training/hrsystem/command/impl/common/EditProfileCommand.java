@@ -27,7 +27,7 @@ import by.training.hrsystem.service.exeption.user.WrongSurnameServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class EditProfileCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(EditProfileCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)

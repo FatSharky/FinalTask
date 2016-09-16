@@ -31,7 +31,7 @@ import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.factory.ServiceFactory;
 
 public class ShowResumeCommand implements Command {
-	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger = LogManager.getLogger(ShowResumeCommand.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
