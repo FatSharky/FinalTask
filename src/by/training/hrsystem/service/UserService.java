@@ -7,19 +7,16 @@ public interface UserService {
 	User login(String email, String password) throws ServiceException;
 
 	User registration(String email, String password, String copyPass, String surname, String name, String secondName,
-			String skype, String contcactPhone, String birth_date, String role) throws ServiceException;
-
-	User addTranslUser(String email, String lang, String surname, String name, String secondName)
-			throws ServiceException;
+			String skype, String contcactPhone, String birthDate, String role) throws ServiceException;
 
 	void updateProfile(String password, String copyPass, String surname, String name, String secondName, String skype,
-			String contcactPhone, String birth_date, String email) throws ServiceException;
+			String contcactPhone, String birthDate, String email) throws ServiceException;
 
 	User selectUserByEmail(String email) throws ServiceException;
 
-	User selectUserByIdVacancy(int idVacancy) throws ServiceException;
+	User selectUserByIdVacancy(String idVacancy) throws ServiceException;
 
-	User selectUserByIdResume(int idResume) throws ServiceException;
+	User selectUserByIdResume(String idResume) throws ServiceException;
 
 	int countAllApplicants() throws ServiceException;
 

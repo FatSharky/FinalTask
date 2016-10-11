@@ -13,7 +13,6 @@ import by.training.hrsystem.service.ResumeLanguageService;
 import by.training.hrsystem.service.exeption.ServiceException;
 import by.training.hrsystem.service.exeption.languagelevel.LanguageLevelServiceException;
 import by.training.hrsystem.service.exeption.languagelevel.LanguageNameServiceException;
-import by.training.hrsystem.service.exeption.languagelevel.ListLanguageLevelIsEmptyServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
@@ -22,9 +21,9 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	private static final Logger logger = LogManager.getLogger(ResumeLanguageServiceImpl.class);
 
 	@Override
-	public void addLanguage(String name, String skillLevel, int idResume)
+	public void addLanguage(String name, String skillLevel, String idResume)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException {
-		logger.debug("ResumeLanguageImpl: addLanguage() : user's data is valid (name = {}, skillLevel={}, idResume={}",
+		logger.debug("ResumeLanguageImpl.addLanguage() : user's data is valid (name = {}, skillLevel={}, idResume={})",
 				name, skillLevel, idResume);
 
 		if (!Validation.validateStringField(name)) {
@@ -41,9 +40,9 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 			ResumeLanguage language = new ResumeLanguage();
 			language.setName(name);
 			language.setRaiting(Parser.fromStringToLanguageLevel(skillLevel));
-			language.setIdResume(idResume);
+			language.setIdResume(Parser.parseStringtoInt(idResume));
 
-			resumeLangugaeDAO.addResumeLang(language);
+			resumeLangugaeDAO.add(language);
 
 		} catch (DAOException | ParserException e) {
 			throw new ServiceException("Service layer: cannot make a new resumeLanguage", e);
@@ -52,10 +51,10 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public void updateLanguage(String name, String skillLevel, int idLanguage)
+	public void updateLanguage(String name, String skillLevel, String idLanguage)
 			throws LanguageNameServiceException, LanguageLevelServiceException, ServiceException {
 		logger.debug(
-				"ResumeLanguageImpl: updateLanguage() : user's data is valid (name = {}, skillLevel={}, idLanguage={}",
+				"ResumeLanguageImpl.updateLanguage() : user's data is valid (name = {}, skillLevel={}, idLanguage={})",
 				name, skillLevel, idLanguage);
 		if (!Validation.validateStringField(name)) {
 			throw new LanguageNameServiceException("wrong language");
@@ -71,23 +70,23 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 			ResumeLanguage language = new ResumeLanguage();
 			language.setName(name);
 			language.setRaiting(Parser.fromStringToLanguageLevel(skillLevel));
-			language.setIdLanguage(idLanguage);
+			language.setIdLanguage(Parser.parseStringtoInt(idLanguage));
 
-			resumeLangugaeDAO.updateResumeLang(language);
+			resumeLangugaeDAO.update(language);
 
 		} catch (DAOException | ParserException e) {
-			throw new ServiceException("Service layer: cannot update new ResumeLanguage", e);
+			throw new ServiceException("Service layer: cannot update ResumeLanguage", e);
 		}
 
 	}
 
 	@Override
-	public void deleteLanguage(int idLanguage) throws ServiceException {
-		logger.debug("ResumeLanguageImpl: deleteLanguage() : user's data is valid (idLanguage={}", idLanguage);
+	public void deleteLanguage(String idLanguage) throws ServiceException {
+		logger.debug("ResumeLanguageImpl.deleteLanguage() : idLanguage={}", idLanguage);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeLangugaeDAO resumeLangugaeDAO = daoFactory.getResumeLanguageDAO();
-			resumeLangugaeDAO.deleteResumeLang(idLanguage);
+			resumeLangugaeDAO.delete(Parser.parseStringtoInt(idLanguage));
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: can not delete resumeLanguage");
 		}
@@ -95,19 +94,17 @@ public class ResumeLanguageServiceImpl implements ResumeLanguageService {
 	}
 
 	@Override
-	public List<ResumeLanguage> selectLanguageByIdResume(int idResume, String lang)
-			throws ListLanguageLevelIsEmptyServiceException, LanguageLevelServiceException {
-		logger.debug("ResumeLanguageImpl: selectLanguageByIdResume() : user's data is valid (idResume={},lang={}",
-				idResume, lang);
+	public List<ResumeLanguage> selectLanguageByIdResume(String idResume) throws ServiceException {
+		logger.debug("ResumeLanguageImpl.selectLanguageByIdResume() : idResume={}", idResume);
 		List<ResumeLanguage> listResumeLanguage = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			ResumeLangugaeDAO resumeLanguageDAO = daoFactory.getResumeLanguageDAO();
 
-			listResumeLanguage = resumeLanguageDAO.getResumeLangByIdResume(idResume, lang);
+			listResumeLanguage = resumeLanguageDAO.getResumeLangByIdResume(Parser.parseStringtoInt(idResume));
 
 		} catch (DAOException e) {
-			throw new LanguageLevelServiceException("Service laye: can not show list of education");
+			throw new ServiceException("Service layer: can not show list of resume languages");
 		}
 		return listResumeLanguage;
 

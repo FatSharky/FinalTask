@@ -24,12 +24,11 @@ public class VerifyResumeNotPassCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(VerifyResumeNotPassCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("VerifyResumeNotPassCommand.execute() start");
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idVerify = Integer.parseInt(request.getParameter(Attribute.ID_VERIFY));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idVerify = request.getParameter(Attribute.ID_VERIFY);
 		String prevQuery = (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.HR) {

@@ -37,12 +37,12 @@ public class EditTranslVacancyCommand implements Command {
 		String duties = request.getParameter(Attribute.DUTIES);
 		String conditions = request.getParameter(Attribute.CONDITIONS);
 		String lang = request.getParameter(Attribute.TRANSL_EN);
-		int idVacancy = Integer.parseInt(request.getParameter(Attribute.ID_VACANCY));
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
 				VacancyService vacancyService = serviceFactory.getVacancyService();
-				vacancyService.updateTranslVacancy(vacancyName, description, duties, conditions, idVacancy, lang);;
+				vacancyService.updateTranslVacancy(vacancyName, description, duties, conditions, idVacancy, lang);
 				request.getRequestDispatcher(PageName.HR_TO_LIST_VACANCY_PAGE).forward(request, response);
 			} catch (WrongVacancyNameServiceException e) {
 				request.setAttribute(Attribute.ERROR_VACANCY_NAME, true);

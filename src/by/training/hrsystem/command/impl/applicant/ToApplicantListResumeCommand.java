@@ -29,8 +29,7 @@ public class ToApplicantListResumeCommand implements Command {
 	private static final int RESUME_PER_PAGE = 4;
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ToApplicantListResumeCommand.execute() - start");
 
 		HttpSession session = request.getSession(false);
@@ -44,10 +43,8 @@ public class ToApplicantListResumeCommand implements Command {
 			ServiceFactory serviceFactory = ServiceFactory.getInstance();
 			ResumeService resumeService = serviceFactory.getResumeService();
 			User applicantEmail = (User) request.getSession().getAttribute(Attribute.USER);
-			String lang = (session == null) ? null : (String) request.getSession().getAttribute(Attribute.LOCALE);
-
 			try {
-				List<Resume> resumeList = resumeService.selectResumeByEmail(applicantEmail.getEmail(), lang,
+				List<Resume> resumeList = resumeService.selectResumeByEmail(applicantEmail.getEmail(),
 						(pageNumber - 1) * RESUME_PER_PAGE, RESUME_PER_PAGE);
 				request.setAttribute(Attribute.LIST_RESUME_BY_EMAIL, resumeList);
 

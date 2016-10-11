@@ -59,7 +59,7 @@ import by.training.hrsystem.command.impl.humanresources.ToVerifyListCommand;
 import by.training.hrsystem.command.impl.humanresources.VerifyResumeNotPassCommand;
 import by.training.hrsystem.command.impl.humanresources.VerifyResumePassCommand;
 
-public class CommandHelper {
+public final class CommandHelper {
 	private static final CommandHelper INSTANCE = new CommandHelper();
 	private Map<CommandName, Command> commands = new HashMap<>();
 

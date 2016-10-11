@@ -20,7 +20,7 @@
     <![endif]-->
 </head>
 <body>
-	<h1 class="text-center">Something bad goes on</h1>
+	<h1 class="text-center">Something bad goes on server</h1>
 	<h2 class="text-center">
 		Page not found <a class="text-center" href="index.jsp">(To main
 			page)</a>

@@ -38,7 +38,7 @@ public class AddInterviewToApplicantCommand implements Command {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
 				InterviewService interviewService = serviceFactory.getInterviewService();
-				interviewService.addInterviewService(interviewType, dateInterview, idVerify);
+				interviewService.addInterview(interviewType, dateInterview, idVerify);
 				response.sendRedirect(prevQuery);
 			} catch (WrongDateInterviewServiceException e) {
 				request.setAttribute(Attribute.ERROR_DATE_INTERVIEW, true);

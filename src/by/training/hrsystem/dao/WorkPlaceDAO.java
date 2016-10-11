@@ -5,19 +5,32 @@ import java.util.List;
 import by.training.hrsystem.dao.exception.DAOException;
 import by.training.hrsystem.domain.WorkPlace;
 
-public interface WorkPlaceDAO {
-	void addWorkPlace(WorkPlace workplace) throws DAOException;
-
-	void updateWorkPlace(WorkPlace workplace) throws DAOException;
-
-	void deleteWorkPlace(int idWorkplace) throws DAOException;
-
-	void addTranslateWorkPlace(WorkPlace workplace, String lang) throws DAOException;
-
-	void updateTranslateWorkPlace(WorkPlace workplace, String lang) throws DAOException;
-
-	void deleteTranslateWorkPlace(int idWorkplace, String lang) throws DAOException;
-
-	List<WorkPlace> getWorkPlaceByIdResume(int idResume, String lang) throws DAOException;
+/**
+ * Interface {@code WorkPlaceDAO} extends {@link AbstractDAO} and declare method
+ * than appropriate just for {@link by.training.hrsystem.domain.WorkPlace
+ * WorkPlace} objects
+ * 
+ * @author Vladislav
+ *
+ * @see AbstractDAO
+ * @see by.training.hrsystem.domain.WorkPlace
+ */
+public interface WorkPlaceDAO extends AbstractDAO<WorkPlace> {
+	/**
+	 * Method {@code getWorkPlaceByIdResume} allow to find list of work places
+	 * objects by id resume.
+	 * 
+	 * @param idResume
+	 *            key of entity,it will use to find list of work place objects
+	 *            from database.
+	 * @return list of work place objects that belong to the given id resume.
+	 * @throws DAOException
+	 *             if a database access error occurred or error interaction with
+	 *             connection pool while finding list of work place objects.
+	 * 
+	 * @see by.training.hrsystem.dao.exception.DAOException
+	 * @see by.training.hrsystem.domain.WorkPlace
+	 */
+	List<WorkPlace> getWorkPlaceByIdResume(int idResume) throws DAOException;
 
 }

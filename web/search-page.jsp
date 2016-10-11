@@ -20,6 +20,14 @@
 <fmt:message bundle="${locale}" key="locale.searchVacancy"
 	var="searchVacancy" />
 <fmt:message bundle="${locale}" key="locale.search" var="search" />
+<fmt:message bundle="${locale}" key="locale.vacancy.rub" var="rub" />
+<fmt:message bundle="${locale}" key="locale.vacancy.dolar" var="dolar" />
+<fmt:message bundle="${locale}" key="locale.vacancy.wage" var="wage" />
+<fmt:message bundle="${locale}" key="locale.publishDate"
+	var="publishDate" />
+<fmt:message bundle="${locale}" key="locale.searchVacancy"
+	var="searchVacancy" />
+<fmt:message bundle="${locale}" key="locale.search" var="search" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -45,7 +53,8 @@
 
 	<div class="container">
 		<ol class="breadcrumb">
-			<li class="active"><a href="Controller?command=to-index-page">${mainPage}</a></li>
+			<li><a href="Controller?command=to-index-page">${mainPage}</a></li>
+			<li class="active"><a href="#">${search}</a></li>
 		</ol>
 		<form class="form-horizontal" action="Controller" method="post">
 			<input type="hidden" name="command" value="search-vacancy">
@@ -71,7 +80,18 @@
 								<a
 									href="Controller?command=show-vacancy&vacancy-id=${vacancy.idVacancy}">${vacancy.name}</a>
 							</h3>
-							<p>${vacancy.salary}</p>
+							<p>${wage}
+								${vacancy.salary}
+								<c:choose>
+									<c:when test="${vacancy.currency=='RUB'}">
+								${rub}
+							</c:when>
+									<c:when test="${vacancy.currency=='DOLAR'}">
+								${dolar}
+							</c:when>
+								</c:choose>
+							</p>
+							<p>${publishDate}:${vacancy.publishDate}</p>
 						</div>
 					</div>
 				</div>

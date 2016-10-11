@@ -11,7 +11,6 @@ import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.WorkPlace;
 import by.training.hrsystem.service.WorkPlaceService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.education.EducationServiceException;
 import by.training.hrsystem.service.exeption.workplace.ListWorkPlaceIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.workplace.WrongCompanyNameServiceException;
 import by.training.hrsystem.service.exeption.workplace.WrongDateBeginServiceException;
@@ -26,11 +25,11 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	private static final Logger logger = LogManager.getLogger(WorkPlaceServiceImpl.class);
 
 	@Override
-	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idResume)
+	public void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idResume)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException {
 		logger.debug(
-				"WorkPlaceServiceImpl: addWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
+				"WorkPlaceServiceImpl.addWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
 						+ " dateEnd = {}, idResume={})",
 				companyName, position, dateBegin, dateEnd, idResume);
 
@@ -62,9 +61,9 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 			workPlace.setPosition(position);
 			workPlace.setDateBegin(Parser.parseToFullDate(dateBegin));
 			workPlace.setDateEnd(Parser.parseToFullDate(dateEnd));
-			workPlace.setIdResume(idResume);
+			workPlace.setIdResume(Parser.parseStringtoInt(idResume));
 
-			workPlaceDAO.addWorkPlace(workPlace);
+			workPlaceDAO.add(workPlace);
 
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: cannot make a new worplace", e);
@@ -74,11 +73,11 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idWorkPlace)
-			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
-			WrongDateEndServiceException, WrongDateServiceException, ServiceException {
+	public void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd,
+			String idWorkPlace) throws WrongCompanyNameServiceException, WrongPositionServiceException,
+			WrongDateBeginServiceException, WrongDateEndServiceException, WrongDateServiceException, ServiceException {
 		logger.debug(
-				"WorkPlaceServiceImpl: updateWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
+				"WorkPlaceServiceImpl.updateWorkPlace() : user's data is valid (companyName = {}, position={}, dateBigin = {}, "
 						+ " dateEnd = {}, idWorkPlace={})",
 				companyName, position, dateBegin, dateEnd, idWorkPlace);
 
@@ -110,9 +109,9 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 			workPlace.setPosition(position);
 			workPlace.setDateBegin(Parser.parseToFullDate(dateBegin));
 			workPlace.setDateEnd(Parser.parseToFullDate(dateEnd));
-			workPlace.setIdWorkPlace(idWorkPlace);
+			workPlace.setIdWorkPlace(Parser.parseStringtoInt(idWorkPlace));
 
-			workPlaceDAO.updateWorkPlace(workPlace);
+			workPlaceDAO.update(workPlace);
 
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: cannot make a new worplace", e);
@@ -123,32 +122,31 @@ public class WorkPlaceServiceImpl implements WorkPlaceService {
 	}
 
 	@Override
-	public void deleteWorkplace(int idWorPlace) throws EducationServiceException {
+	public void deleteWorkplace(String idWorPlace) throws ServiceException {
 		logger.debug("WorkPlaceServiceImpl: deleteWorkPlace() : user's data is valid (idWorkPlace={})", idWorPlace);
 
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
-			workPlaceDAO.deleteWorkPlace(idWorPlace);
+			workPlaceDAO.delete(Parser.parseStringtoInt(idWorPlace));
 
 		} catch (DAOException e) {
-			throw new EducationServiceException("Service layer: can not delete workPlace");
+			throw new ServiceException("Service layer: can not delete workPlace");
 		}
 
 	}
 
 	@Override
-	public List<WorkPlace> selectWorkPlaceByIdResume(int idResume, String lang)
+	public List<WorkPlace> selectWorkPlaceByIdResume(String idResume)
 			throws ListWorkPlaceIsEmptyServiceException, ServiceException {
-		logger.debug("WorkPlaceServiceImpl: selectWorkPlaceByIdResume() : user's data is valid (idResume={}, lang={})",
-				idResume, lang);
+		logger.debug("WorkPlaceServiceImpl.selectWorkPlaceByIdResume() : user's data is valid (idResume={})", idResume);
 
 		List<WorkPlace> listWorkPlace = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			WorkPlaceDAO workPlaceDAO = daoFactory.getWorkPlaceDAO();
 
-			listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(idResume, lang);
+			listWorkPlace = workPlaceDAO.getWorkPlaceByIdResume(Parser.parseStringtoInt(idResume));
 
 		} catch (DAOException e) {
 			throw new ServiceException("Service laye: can not show list of workPlace");

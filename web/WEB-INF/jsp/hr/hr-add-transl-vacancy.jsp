@@ -8,7 +8,8 @@
 	<fmt:setLocale value="${sessionScope.locale}" />
 </c:if>
 <fmt:setBundle basename="resource.locale" var="locale" />
-<fmt:message bundle="${locale}" key="locale.vacancy.addTranslation" var="add" />
+<fmt:message bundle="${locale}" key="locale.vacancy.addTranslation"
+	var="add" />
 <fmt:message bundle="${locale}"
 	key="locale.applicant.office.header.profile" var="profile" />
 <fmt:message bundle="${locale}" key="locale.hr.office.header.vacancy"
@@ -101,7 +102,8 @@
 		</div>
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">${addTransl} ${requestScope.vacancy.name }</h3>
+				<h3 class="panel-title">${addTransl}
+					${requestScope.vacancy.name}</h3>
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" action="Controller" method="post">

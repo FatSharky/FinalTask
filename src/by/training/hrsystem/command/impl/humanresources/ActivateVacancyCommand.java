@@ -24,13 +24,12 @@ public class ActivateVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ActivateVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws  ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ActivateVacancyCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
-		int vacancyId = Integer.parseInt(request.getParameter(Attribute.ID_VACANCY));
+		String vacancyId = request.getParameter(Attribute.ID_VACANCY);
 		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.HR) {

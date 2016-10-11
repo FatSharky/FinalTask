@@ -1,0 +1,86 @@
+2016-09-15 13:44:45 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=null, role=HR]
+2016-09-15 13:51:18 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 13:51:33 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:04:30 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:04:30 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:05:24 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:05:24 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:15:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:15:23 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:15:23 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:15:40 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Sat Feb 05 00:00:00 MSK 1994, role=null]
+2016-09-15 14:15:41 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:15:41 [DEBUG]  - DBUserDAO.delete() - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:15:41 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:15:41 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:15:41 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Sat Feb 05 00:00:00 MSK 1994, role=null]
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.delete() - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:16:03 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:23:36 [DEBUG]  - DBUserDAO.delete() - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Sat Feb 05 00:00:00 MSK 1994, role=null]
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:23:37 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Sat Feb 05 00:00:00 MSK 1994, role=null]
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.delete() - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:24:15 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.delete() - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Sat Feb 05 00:00:00 MSK 1994, role=null]
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:28:01 [DEBUG]  - DBUserDAO.getUserByEmail - email = vladosiskbypinsk@mail.ru
+2016-09-15 14:35:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:35:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:35:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:35:03 [DEBUG]  - DBUserDAO.addUser() - user = User [email=vladosiskbypinsk@mail.ru, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:36:46 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=test, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=null]
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.getUserByEmail - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.delete() - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.delete() - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.getUserByEmail - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.getUserByEmail - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.delete() - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.getUserByEmail - email = test
+2016-09-15 14:36:47 [DEBUG]  - DBUserDAO.delete() - email = test
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=test2, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=null]
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-09-15 14:52:46 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.updateUser() - user = User [email=test2, password=Vlad214248, surname=SurnameUpdate, name=NameUpdate, secondName=SecondNameUpdate, photo=null, skype=SkypeUpdate, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=null]
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.delete() - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.addUser() - user = User [email=test2, password=Vlad214248, surname=Surname, name=Name, secondName=SecondName, photo=null, skype=Skype, contactPhone=5458748, birthDate=Wed Feb 05 00:00:00 MSK 2014, role=HR]
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.getUserByEmail - email = test2
+2016-10-08 14:58:58 [DEBUG]  - DBUserDAO.delete() - email = test2

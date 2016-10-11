@@ -17,22 +17,28 @@ import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.Skill;
 import by.training.hrsystem.domain.type.SkillType;
 
+/**
+ * Class {@code DBSkillDAO} implements {@link by.training.hrsystem.dao.SkillDAO
+ * SkillDAO} and override all methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.SkillDAO
+ * @see by.training.hrsystem.domain.Skill
+ * 
+ *
+ */
 public class DBSkillDAO implements SkillDAO {
 
 	private static final Logger logger = LogManager.getLogger(DBSkillDAO.class);
 	private static final String SQL_ADD_SKILL = "INSERT INTO skill (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_SKILL = "UPDATE skill SET name=?, raiting=? WHERE id_skill=?;";
 	private static final String SQL_DELETE_SKILL = "DELETE FROM skill WHERE id_skill=?;";
-	private static final String SQL_ADD_TRANSLATION_SKILL = "INSERT INTO tskill (id_skill, lang, name) VALUES (?, ?, ?);";
-	private static final String SQL_UPDATE_TRANSLATION_SKILL = "UPDATE tskill SET name=? WHERE id_skill=? and lang=?;";
-	private static final String SQL_DELETE_TRANSLATION_SKILL = "DELETE FROM tskill WHERE id_skill=? and lang=?;";
 	private static final String SQL_SELECT_SKILL_BY_ID_RESUME = "SELECT * FROM skill WHERE id_resume=?;";
-	private static final String SQL_SELECT_TRANSL_SKILL_BY_ID_RESUME = "SELECT s.id_skill, coalesce(ts.name, s.name) AS name, s.raiting, s.id_resume "
-			+ "FROM skill AS s LEFT JOIN (SELECT * FROM tskill WHERE lang = ?) AS ts USING(id_skill) WHERE id_resume=?;";
 
 	@Override
-	public void addSkill(Skill skill) throws DAOException {
-		logger.debug("DBSkillDAO.addSkill() - skill = {}", skill);
+	public void add(Skill entity) throws DAOException {
+		logger.debug("DBSkillDAO.addSkill() - skill = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -40,9 +46,9 @@ public class DBSkillDAO implements SkillDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_SKILL);
-			ps.setString(1, skill.getName());
-			ps.setString(2, skill.getRaiting().getSkillType());
-			ps.setInt(3, skill.getIdResume());
+			ps.setString(1, entity.getName());
+			ps.setString(2, entity.getRaiting().getSkillType());
+			ps.setInt(3, entity.getIdResume());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create skill: ", e);
@@ -60,8 +66,8 @@ public class DBSkillDAO implements SkillDAO {
 	}
 
 	@Override
-	public void updateSkill(Skill skill) throws DAOException {
-		logger.debug("DBSkillDAO.updateSkill() - skill = {}", skill);
+	public void update(Skill entity) throws DAOException {
+		logger.debug("DBSkillDAO.updateSkill() - skill = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -69,9 +75,9 @@ public class DBSkillDAO implements SkillDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_UPDATE_SKILL);
-			ps.setString(1, skill.getName());
-			ps.setString(2, skill.getRaiting().getSkillType());
-			ps.setInt(3, skill.getIdSkill());
+			ps.setString(1, entity.getName());
+			ps.setString(2, entity.getRaiting().getSkillType());
+			ps.setInt(3, entity.getIdSkill());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild update skill: ", e);
@@ -89,7 +95,8 @@ public class DBSkillDAO implements SkillDAO {
 	}
 
 	@Override
-	public void deleteSkill(int idSkill) throws DAOException {
+	public void delete(int id) throws DAOException {
+		logger.debug("DBSkillDAO.deleteSkill() - idSkill = {}", id);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -97,7 +104,7 @@ public class DBSkillDAO implements SkillDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_SKILL);
-			ps.setInt(1, idSkill);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete skill: ", e);
@@ -107,7 +114,7 @@ public class DBSkillDAO implements SkillDAO {
 			try {
 				ps.close();
 				ConnectionPool.getInstance().closeConnection(conn);
-				
+
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -116,90 +123,7 @@ public class DBSkillDAO implements SkillDAO {
 	}
 
 	@Override
-	public void addTranslateSkill(Skill skill, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_ADD_TRANSLATION_SKILL);
-			ps.setInt(1, skill.getIdResume());
-			ps.setString(2, lang);
-			ps.setString(3, skill.getName());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild create translation for resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void updateTranslateSkill(Skill skill, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_UPDATE_TRANSLATION_SKILL);
-			ps.setString(1, skill.getName());
-			ps.setInt(2, skill.getIdResume());
-			ps.setString(3, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild update translation for resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void deleteTranslateSkill(int idSkill, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_DELETE_TRANSLATION_SKILL);
-			ps.setInt(1, idSkill);
-			ps.setString(2, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild delete translation skill: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public List<Skill> getSkillByIdResume(int idResume, String lang) throws DAOException {
+	public List<Skill> getSkillByIdResume(int idResume) throws DAOException {
 		List<Skill> skill = new ArrayList<Skill>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -208,15 +132,8 @@ public class DBSkillDAO implements SkillDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
-				ps = conn.prepareStatement(SQL_SELECT_SKILL_BY_ID_RESUME);
-				ps.setInt(1, idResume);
-			} else {
-				ps = conn.prepareStatement(SQL_SELECT_TRANSL_SKILL_BY_ID_RESUME);
-				ps.setString(1, lang);
-				ps.setInt(2, idResume);
-
-			}
+			ps = conn.prepareStatement(SQL_SELECT_SKILL_BY_ID_RESUME);
+			ps.setInt(1, idResume);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				skill.add(getSkillFromResultSet(rs));
@@ -227,9 +144,8 @@ public class DBSkillDAO implements SkillDAO {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				rs.close();
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);	
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}
@@ -246,4 +162,5 @@ public class DBSkillDAO implements SkillDAO {
 		return skill;
 
 	}
+
 }

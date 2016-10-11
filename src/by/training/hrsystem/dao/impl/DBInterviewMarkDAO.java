@@ -18,6 +18,18 @@ import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.InterviewMark;
 import by.training.hrsystem.domain.type.SkillType;
 
+/**
+ * Class {@code DBInterviewMarkDAO} implements
+ * {@link by.training.hrsystem.dao.InterviewMarkDAO InterviewMarkDAO} and
+ * override all methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.InterviewMarkDAO
+ * @see by.training.hrsystem.domain.InterviewMark
+ * 
+ *
+ */
 public class DBInterviewMarkDAO implements InterviewMarkDAO {
 	private static final Logger logger = LogManager.getLogger(DBInterviewMarkDAO.class);
 	private static final String SQL_ADD_INTERVIEW_MARK = "INSERT INTO interview_mark (skill, mark, id_interview) VALUES (?, ?, ?);";
@@ -28,7 +40,8 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			+ "ON im.id_interview=i.id_interview WHERE i.id_verify=? and i.type='preliminary';";
 
 	@Override
-	public void addMark(InterviewMark mark) throws DAOException {
+	public void add(InterviewMark entity) throws DAOException {
+		logger.debug("DBInterviewMarkDAO.addMark() - entity = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -36,9 +49,9 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_INTERVIEW_MARK);
-			ps.setString(1, mark.getSkill());
-			ps.setString(2, mark.getMark().getSkillType());
-			ps.setInt(3, mark.getIdInterview());
+			ps.setString(1, entity.getSkill());
+			ps.setString(2, entity.getMark().getSkillType());
+			ps.setInt(3, entity.getIdInterview());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create Interview mark: ", e);
@@ -56,8 +69,13 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 	}
 
 	@Override
-	public void deleteMark(int idMark) throws DAOException {
-		logger.debug("DBInterviewMarkDAO.deleteMark() - idMark = {}", idMark);
+	public void update(InterviewMark entity) throws DAOException {
+
+	}
+
+	@Override
+	public void delete(int id) throws DAOException {
+		logger.debug("DBInterviewMarkDAO.deleteMark() - idMark = {}", id);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -65,7 +83,7 @@ public class DBInterviewMarkDAO implements InterviewMarkDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_INTERVIEW_MARK);
-			ps.setInt(1, idMark);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete mark: ", e);

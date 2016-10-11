@@ -6,15 +6,15 @@ import by.training.hrsystem.domain.Verify;
 import by.training.hrsystem.service.exeption.ServiceException;
 
 public interface VerifyService {
-	void addResumeToVacancy(int idVacancy, int idResume) throws ServiceException;
+	void addResumeToVacancy(String idVacancy, String idResume) throws ServiceException;
 
-	List<Verify> verifyList(int idVacancy) throws ServiceException;
+	List<Verify> verifyList(String idVacancy) throws ServiceException;
 
-	List<Verify> passVerifyList(int idVacancy) throws ServiceException;
+	List<Verify> passVerifyList(String idVacancy) throws ServiceException;
 
-	Verify selectVerifyById(int idVerify) throws ServiceException;
+	Verify selectVerifyById(String idVerify) throws ServiceException;
 
-	void verifyResumePass(int idVerify) throws ServiceException;
+	void verifyResumePass(String idVerify) throws ServiceException;
 
-	void verifyResumeNotPass(int idVerify) throws ServiceException;
+	void verifyResumeNotPass(String idVerify) throws ServiceException;
 }

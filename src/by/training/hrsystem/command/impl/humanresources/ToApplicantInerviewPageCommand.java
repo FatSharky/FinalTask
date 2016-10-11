@@ -30,12 +30,11 @@ public class ToApplicantInerviewPageCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ToApplicantInerviewPageCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ToApplicantInerviewPageCommand .execute() start");
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idVerify = Integer.valueOf(request.getParameter(Attribute.ID_VERIFY));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idVerify = request.getParameter(Attribute.ID_VERIFY);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -57,7 +56,6 @@ public class ToApplicantInerviewPageCommand implements Command {
 				request.getRequestDispatcher(PageName.ERROR_PAGE).forward(request, response);
 				logger.error("something goes wrong!");
 			}
-
 		} else {
 			request.getRequestDispatcher(PageName.ERROR_TIME_OUT_PAGE).forward(request, response);
 			logger.error("user session is over");

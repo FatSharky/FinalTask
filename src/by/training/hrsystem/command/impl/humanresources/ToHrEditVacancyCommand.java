@@ -26,12 +26,11 @@ public class ToHrEditVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ToHrEditVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ToEditVacancyCommand.execute() start");
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();

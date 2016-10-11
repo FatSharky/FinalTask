@@ -30,13 +30,12 @@ public class AddEducationCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(AddEducationCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws  ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("AddEducationCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idResume = Integer.parseInt(request.getParameter(Attribute.ID_RESUME));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
 		String institution = request.getParameter(Attribute.INSTITUTION);
 		String faculty = request.getParameter(Attribute.FACULTY);
 		String department = request.getParameter(Attribute.DEPARTMENT);

@@ -24,14 +24,13 @@ public class DeleteWorkPlaceCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteWorkPlaceCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DelteWorkplaceCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idWorkplace = Integer.parseInt(request.getParameter(Attribute.ID_WORKPLACE));
-		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idWorkplace = request.getParameter(Attribute.ID_WORKPLACE);
+		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {

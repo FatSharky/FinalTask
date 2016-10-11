@@ -15,6 +15,17 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Class {@code DBUserDAO} implements {@link by.training.hrsystem.dao.UserDAO
+ * UserDAO} and override all methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.UserDAO
+ * @see by.training.hrsystem.domain.User
+ * 
+ *
+ */
 public class DBUserDAO implements UserDAO {
 
 	private static final Logger logger = LogManager.getRootLogger();
@@ -22,7 +33,6 @@ public class DBUserDAO implements UserDAO {
 			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE_USER = "UPDATE user SET password=md5(?), surname=?, name=?, secondname=?, skype=?, contact_phone=?, birth_date=? WHERE email=?;";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
-	private static final String SQL_ADD_TRANSL_USER = "INSERT INTO tuser (email, lang, surname, name, secondname) VALUES (?, ?, ?, ?, ?);";
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
 	private static final String SQL_DELETE_USER = "DELETE FROM user WHERE email=?;";
 	private static final String SQL_SELECT_USER_BY_ID_VACANCY = "SELECT user.email, user.surname, user.name, user.secondname, user.birth_date, user.skype,user.contact_phone,user.photo "
@@ -32,8 +42,8 @@ public class DBUserDAO implements UserDAO {
 	private static final String SQL_SELECT_COUNT_APPLICANTS = "SELECT COUNT(email) FROM user WHERE role='applicant';";
 
 	@Override
-	public void addUser(User user) throws DAOException {
-		logger.debug("DBUserDAO.addUser() - user = {}", user);
+	public void add(User entity) throws DAOException {
+		logger.debug("DBUserDAO.addUser() - user = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -41,16 +51,16 @@ public class DBUserDAO implements UserDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_USER);
-			ps.setString(1, user.getEmail());
-			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getSurname());
-			ps.setString(4, user.getName());
-			ps.setString(5, user.getSecondName());
-			ps.setString(6, user.getPhoto());
-			ps.setString(7, user.getSkype());
-			ps.setInt(8, user.getContactPhone());
-			ps.setDate(9, new Date(user.getBirthDate().getTime()));
-			ps.setString(10, user.getRole().getRole());
+			ps.setString(1, entity.getEmail());
+			ps.setString(2, entity.getPassword());
+			ps.setString(3, entity.getSurname());
+			ps.setString(4, entity.getName());
+			ps.setString(5, entity.getSecondName());
+			ps.setString(6, entity.getPhoto());
+			ps.setString(7, entity.getSkype());
+			ps.setInt(8, entity.getContactPhone());
+			ps.setDate(9, new Date(entity.getBirthDate().getTime()));
+			ps.setString(10, entity.getRole().getRole());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild insert new User: ", e);
@@ -68,33 +78,41 @@ public class DBUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void addTranslateUser(User user, String lang) throws DAOException {
-		logger.debug("DBUserDAO.addTranslateUser() - user = {}, lang={}", user, lang);
+	public void update(User entity) throws DAOException {
+		logger.debug("DBUserDAO.updateUser() - user = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_ADD_TRANSL_USER);
-			ps.setString(1, user.getEmail());
-			ps.setString(2, lang);
-			ps.setString(3, user.getSurname());
-			ps.setString(4, user.getName());
-			ps.setString(5, user.getSecondName());
+			ps = conn.prepareStatement(SQL_UPDATE_USER);
+			ps.setString(1, entity.getPassword());
+			ps.setString(2, entity.getSurname());
+			ps.setString(3, entity.getName());
+			ps.setString(4, entity.getSecondName());
+			ps.setString(5, entity.getSkype());
+			ps.setInt(6, entity.getContactPhone());
+			ps.setDate(7, new Date(entity.getBirthDate().getTime()));
+			ps.setString(8, entity.getEmail());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new DAOException("Faild insert new User: ", e);
+			throw new DAOException("Faild update new User: ", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection pool problems!", e);
 		} finally {
 			try {
-				ConnectionPool.getInstance().closeConnection(conn);
 				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
 		}
+
+	}
+
+	@Override
+	public void delete(int id) throws DAOException {
 
 	}
 
@@ -122,52 +140,6 @@ public class DBUserDAO implements UserDAO {
 				logger.error("Faild to close connection or ps", e);
 			}
 		}
-
-	}
-
-	@Override
-	public void deleteTranslateUser(String email, String lang) throws DAOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateUser(User user) throws DAOException {
-		logger.debug("DBUserDAO.updateUser() - user = {}", user);
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_UPDATE_USER);
-			ps.setString(1, user.getPassword());
-			ps.setString(2, user.getSurname());
-			ps.setString(3, user.getName());
-			ps.setString(4, user.getSecondName());
-			ps.setString(5, user.getSkype());
-			ps.setInt(6, user.getContactPhone());
-			ps.setDate(7, new Date(user.getBirthDate().getTime()));
-			ps.setString(8, user.getEmail());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild update new User: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void updateTranslateUser(User user, String lang) throws DAOException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -230,7 +202,7 @@ public class DBUserDAO implements UserDAO {
 				rs.close();
 				ps.close();
 				ConnectionPool.getInstance().closeConnection(conn);
-	
+
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -301,7 +273,7 @@ public class DBUserDAO implements UserDAO {
 		} finally {
 			try {
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);		
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -360,7 +332,7 @@ public class DBUserDAO implements UserDAO {
 			try {
 				rs.close();
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);			
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -398,4 +370,5 @@ public class DBUserDAO implements UserDAO {
 			}
 		}
 	}
+
 }

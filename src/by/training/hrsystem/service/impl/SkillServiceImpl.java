@@ -11,8 +11,6 @@ import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Skill;
 import by.training.hrsystem.service.SkillService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.skill.ListSkillIsEmptyServiceException;
-import by.training.hrsystem.service.exeption.skill.SkillServiceException;
 import by.training.hrsystem.service.exeption.skill.WrongRaitingServiceException;
 import by.training.hrsystem.service.exeption.skill.WrongSkillNameServiceException;
 import by.training.hrsystem.service.parser.Parser;
@@ -23,10 +21,10 @@ public class SkillServiceImpl implements SkillService {
 	private static final Logger logger = LogManager.getLogger(SkillServiceImpl.class);
 
 	@Override
-	public void addSkill(String name, String raiting, int idResume)
+	public void addSkill(String name, String raiting, String idResume)
 			throws WrongSkillNameServiceException, WrongRaitingServiceException, ServiceException {
 
-		logger.debug("SkillServiceImpl: addSkill() : user's data is valid (name = {}, raiting={}, idResume={}", name,
+		logger.debug("SkillServiceImpl.addSkill() : user's data is valid (name = {}, raiting={}, idResume={})", name,
 				raiting, idResume);
 
 		if (!Validation.validateStringField(name)) {
@@ -43,9 +41,9 @@ public class SkillServiceImpl implements SkillService {
 			Skill skill = new Skill();
 			skill.setName(name);
 			skill.setRaiting(Parser.fromStringToSkill(raiting));
-			skill.setIdResume(idResume);
+			skill.setIdResume(Parser.parseStringtoInt(idResume));
 
-			skillDAO.addSkill(skill);
+			skillDAO.add(skill);
 
 		} catch (DAOException | ParserException e) {
 			throw new ServiceException("Service layer: cannot make a new skill", e);
@@ -54,60 +52,54 @@ public class SkillServiceImpl implements SkillService {
 	}
 
 	@Override
-	public void updateSkill(String name, String raiting, int idSkill)
+	public void updateSkill(String name, String raiting, String idSkill)
 			throws WrongSkillNameServiceException, WrongRaitingServiceException, ServiceException {
 		if (!Validation.validateStringField(name)) {
-			logger.debug("SkillServiceImpl: updateSkill() : user's data is valid (name = {}, raiting={}, idSkill={}",
+			logger.debug("SkillServiceImpl.updateSkill() : user's data is valid (name = {}, raiting={}, idSkill={})",
 					name, raiting, idSkill);
 			throw new WrongSkillNameServiceException("wrong skillName");
 		}
 		if (raiting == null) {
 			throw new WrongRaitingServiceException("wrong raiting");
 		}
-
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			SkillDAO skillDAO = daoFactory.getSkillDAO();
-
 			Skill skill = new Skill();
 			skill.setName(name);
 			skill.setRaiting(Parser.fromStringToSkill(raiting));
-			skill.setIdSkill(idSkill);
-			skillDAO.updateSkill(skill);
-
+			skill.setIdSkill(Parser.parseStringtoInt(idSkill));
+			skillDAO.update(skill);
 		} catch (DAOException | ParserException e) {
-			throw new ServiceException("Service layer: cannot make a new skill", e);
+			throw new ServiceException("Service layer: cannot update skill", e);
 		}
 
 	}
 
 	@Override
-	public void deleteSkill(int idSkill) throws ServiceException {
-		logger.debug("SkillServiceImpl: deleteSkill() : user's data is valid (idSkill={}", idSkill);
+	public void deleteSkill(String idSkill) throws ServiceException {
+		logger.debug("SkillServiceImpl.deleteSkill() : idSkill={}", idSkill);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			SkillDAO skillDAO = daoFactory.getSkillDAO();
-			skillDAO.deleteSkill(idSkill);
+			skillDAO.delete(Parser.parseStringtoInt(idSkill));
 		} catch (DAOException e) {
-			throw new ServiceException("Service layer: can not delete education");
+			throw new ServiceException("Service layer: can not delete skill");
 		}
 
 	}
 
 	@Override
-	public List<Skill> selectSkillByIdResume(int idResume, String lang)
-			throws ListSkillIsEmptyServiceException, SkillServiceException {
-		logger.debug("SkillServiceImpl: selectSkillByIdResume(): user's data is valid (idResume={}, lang={}", idResume,
-				lang);
+	public List<Skill> selectSkillByIdResume(String idResume) throws ServiceException {
+		logger.debug("SkillServiceImpl.selectSkillByIdResume(): idResume={}", idResume);
 		List<Skill> listSkill = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			SkillDAO skillDAO = daoFactory.getSkillDAO();
 
-			listSkill = skillDAO.getSkillByIdResume(idResume, lang);
-
+			listSkill = skillDAO.getSkillByIdResume(Parser.parseStringtoInt(idResume));
 		} catch (DAOException e) {
-			throw new SkillServiceException("Service laye: can not show list of education");
+			throw new ServiceException("Service layer: can not show list of skills");
 		}
 		return listSkill;
 	}

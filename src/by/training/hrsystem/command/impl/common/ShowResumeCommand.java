@@ -34,12 +34,10 @@ public class ShowResumeCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowResumeCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ShowResumeCommand:execute() start");
 		User user = (User) request.getSession().getAttribute(Attribute.USER);
-		int idResume = Integer.valueOf(request.getParameter(Attribute.ID_RESUME));
-		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
 		if (user != null) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -50,12 +48,12 @@ public class ShowResumeCommand implements Command {
 				ResumeLanguageService resumeLanguageService = serviceFactory.getResumeLanguageService();
 				WorkPlaceService workPlaceService = serviceFactory.getWorkPlaceService();
 
-				Resume resume = resumeService.selectResumeById(idResume, lang);
+				Resume resume = resumeService.selectResumeById(idResume);
 				User applicant = userService.selectUserByIdResume(idResume);
-				List<Education> education = educationService.selectEducationbyIdResume(idResume, lang);
-				List<Skill> skills = skillService.selectSkillByIdResume(idResume, lang);
-				List<ResumeLanguage> resumeLanguage = resumeLanguageService.selectLanguageByIdResume(idResume, lang);
-				List<WorkPlace> workPlace = workPlaceService.selectWorkPlaceByIdResume(idResume, lang);
+				List<Education> education = educationService.selectEducationbyIdResume(idResume);
+				List<Skill> skills = skillService.selectSkillByIdResume(idResume);
+				List<ResumeLanguage> resumeLanguage = resumeLanguageService.selectLanguageByIdResume(idResume);
+				List<WorkPlace> workPlace = workPlaceService.selectWorkPlaceByIdResume(idResume);
 
 				request.setAttribute(Attribute.RESUME, resume);
 				request.setAttribute(Attribute.APPLICANT, applicant);

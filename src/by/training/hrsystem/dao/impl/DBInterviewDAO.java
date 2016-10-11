@@ -18,6 +18,18 @@ import by.training.hrsystem.domain.Interview;
 import by.training.hrsystem.domain.Verify;
 import by.training.hrsystem.domain.type.InterviewType;
 
+/**
+ * Class {@code DBInterviewDAO} implements
+ * {@link by.training.hrsystem.dao.InterviewDAO InterviewDAO} and override all
+ * methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.InterviewDAO
+ * @see by.training.hrsystem.domain.Interview
+ * 
+ *
+ */
 public class DBInterviewDAO implements InterviewDAO {
 	private static final Logger logger = LogManager.getLogger(DBInterviewDAO.class);
 	private static final String SQL_ADD_INTERVIEW = "INSERT INTO interview (type, date_begin, id_verify) VALUES (?, ?, ?);";
@@ -25,8 +37,8 @@ public class DBInterviewDAO implements InterviewDAO {
 	private static final String SQL_SELECT_INTERVIEW_BY_ID_VERIFY = "SELECT * FROM interview WHERE id_verify=?;";
 
 	@Override
-	public void addInterview(Interview interview) throws DAOException {
-		logger.debug("DBInterviewDAO.addInterview() - interview = {}", interview);
+	public void add(Interview entity) throws DAOException {
+		logger.debug("DBInterviewDAO.addInterview() - interview = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -34,9 +46,9 @@ public class DBInterviewDAO implements InterviewDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_INTERVIEW);
-			ps.setString(1, interview.getInterviewType().getInterviewType());
-			ps.setDate(2, new java.sql.Date(interview.getDateBegin().getTime()));
-			ps.setInt(3, interview.getVerify().getIdVerify());
+			ps.setString(1, entity.getInterviewType().getInterviewType());
+			ps.setDate(2, new java.sql.Date(entity.getDateBegin().getTime()));
+			ps.setInt(3, entity.getVerify().getIdVerify());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create interview: ", e);
@@ -54,8 +66,12 @@ public class DBInterviewDAO implements InterviewDAO {
 	}
 
 	@Override
-	public void deleteInterview(int idInterview) throws DAOException {
-		logger.debug("DBInterviewDAO.deleteInterview() - idinterview = {}", idInterview);
+	public void update(Interview entity) throws DAOException {
+	}
+
+	@Override
+	public void delete(int id) throws DAOException {
+		logger.debug("DBInterviewDAO.deleteInterview() - idinterview = {}", id);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -63,7 +79,7 @@ public class DBInterviewDAO implements InterviewDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_INTERVIEW);
-			ps.setInt(1, idInterview);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete interview: ", e);
@@ -126,4 +142,5 @@ public class DBInterviewDAO implements InterviewDAO {
 		return interview;
 
 	}
+
 }

@@ -45,9 +45,6 @@
 			<a class="navbar-brand" href="Controller?command=to-index-page">${siteName}</a>
 		</div>
 		<div class="collapse navbar-collapse" id="responsive-menu">
-			<ul class="nav navbar-nav visible-lg visible-md">
-				<li><a href="#">${aboutUs}</a></li>
-			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<c:if test="${sessionScope.user!=null}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

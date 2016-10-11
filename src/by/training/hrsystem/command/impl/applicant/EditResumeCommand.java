@@ -25,16 +25,15 @@ public class EditResumeCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(EditResumeCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("editResumeCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idResume = Integer.parseInt(request.getParameter(Attribute.ID_RESUME));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
 		String resumeName = request.getParameter(Attribute.RESUME_NAME);
 		String resumeMilitary = request.getParameter(Attribute.RESUME_MILITARY);
-		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
+		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {

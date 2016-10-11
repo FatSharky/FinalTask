@@ -35,7 +35,7 @@ public class DBUserDAOTest {
 	@Test
 	public void testRegistrateUser() throws DAOException, ParseException {
 		User user = createUser();
-		userDAO.addUser(user);
+		userDAO.add(user);
 
 		User actualUser = userDAO.getUserByEmail(user.getEmail());
 		Assert.assertEquals(user.getEmail(), actualUser.getEmail());
@@ -52,7 +52,7 @@ public class DBUserDAOTest {
 	@Test
 	public void testUpdateUser() throws ParseException, DAOException {
 		User user = createUser();
-		userDAO.addUser(user);
+		userDAO.add(user);
 
 		String value = "2014-02-05";
 		SimpleDateFormat originForm = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,7 +68,7 @@ public class DBUserDAOTest {
 		updateUser.setBirthDate(date);
 		updateUser.setEmail("test2");
 
-		userDAO.updateUser(updateUser);
+		userDAO.update(updateUser);
 		User actualUser = userDAO.getUserByEmail(updateUser.getEmail());
 		Assert.assertEquals(updateUser.getEmail(), actualUser.getEmail());
 		Assert.assertEquals(updateUser.getSurname(), actualUser.getSurname());
@@ -84,7 +84,7 @@ public class DBUserDAOTest {
 	@Test
 	public void testGetUserByEmail() throws DAOException, ParseException {
 		User user = createUser();
-		userDAO.addUser(user);
+		userDAO.add(user);
 		User actualUser = userDAO.getUserByEmail(user.getEmail());
 		Assert.assertEquals(user.getEmail(), actualUser.getEmail());
 		userDAO.deleteUser(user.getEmail());
@@ -93,7 +93,7 @@ public class DBUserDAOTest {
 	@Test
 	public void testDeleteUser() throws DAOException, ParseException {
 		User user = createUser();
-		userDAO.addUser(user);
+		userDAO.add(user);
 		userDAO.deleteUser(user.getEmail());
 		Assert.assertNull(userDAO.getUserByEmail(user.getEmail()));
 	}

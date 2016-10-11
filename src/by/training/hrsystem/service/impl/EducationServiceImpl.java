@@ -11,8 +11,6 @@ import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.Education;
 import by.training.hrsystem.service.EducationService;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.education.EducationServiceException;
-import by.training.hrsystem.service.exeption.education.ListEducationIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.education.WrongCourseServiceException;
 import by.training.hrsystem.service.exeption.education.WrongDepartmentServiceException;
 import by.training.hrsystem.service.exeption.education.WrongEducationServiceException;
@@ -29,12 +27,12 @@ public class EducationServiceImpl implements EducationService {
 
 	@Override
 	public void addEducation(String institution, String faculty, String department, String education, String course,
-			String gradYear, String postgraduate, int idResume)
+			String gradYear, String postgraduate, String idResume)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
-			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
+			WrongPostGraduateServiceException, ServiceException {
 		logger.debug(
-				"EducationServiceImpl: addEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
+				"EducationServiceImpl.addEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
 						+ "education = {}, course={}, gradYear={}, postGraduate={}, idResume={})",
 				institution, faculty, department, education, course, gradYear, postgraduate, idResume);
 		if (!Validation.validateSmallestMultyTextField(institution)) {
@@ -59,7 +57,6 @@ public class EducationServiceImpl implements EducationService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
-
 			Education newEducation = new Education();
 			newEducation.setInstitution(institution);
 			newEducation.setFaculty(faculty);
@@ -67,24 +64,21 @@ public class EducationServiceImpl implements EducationService {
 			newEducation.setEducation(Parser.fromStringToEducType(education));
 			newEducation.setGradYear(Parser.parseStringtoInt(gradYear));
 			newEducation.setPostGraduate(Parser.fromStringToPostGradType(postgraduate));
-			newEducation.setIdResume(idResume);
-			educationDAO.addEducation(newEducation);
-
-		} catch (DAOException e) {
-			throw new EducationServiceException("Service layer: cannot make a new registrarion", e);
-		} catch (ParserException e) {
-			throw new ServiceException("Service layer: can not parse date");
+			newEducation.setIdResume(Parser.parseStringtoInt(idResume));
+			educationDAO.add(newEducation);
+		} catch (DAOException | ParserException e) {
+			throw new ServiceException("Service layer: cannot create new education");
 		}
 	}
 
 	@Override
 	public void updateEducation(String institution, String faculty, String department, String education, String course,
-			String gradYear, String postgraduate, int idEducation)
+			String gradYear, String postgraduate, String idEducation)
 			throws WrongInstitutionServiceException, WrongFacultyServiceException, WrongDepartmentServiceException,
 			WrongEducationServiceException, WrongCourseServiceException, WrongGradYearServiceException,
-			WrongPostGraduateServiceException, EducationServiceException, ServiceException {
+			WrongPostGraduateServiceException, ServiceException {
 		logger.debug(
-				"EducationServiceImpl: updateEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
+				"EducationServiceImpl.updateEducation() : user's data is valid (institution = {}, faculty={}, department = {}, "
 						+ "education = {}, course={}, gradYear={}, postGraduate={}, idEducation={})",
 				institution, faculty, department, education, course, gradYear, postgraduate, idEducation);
 		if (!Validation.validateStringField(institution)) {
@@ -99,12 +93,6 @@ public class EducationServiceImpl implements EducationService {
 		if (education == null) {
 			throw new WrongEducationServiceException("Wrong education");
 		}
-		/*
-		 * if (!Validation.validateCourseField(course)) { throw new
-		 * WrongCourseServiceException("Wong course"); } if
-		 * (!Validation.validateShortDateField(gradYear)) { throw new
-		 * WrongGradYearServiceException("Wrong gradeYear"); }
-		 */
 		if (postgraduate == null) {
 			throw new WrongPostGraduateServiceException("WrongPostGraduate");
 		}
@@ -112,52 +100,44 @@ public class EducationServiceImpl implements EducationService {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
-
 			Education updateEducation = new Education();
 			updateEducation.setInstitution(institution);
 			updateEducation.setFaculty(faculty);
 			updateEducation.setDepartment(department);
 			updateEducation.setEducation(Parser.fromStringToEducType(education));
-			// updateEducation.setCourse(Parser.parseStringtoInt(course));
 			updateEducation.setGradYear(Parser.parseStringtoInt(gradYear));
 			updateEducation.setPostGraduate(Parser.fromStringToPostGradType(postgraduate));
-			updateEducation.setIdEducation(idEducation);
-			educationDAO.updateEducation(updateEducation);
-
-		} catch (DAOException e) {
-			throw new EducationServiceException("Service layer: cannot update education", e);
-		} catch (ParserException e) {
-			throw new ServiceException("Service layer: can not parse date");
+			updateEducation.setIdEducation(Parser.parseStringtoInt(idEducation));
+			educationDAO.update(updateEducation);
+		} catch (DAOException | ParserException e) {
+			throw new ServiceException("Service layer: cannot update education");
 		}
 	}
 
 	@Override
-	public void deleteEducation(int idEducation) throws EducationServiceException {
-		logger.debug("EducationServiceImpl: deleteEducation() : user's data is valid (idEducation = {}", idEducation);
+	public void deleteEducation(String idEducation) throws ServiceException {
+		logger.debug("EducationServiceImpl.deleteEducation() : user's data is valid (idEducation = {})", idEducation);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
-			educationDAO.deleteEducation(idEducation);
+			educationDAO.delete(Parser.parseStringtoInt(idEducation));
 		} catch (DAOException e) {
-			throw new EducationServiceException("Service layer: can not delete education");
+			throw new ServiceException("Service layer: can not delete education");
 		}
 
 	}
 
 	@Override
-	public List<Education> selectEducationbyIdResume(int idResume, String lang)
-			throws ListEducationIsEmptyServiceException, EducationServiceException {
-		logger.debug("EducationServiceImpl: selectEducationbyIdResume() : user's data is valid (idResume = {}, lang={}",
-				idResume, lang);
+	public List<Education> selectEducationbyIdResume(String idResume) throws ServiceException {
+		logger.debug("EducationServiceImpl.selectEducationbyIdResume() : user's data is valid (idResume = {})",
+				idResume);
 		List<Education> listEducation = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			EducationDAO educationDAO = daoFactory.getEducationDAO();
-
-			listEducation = educationDAO.getEducationByIdResume(idResume, lang);
-
+			listEducation = educationDAO.getEducationByIdResume(Parser.parseStringtoInt(idResume));
 		} catch (DAOException e) {
-			throw new EducationServiceException("Service laye: can not show list of education");
+			throw new ServiceException("Service laye: can not show list of education");
 		}
 		return listEducation;
 	}

@@ -29,7 +29,7 @@ public class VerifyResumePassCommand implements Command {
 
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
-		int idVerify = Integer.parseInt(request.getParameter(Attribute.ID_VERIFY));
+		String idVerify = request.getParameter(Attribute.ID_VERIFY);
 		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.HR) {

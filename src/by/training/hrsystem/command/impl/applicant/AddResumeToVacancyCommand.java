@@ -23,15 +23,14 @@ public class AddResumeToVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(AddResumeToVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("AddResumeToVcacancyCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
 		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
-		int idVacancy = Integer.parseInt(request.getParameter(Attribute.ID_VACANCY));
-		int idResume = Integer.parseInt(request.getParameter(Attribute.ID_RESUME));
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
 
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {

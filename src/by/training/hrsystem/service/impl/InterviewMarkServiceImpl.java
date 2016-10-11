@@ -11,6 +11,7 @@ import by.training.hrsystem.dao.factory.DAOFactory;
 import by.training.hrsystem.domain.InterviewMark;
 import by.training.hrsystem.service.InterviewMarkService;
 import by.training.hrsystem.service.exeption.ServiceException;
+import by.training.hrsystem.service.exeption.interviewmark.WrongMarkSkillServiceException;
 import by.training.hrsystem.service.parser.Parser;
 import by.training.hrsystem.service.parser.exception.ParserException;
 import by.training.hrsystem.service.validation.Validation;
@@ -19,13 +20,14 @@ public class InterviewMarkServiceImpl implements InterviewMarkService {
 	private static final Logger logger = LogManager.getLogger(InterviewServiceImpl.class);
 
 	@Override
-	public void addMark(String skill, String mark, String idInterview) throws ServiceException {
+	public void addMark(String skill, String mark, String idInterview)
+			throws WrongMarkSkillServiceException, ServiceException {
 
-		logger.debug("InterviewMarkServiceImpl.addMark() user's data is valid skill = {}, mark={}, idInterview={}",
+		logger.debug("InterviewMarkServiceImpl.addMark() : user's data is valid (skill = {}, mark={}, idInterview={})",
 				skill, mark, idInterview);
 
 		if (!Validation.validateSmallMultyTextField(skill)) {
-			throw new ServiceException("wrong skill name");
+			throw new WrongMarkSkillServiceException("wrong skill name");
 		}
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
@@ -34,48 +36,48 @@ public class InterviewMarkServiceImpl implements InterviewMarkService {
 			interviewMark.setSkill(skill);
 			interviewMark.setMark(Parser.fromStringToSkill(mark));
 			interviewMark.setIdInterview(Parser.parseStringtoInt(idInterview));
-			interviewMarkDAO.addMark(interviewMark);
+			interviewMarkDAO.add(interviewMark);
 		} catch (DAOException | ParserException e) {
-			throw new ServiceException("Service layer: cannot make a new skill", e);
+			throw new ServiceException("Service layer: cannot make a new interview mark", e);
 		}
 
 	}
 
 	@Override
-	public List<InterviewMark> selectMarkOfTechicalInterview(int idVerify) throws ServiceException {
-		logger.debug("InterviewMarkServiceImpl.selectMarkOfTechicalInterview() : idVerify", idVerify);
+	public List<InterviewMark> selectMarkOfTechicalInterview(String idVerify) throws ServiceException {
+		logger.debug("InterviewMarkServiceImpl.selectMarkOfTechicalInterview() : idVerify={}", idVerify);
 		List<InterviewMark> listInterviewMark = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			InterviewMarkDAO interviewMarkDAO = daoFactory.getInterviewMarkDAO();
-			listInterviewMark = interviewMarkDAO.selectMarkOfTechicalInterview(idVerify);
+			listInterviewMark = interviewMarkDAO.selectMarkOfTechicalInterview(Parser.parseStringtoInt(idVerify));
 		} catch (DAOException e) {
-			throw new ServiceException("Service layer: can not show list of marks");
+			throw new ServiceException("Service layer: can not show list of interview marks");
 		}
 		return listInterviewMark;
 	}
 
 	@Override
-	public List<InterviewMark> selectMarkOfPreliminaryInterview(int idVerify) throws ServiceException {
-		logger.debug("InterviewMarkServiceImpl.selectMarkOfPreliminaryInterview : idVerify", idVerify);
+	public List<InterviewMark> selectMarkOfPreliminaryInterview(String idVerify) throws ServiceException {
+		logger.debug("InterviewMarkServiceImpl.selectMarkOfPreliminaryInterview : idVerify={}", idVerify);
 		List<InterviewMark> listInterviewMark = null;
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			InterviewMarkDAO interviewMarkDAO = daoFactory.getInterviewMarkDAO();
-			listInterviewMark = interviewMarkDAO.selectMarkOfPreliminaryInterview(idVerify);
+			listInterviewMark = interviewMarkDAO.selectMarkOfPreliminaryInterview(Parser.parseStringtoInt(idVerify));
 		} catch (DAOException e) {
-			throw new ServiceException("Service layer: can not show list of marks");
+			throw new ServiceException("Service layer: can not show list of interview marks");
 		}
 		return listInterviewMark;
 	}
 
 	@Override
-	public void deleteInterviewMark(int idMark) throws ServiceException {
+	public void deleteInterviewMark(String idMark) throws ServiceException {
 		logger.debug("InterviewMarkServiceImpl.deleteInterviewMark : idMark={}", idMark);
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			InterviewMarkDAO interviewMarkDAO = daoFactory.getInterviewMarkDAO();
-			interviewMarkDAO.deleteMark(idMark);
+			interviewMarkDAO.delete(Parser.parseStringtoInt(idMark));
 		} catch (DAOException e) {
 			throw new ServiceException("Service layer: can not delete interview mark");
 		}

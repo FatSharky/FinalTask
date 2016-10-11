@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -22,8 +22,7 @@
 <body>
 	<h1 class="text-center">Session is time out</h1>
 	<h2 class="text-center">
-		Page not found <a class="text-center" href="index.jsp">(To main
-			page)</a>
+		<a class="text-center" href="index.jsp">(To main page)</a>
 	</h2>
 	<style>
 body {

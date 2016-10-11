@@ -24,14 +24,13 @@ public class DeleteResumeCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteResumeCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteResumeCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idResume = Integer.parseInt(request.getParameter(Attribute.ID_RESUME));
-		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
+		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();

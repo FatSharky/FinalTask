@@ -24,13 +24,12 @@ public class DeleteEducationCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(DeleteEducationCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeltetEducationCommand.execute() start");
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
-		int idEducation = Integer.parseInt(request.getParameter(Attribute.ID_EDUCATION));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
+		String idEducation = request.getParameter(Attribute.ID_EDUCATION);
 
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {

@@ -30,17 +30,21 @@ public class ToAddTranslVacancyCommand implements Command {
 		logger.debug("ToAddTranslVacancyCommand.execute() start");
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
-		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
 				VacancyService vacancyService = serviceFactory.getVacancyService();
-				Vacancy vacnacy = vacancyService.selectTranslVacancyById(idVacancy);
-				request.setAttribute(Attribute.VACANCY, vacnacy);
+
 				if (vacancyService.translExist(idVacancy)) {
+					Vacancy vacnacy = vacancyService.selectTranslVacancyById(idVacancy);
+					request.setAttribute(Attribute.VACANCY, vacnacy);
 					request.getRequestDispatcher(PageName.HR_EDIT_TRANSL_VACANCY_PAGE).forward(request, response);
-				} else
+				} else {
+					Vacancy vacnacy = vacancyService.selectNormalVacancyById(idVacancy);
+					request.setAttribute(Attribute.VACANCY, vacnacy);
 					request.getRequestDispatcher(PageName.HR_ADD_TRANSL_VACANCY_PAGE).forward(request, response);
+				}
 			} catch (ServiceException e) {
 				request.getRequestDispatcher(PageName.ERROR_PAGE).forward(request, response);
 				logger.error("something goes wrong!");

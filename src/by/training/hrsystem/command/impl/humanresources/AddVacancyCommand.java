@@ -29,12 +29,11 @@ public class AddVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(AddVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("addVacancyCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
 
 		String vacancyName = request.getParameter(Attribute.VACANCY_NAME);
 		String salary = request.getParameter(Attribute.SALARY);
@@ -43,7 +42,7 @@ public class AddVacancyCommand implements Command {
 		String duties = request.getParameter(Attribute.DUTIES);
 		String conditions = request.getParameter(Attribute.CONDITIONS);
 		String employmentType = request.getParameter(Attribute.EMPLOYMENT_TYPE);
-		
+
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();

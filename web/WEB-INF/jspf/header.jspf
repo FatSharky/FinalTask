@@ -5,8 +5,8 @@
 <fmt:setBundle basename="resource.locale" var="locale" />
 <fmt:message bundle="${locale}" key="locale.header.findJob"
 	var="findJob" />
-<fmt:message bundle="${locale}" key="locale.header.forApplicant"
-	var="forApplicant" />
+<fmt:message bundle="${locale}" key="locale.header.registration"
+	var="registration" />
 <fmt:message bundle="${locale}" key="locale.header.forEmployer"
 	var="forEmployer" />
 <fmt:message bundle="${locale}" key="locale.header.resume" var="resume" />
@@ -15,7 +15,8 @@
 <fmt:message bundle="${locale}" key="locale.header.applicants"
 	var="applicants" />
 
-<br><br>
+<br>
+<br>
 <div class="jumbotron clearfix">
 
 	<div class="about-work">
@@ -24,8 +25,7 @@
 			<p>
 				<input type="hidden" name="command" value="to-registration-page">
 				<input type="submit" class="btn btn-primary btn-lg"
-					value="${forEmployer}"> <input type="submit"
-					class="btn btn-primary btn-lg" value="${forApplicant}">
+					value="${registration}">
 			</p>
 		</form>
 	</div>

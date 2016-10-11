@@ -35,14 +35,12 @@ public class ToApplicantEditResumeCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ToApplicantEditResumeCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ToApplicantEditResumeCommand.execute() start");
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
 
-		int idResume = Integer.valueOf(request.getParameter(Attribute.ID_RESUME));
-		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
+		String idResume = request.getParameter(Attribute.ID_RESUME);
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -53,13 +51,12 @@ public class ToApplicantEditResumeCommand implements Command {
 				SkillService skillService = serviceFactory.getSkillService();
 				WorkPlaceService workPlaceService = serviceFactory.getWorkPlaceService();
 
-				Resume resume = resumeService.selectResumeById(idResume, lang);
+				Resume resume = resumeService.selectResumeById(idResume);
 				User applicant = userService.selectUserByIdVacancy(idResume);
-				List<Education> listEducation = educationService.selectEducationbyIdResume(idResume, lang);
-				List<ResumeLanguage> listResumeLanguage = resumeLanguageService.selectLanguageByIdResume(idResume,
-						lang);
-				List<Skill> listSkill = skillService.selectSkillByIdResume(idResume, lang);
-				List<WorkPlace> listWorkPlace = workPlaceService.selectWorkPlaceByIdResume(idResume, lang);
+				List<Education> listEducation = educationService.selectEducationbyIdResume(idResume);
+				List<ResumeLanguage> listResumeLanguage = resumeLanguageService.selectLanguageByIdResume(idResume);
+				List<Skill> listSkill = skillService.selectSkillByIdResume(idResume);
+				List<WorkPlace> listWorkPlace = workPlaceService.selectWorkPlaceByIdResume(idResume);
 
 				request.setAttribute(Attribute.RESUME, resume);
 				request.setAttribute(Attribute.APPLICANT, applicant);

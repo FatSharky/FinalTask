@@ -30,6 +30,11 @@
 <fmt:message bundle="${locale}" key="locale.vacancy.chooseVacancy"
 	var="chooseVacancy" />
 <fmt:message bundle="${locale}" key="locale.vacancy.apply" var="apply" />
+<fmt:message bundle="${locale}" key="locale.vacancy.noVacancy"
+	var="noVacancy" />
+<fmt:message bundle="${locale}" key="locale.vacancy.leftVacancy"
+	var="leftVacancy" />
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ru">
@@ -74,78 +79,92 @@
 			<li><a href="Controller?command=to-index-page">${mainPage}</a></li>
 			<li class="active"><a href="#">${requestScope.vacancy.name}</a></li>
 		</ol>
-
-			<h1>${requestScope.vacancy.name}:</h1>
-			<p>${wage}${requestScope.vacancy.salary}
-				<c:choose>
-					<c:when test="${requestScope.vacancy.currency=='RUB'}">
+		<h1>${requestScope.vacancy.name}:</h1>
+		<p>${wage}${requestScope.vacancy.salary}
+			<c:choose>
+				<c:when test="${requestScope.vacancy.currency=='RUB'}">
 		${rub}
 		</c:when>
-					<c:when test="${requestScope.vacancy.currency=='DOLAR'}">
+				<c:when test="${requestScope.vacancy.currency=='DOLAR'}">
 		${dolar}
 		</c:when>
-				</c:choose>
-			</p>
-			<p>${requestScope.vacancy.description}</p>
-			<p>
-				<strong>${duties}</strong>
-			</p>
-			<p>${requestScope.vacancy.duty}</p>
-			<p>
-				<strong>${terms}</strong>
-			</p>
-			<p>${requestScope.vacancy.condition}</p>
-			<p>
-				<strong>${typeOfEmployment}</strong>
-			</p>
-			<c:choose>
-				<c:when test="${requestScope.vacancy.employmentType == 'FULL_TIME'}">
-					<p>${fullTime}</p>
-				</c:when>
-				<c:when test="${requestScope.vacancy.employmentType == 'PART_TIME'}">
-					<p>${partTime}</p>
-				</c:when>
-				<c:when
-					test="${requestScope.vacancy.employmentType == 'CONTRACTUAL'}">
-					<p>${contractual}</p>
-				</c:when>
 			</c:choose>
-			<p class="visible-xs visible-sm visible-md">
-				<strong>${contactPerson}:</strong>
-			</p>
-			<p class="visible-xs visible-sm visible-md">${requestScope.hr.surname}
-				${requestScope.hr.name} ${requestScope.hr.secondName}</p>
-			<p class="visible-xs visible-sm visible-md">
-				<strong>${contactPhone}</strong>
-			</p>
-			<p class="visible-xs visible-sm visible-md">${requestScope.hr.contactPhone}</p>
-			<p class="visible-xs visible-sm visible-md">
-				<strong>${skype}</strong>
-			</p>
-			<p class="visible-xs visible-sm visible-md">${requestScope.hr.contactPhone}</p>
-			<c:if test="${user.role=='APPLICANT'}">
-				<h3>${chooseVacancy}</h3>
-				<form action="Controller" method="post">
-					<input type="hidden" name="command" value="add-resume-to-vacancy">
-					<input type="hidden" value="${requestScope.vacancy.idVacancy}"
-						name="vacancy-id">
-					<div class="panel-body col-xs-6">
-						<select class="form-control" name="idResume">
-							<c:forEach var="resume" items="${requestScope.listResumeByEmail}">
-								<option value="${resume.idResume}">${resume.name}</option>
-							</c:forEach>
-						</select> <input type="submit" class="btn btn-success" value="${apply}">
+		</p>
+		<p>${requestScope.vacancy.description}</p>
+		<p>
+			<strong>${duties}</strong>
+		</p>
+		<p>${requestScope.vacancy.duty}</p>
+		<p>
+			<strong>${terms}</strong>
+		</p>
+		<p>${requestScope.vacancy.condition}</p>
+		<p>
+			<strong>${typeOfEmployment}</strong>
+		</p>
+		<c:choose>
+			<c:when test="${requestScope.vacancy.employmentType == 'FULL_TIME'}">
+				<p>${fullTime}</p>
+			</c:when>
+			<c:when test="${requestScope.vacancy.employmentType == 'PART_TIME'}">
+				<p>${partTime}</p>
+			</c:when>
+			<c:when
+				test="${requestScope.vacancy.employmentType == 'CONTRACTUAL'}">
+				<p>${contractual}</p>
+			</c:when>
+		</c:choose>
+		<p class="visible-xs visible-sm visible-md">
+			<strong>${contactPerson}:</strong>
+		</p>
+		<p class="visible-xs visible-sm visible-md">${requestScope.hr.surname}
+			${requestScope.hr.name} ${requestScope.hr.secondName}</p>
+		<p class="visible-xs visible-sm visible-md">
+			<strong>${contactPhone}</strong>
+		</p>
+		<p class="visible-xs visible-sm visible-md">${requestScope.hr.contactPhone}</p>
+		<p class="visible-xs visible-sm visible-md">
+			<strong>${skype}</strong>
+		</p>
+		<p class="visible-xs visible-sm visible-md">${requestScope.hr.contactPhone}</p>
+
+
+		<c:if test="${user.role=='APPLICANT'}">
+			<c:choose>
+				<c:when test="${empty requestScope.listLeftResume}">
+					<h3>${noVacancy}</h3>
+				</c:when>
+				<c:otherwise>
+					<h3>${leftVacancy}</h3>
+					<div class="bg-success">
+						<c:forEach var="leftResume" items="${requestScope.listLeftResume}">
+							<p>${leftResume.name }</p>
+						</c:forEach>
 					</div>
-				</form>
-			</c:if>
+				</c:otherwise>
+			</c:choose>
+			<h3>${chooseVacancy}</h3>
+			<form action="Controller" method="post">
+				<input type="hidden" name="command" value="add-resume-to-vacancy">
+				<input type="hidden" value="${requestScope.vacancy.idVacancy}"
+					name="vacancy-id">
+				<div class="panel-body col-xs-6">
+					<select class="form-control" name="idResume">
+						<c:forEach var="resume" items="${requestScope.listResumeByEmail}">
+							<option value="${resume.idResume}">${resume.name}</option>
+						</c:forEach>
+					</select> <br> <input type="submit" class="btn btn-success"
+						value="${apply}">
+				</div>
+			</form>
+		</c:if>
+	</div>
 
-		</div>
-
-		<%@include file="/WEB-INF/jspf/footer.jspf"%>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="js/bootstrap.min.js"></script>
+	<%@include file="/WEB-INF/jspf/footer.jspf"%>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

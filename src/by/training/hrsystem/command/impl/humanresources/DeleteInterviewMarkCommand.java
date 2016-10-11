@@ -29,7 +29,7 @@ public class DeleteInterviewMarkCommand implements Command {
 		logger.debug("DeleteInterviewMark.execute() start");
 		HttpSession session = request.getSession(false);
 		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idInterviewMark = Integer.parseInt(request.getParameter(Attribute.ID_INTERVIEW_MARK));
+		String idInterviewMark = request.getParameter(Attribute.ID_INTERVIEW_MARK);
 		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.HR) {

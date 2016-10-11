@@ -28,17 +28,16 @@ public class AddTranslVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(AddTranslVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("AddTranslVacancyCommand.execute() start");
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
 		String vacancyName = request.getParameter(Attribute.VACANCY_NAME);
 		String description = request.getParameter(Attribute.DESCRIPTION);
 		String duties = request.getParameter(Attribute.DUTIES);
 		String conditions = request.getParameter(Attribute.CONDITIONS);
 		String lang = request.getParameter(Attribute.TRANSL_EN);
-		int idVacancy = Integer.parseInt(request.getParameter(Attribute.ID_VACANCY));
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();

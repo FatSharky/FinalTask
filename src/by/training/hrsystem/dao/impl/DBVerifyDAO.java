@@ -20,6 +20,18 @@ import by.training.hrsystem.domain.Vacancy;
 import by.training.hrsystem.domain.Verify;
 import by.training.hrsystem.domain.type.PassType;
 
+/**
+ * Class {@code DBVerifyDAO} implements
+ * {@link by.training.hrsystem.dao.VerifyDAO VerifyDAO} and override all methods
+ * located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.VerifyDAO
+ * @see by.training.hrsystem.domain.Verify
+ * 
+ *
+ */
 public class DBVerifyDAO implements VerifyDAO {
 
 	private static final Logger logger = LogManager.getLogger(DBVerifyDAO.class);

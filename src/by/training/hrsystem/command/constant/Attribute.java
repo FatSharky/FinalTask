@@ -66,6 +66,7 @@ public final class Attribute {
 
 	public static final String LIST_RESUME_EMPTY = "listResumeEmpty";
 	public static final String LIST_RESUME_BY_EMAIL = "listResumeByEmail";
+	public static final String LIST_LEFT_RESUME = "listLeftResume";
 	public static final String USER = "user";
 	public static final String PREV_QUERY = "prev-query";
 

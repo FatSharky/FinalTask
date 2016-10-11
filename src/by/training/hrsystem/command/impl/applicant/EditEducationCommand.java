@@ -29,14 +29,13 @@ public class EditEducationCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(EditEducationCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("AddEducationCommand.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idEducation = Integer.parseInt(request.getParameter(Attribute.ID_EDUCATION));
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
 
+		String idEducation = request.getParameter(Attribute.ID_EDUCATION);
 		String institution = request.getParameter(Attribute.INSTITUTION);
 		String faculty = request.getParameter(Attribute.FACULTY);
 		String department = request.getParameter(Attribute.DEPARTMENT);
@@ -44,7 +43,7 @@ public class EditEducationCommand implements Command {
 		String course = request.getParameter(Attribute.COURSE);
 		String gradYear = request.getParameter(Attribute.GRAD_YEAR);
 		String postGrad = request.getParameter(Attribute.POSTGRAD);
-		String prevQuery = (session == null) ? null :(String) session.getAttribute(Attribute.PREV_QUERY);
+		String prevQuery = (session == null) ? null : (String) session.getAttribute(Attribute.PREV_QUERY);
 
 		if (user != null && user.getRole() == Role.APPLICANT) {
 			try {

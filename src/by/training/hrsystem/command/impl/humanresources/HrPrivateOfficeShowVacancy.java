@@ -27,14 +27,13 @@ public class HrPrivateOfficeShowVacancy implements Command {
 	private static final Logger logger = LogManager.getLogger(HrPrivateOfficeShowVacancy.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("HrPrivateOfficeShowVacancy.execute() start");
 
 		HttpSession session = request.getSession(false);
-		User user = (session == null) ? null :(User) session.getAttribute(Attribute.USER);
-		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
-		String lang = (session == null) ? null :(String) request.getSession().getAttribute(Attribute.LOCALE);
+		User user = (session == null) ? null : (User) session.getAttribute(Attribute.USER);
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
+		String lang = (session == null) ? null : (String) request.getSession().getAttribute(Attribute.LOCALE);
 		if (user != null && user.getRole() == Role.HR) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();

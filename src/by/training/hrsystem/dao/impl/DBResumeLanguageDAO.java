@@ -17,23 +17,30 @@ import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.ResumeLanguage;
 import by.training.hrsystem.domain.type.LanguageLevelType;
 
+/**
+ * Class {@code ResumeLanguageDAO} implements
+ * {@link by.training.hrsystem.dao.ResumeLanguageDAO ResumeLanguageDAO} and
+ * override all methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.ResumeLanguageDAO
+ * @see by.training.hrsystem.domain.ResumeLanguage
+ * 
+ *
+ */
 public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
-	
+
 	private static final Logger logger = LogManager.getLogger(DBResumeLanguageDAO.class);
-	
+
 	private static final String SQL_ADD_RESEUME_LANGUAGE = "INSERT INTO resumelanguage (name, raiting, id_resume) VALUES (?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME_LANGUAGE = "UPDATE resumelanguage SET name=?, raiting=? WHERE id_language=?;";
 	private static final String SQL_DELETE_RESUME_LANGUAGE = "DELETE FROM resumelanguage WHERE id_language=?;";
-	private static final String SQL_ADD_TRANSL_RESUME_LANGUGE = "INSERT INTO tresumelanguage (id_language, lang, name) VALUES (?, ?, ?);";
-	private static final String SQL_UPDATE_TRANSL_RESUME_LANG = "UPDATE tresumelanguage SET name=? WHERE id_language=? and lang=?;";
-	private static final String SQL_DELETE_TRANSL_RESUME_LANG = "DELETE FROM tresumelanguage WHERE id_language=? and lang=?;";
 	private static final String SQL_SELECT_RESUME_LANG_BY_ID_RESUME = "SELECT * FROM resumelanguage WHERE id_resume=?;";
-	private static final String SQL_SELECT_TRANSL_LANG_BY_ID_RESUME = "SELECT r.id_language, coalesce(tr.name, r.name) AS name, r.raiting, r.id_resume "
-			+ "FROM resumelanguage AS r LEFT JOIN (SELECT * FROM tresumelanguage WHERE lang = ?) AS tr USING(id_language) WHERE id_resume=?;";
 
 	@Override
-	public void addResumeLang(ResumeLanguage resumeLang) throws DAOException {
-		logger.debug("DBResumeLanguageDAO.addResume() - language = {}", resumeLang);
+	public void add(ResumeLanguage entity) throws DAOException {
+		logger.debug("DBResumeLanguageDAO.addResume() - language = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -41,9 +48,9 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_RESEUME_LANGUAGE);
-			ps.setString(1, resumeLang.getName());
-			ps.setString(2, resumeLang.getRaiting().getLanguageLevelType());
-			ps.setInt(3, resumeLang.getIdResume());
+			ps.setString(1, entity.getName());
+			ps.setString(2, entity.getRaiting().getLanguageLevelType());
+			ps.setInt(3, entity.getIdResume());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create Language for resume: ", e);
@@ -53,7 +60,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			try {
 				ps.close();
 				ConnectionPool.getInstance().closeConnection(conn);
-				
+
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -62,8 +69,8 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 	}
 
 	@Override
-	public void updateResumeLang(ResumeLanguage resumeLang) throws DAOException {
-		logger.debug("DBResumeLanguageDAO.updateResumeLang() - language = {}", resumeLang);
+	public void update(ResumeLanguage entity) throws DAOException {
+		logger.debug("DBResumeLanguageDAO.updateResumeLang() - language = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -71,9 +78,9 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_UPDATE_RESUME_LANGUAGE);
-			ps.setString(1, resumeLang.getName());
-			ps.setString(2, resumeLang.getRaiting().getLanguageLevelType());
-			ps.setInt(3, resumeLang.getIdLanguage());
+			ps.setString(1, entity.getName());
+			ps.setString(2, entity.getRaiting().getLanguageLevelType());
+			ps.setInt(3, entity.getIdLanguage());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild to update Language for resume: ", e);
@@ -82,7 +89,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 		} finally {
 			try {
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);	
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -91,7 +98,8 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 	}
 
 	@Override
-	public void deleteResumeLang(int idLanguage) throws DAOException {
+	public void delete(int id) throws DAOException {
+		logger.debug("DBResumeLanguageDAO.deleteResumeLang() - idLanguage = {}", id);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -99,7 +107,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_RESUME_LANGUAGE);
-			ps.setInt(1, idLanguage);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete Language: ", e);
@@ -117,90 +125,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 	}
 
 	@Override
-	public void addTranslateResumeLang(ResumeLanguage resumeLang, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_ADD_TRANSL_RESUME_LANGUGE);
-			ps.setInt(1, resumeLang.getIdResume());
-			ps.setString(2, lang);
-			ps.setString(3, resumeLang.getName());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild create translationLanguage for resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void updateTranslateResumeLang(ResumeLanguage resumeLang, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_UPDATE_TRANSL_RESUME_LANG);
-			ps.setString(1, resumeLang.getName());
-			ps.setInt(2, resumeLang.getIdResume());
-			ps.setString(3, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild create translationLanguage for resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);	
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void deleteTranslateResumeLang(int idResumeLang, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_DELETE_TRANSL_RESUME_LANG);
-			ps.setInt(1, idResumeLang);
-			ps.setString(2, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild delete translation of Language for resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public List<ResumeLanguage> getResumeLangByIdResume(int idResume, String lang) throws DAOException {
+	public List<ResumeLanguage> getResumeLangByIdResume(int idResume) throws DAOException {
 		List<ResumeLanguage> language = new ArrayList<ResumeLanguage>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -209,15 +134,8 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
-				ps = conn.prepareStatement(SQL_SELECT_RESUME_LANG_BY_ID_RESUME);
-				ps.setInt(1, idResume);
-			} else {
-				ps = conn.prepareStatement(SQL_SELECT_TRANSL_LANG_BY_ID_RESUME);
-				ps.setString(1, lang);
-				ps.setInt(2, idResume);
-
-			}
+			ps = conn.prepareStatement(SQL_SELECT_RESUME_LANG_BY_ID_RESUME);
+			ps.setInt(1, idResume);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				language.add(getLanguageFromResultSet(rs));
@@ -230,7 +148,7 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 			try {
 				rs.close();
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);	
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps or rs", e);
 			}
@@ -247,4 +165,5 @@ public class DBResumeLanguageDAO implements ResumeLangugaeDAO {
 		return language;
 
 	}
+
 }

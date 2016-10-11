@@ -28,11 +28,10 @@ public class ShowVacancyCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(ShowVacancyCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ShowVacancyCommand:execute() start");
 
-		int idVacancy = Integer.valueOf(request.getParameter(Attribute.ID_VACANCY));
+		String idVacancy = request.getParameter(Attribute.ID_VACANCY);
 		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
 		User user = (User) request.getSession().getAttribute(Attribute.USER);
 
@@ -46,8 +45,10 @@ public class ShowVacancyCommand implements Command {
 			Vacancy vacnacy = vacancyService.selectVacancyById(idVacancy, lang);
 			User hr = userService.selectUserByIdVacancy(idVacancy);
 			if (user != null && user.getRole() == Role.APPLICANT) {
-				List<Resume> resumeList = resumeService.selectResumeForVacancy(applicantEmail.getEmail(), lang);
+				List<Resume> leftResume = resumeService.selectLeftResume(idVacancy, applicantEmail.getEmail());
+				List<Resume> resumeList = resumeService.selectResumeForVacancy(applicantEmail.getEmail());
 				request.setAttribute(Attribute.LIST_RESUME_BY_EMAIL, resumeList);
+				request.setAttribute(Attribute.LIST_LEFT_RESUME, leftResume);
 
 			}
 			request.setAttribute(Attribute.VACANCY, vacnacy);

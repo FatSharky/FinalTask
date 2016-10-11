@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.ResumeDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.Resume;
@@ -21,33 +20,37 @@ import by.training.hrsystem.domain.User;
 import by.training.hrsystem.domain.type.ActiveType;
 import by.training.hrsystem.domain.type.MilitaryType;
 
+/**
+ * Class {@code DBResumeDAO} implements
+ * {@link by.training.hrsystem.dao.ResumeDAO ResumeDAO} and override all methods
+ * located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.ResumeDAO
+ * @see by.training.hrsystem.domain.Resume
+ * 
+ *
+ */
 public class DBResumeDAO implements ResumeDAO {
 	private static final Logger logger = LogManager.getLogger(DBResumeDAO.class);
 
 	private static final String SQL_ADD_RESUME = "INSERT INTO resume (name, publish_date, military, email) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE_RESUME = "UPDATE resume SET name=?, publish_date=?, military=? WHERE id_resume=?;";
 	private static final String SQL_DELETE_RESUME = "DELETE FROM resume WHERE id_resume=?;";
-	private static final String SQL_ADD_TRANSLATION_RESUME = "INSERT INTO tresume (id_resume, lang, name) VALUES (?, ?, ?);";
-	private static final String SQL_UPDATE_TRANSLATION_RESUME = "UPDATE tresume SET name=? WHERE id_resume=? and lang=?;";
-	private static final String SQL_DELETE_TRANSLATION_RESUME = "DELETE FROM tresume WHERE id_resume=? and lang=?;";
 	private static final String SQL_SELECT_COUNT_RESUME = "SELECT count(id_resume) AS resume_count FROM resume;";
 	private static final String SQL_ACTIVATE_RESUME = "UPDATE resume SET active=active WHERE id_resume=?;";
 	private static final String SQL_SELECT_RESUME_BY_ID = "SELECT * FROM resume WHERE id_resume=?;";
-	private static final String SQL_SELECT_TRANSL_RESUME_BY_ID = "SELECT r.id_resume, coalesce(tr.name, r.name) AS name, r.publish_date, r.military, r.active, r.email "
-			+ "FROM resume AS r LEFT JOIN (SELECT * FROM tresume WHERE lang = ?) AS tr USING(id_resume) WHERE id_resume=?;";
 	private static final String SQL_SELECT_RESUME_BY_APPLICANT = "SELECT * FROM resume WHERE email=? LIMIT ?,?;";
-	private static final String SQL_SELECT_TRANSL_RESUME_BY_APPLICANT = "SELECT r.id_resume, coalesce(tr.name, r.name) AS name, r.publish_date, r.military, r.active, r.email "
-			+ "FROM resume AS r LEFT JOIN (SELECT * FROM tresume WHERE lang = ?) AS tr USING(id_resume) WHERE email=? LIMIT ?,?;";
 	private static final String SQL_SELECT_RESUME_FOR_VACANCY = "SELECT * FROM resume WHERE email=?;";
-	private static final String SQL_SELECT_TRANSL_RESUME_FOR_VACANCY = "SELECT r.id_resume, coalesce(tr.name, r.name) AS name, r.publish_date, r.military, r.active, r.email "
-			+ "FROM resume AS r LEFT JOIN (SELECT * FROM tresume WHERE lang = ?) AS tr USING(id_resume) WHERE email=?;";
 	private static final String SQL_SELECT_COUNT_RESUME_BY_APPLIC_EMAIL = "SELECT count(id_resume) AS resume_count FROM resume WHERE email=?;";
 	private static final String SQL_SELECT_RESUME_BY_ID_VACANCY = "SELECT r.id_resume, r.name, r.publish_date, r.military, r.active, r.email FROM verify as v, resume as r "
 			+ "WHERE v.id_vacancy=? and r.id_resume=v.id_resume; ";
+	private static final String SQL_SELECT_LEFT_RESUME = "SELECT * FROM resume as r JOIN verify as v ON r.id_resume=v.id_resume WHERE id_vacancy=? and email=?;";
 
 	@Override
-	public void addResume(Resume resume) throws DAOException {
-		logger.debug("DBResumeDAO.addResume() - resume = {}", resume);
+	public void add(Resume entity) throws DAOException {
+		logger.debug("DBResumeDAO.addResume() - resume = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -55,10 +58,10 @@ public class DBResumeDAO implements ResumeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_RESUME);
-			ps.setString(1, resume.getName());
+			ps.setString(1, entity.getName());
 			ps.setDate(2, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
-			ps.setString(3, resume.getMilitatyType().getMillatryType());
-			ps.setString(4, resume.getApplicant().getEmail());
+			ps.setString(3, entity.getMilitatyType().getMillatryType());
+			ps.setString(4, entity.getApplicant().getEmail());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild to create resume: ", e);
@@ -76,8 +79,8 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public void updateResume(Resume resume) throws DAOException {
-		logger.debug("DBResumeDAO.updateResume() - resume = {}", resume);
+	public void update(Resume entity) throws DAOException {
+		logger.debug("DBResumeDAO.updateResume() - resume = {}", entity);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -85,10 +88,10 @@ public class DBResumeDAO implements ResumeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_UPDATE_RESUME);
-			ps.setString(1, resume.getName());
+			ps.setString(1, entity.getName());
 			ps.setDate(2, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
-			ps.setString(3, resume.getMilitatyType().getMillatryType());
-			ps.setInt(4, resume.getIdResume());
+			ps.setString(3, entity.getMilitatyType().getMillatryType());
+			ps.setInt(4, entity.getIdResume());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild update resume: ", e);
@@ -106,8 +109,8 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public void deleteResume(int idResume) throws DAOException {
-		logger.debug("DBResumeDAO.deleteResume() - idResume = {}", idResume);
+	public void delete(int id) throws DAOException {
+		logger.debug("DBResumeDAO.deleteResume() - idResume = {}", id);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -115,7 +118,7 @@ public class DBResumeDAO implements ResumeDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_RESUME);
-			ps.setInt(1, idResume);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete Resume: ", e);
@@ -133,90 +136,7 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public void addTranlateResume(Resume resume, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_ADD_TRANSLATION_RESUME);
-			ps.setInt(1, resume.getIdResume());
-			ps.setString(2, lang);
-			ps.setString(3, resume.getName());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild create translation of resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void updateTranslateResume(Resume resume, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_UPDATE_TRANSLATION_RESUME);
-			ps.setString(1, resume.getName());
-			ps.setInt(2, resume.getIdResume());
-			ps.setString(3, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild to update translation of resume: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ConnectionPool.getInstance().closeConnection(conn);
-				ps.close();
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public void deleteTranslateResume(int Idresume, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_DELETE_TRANSLATION_RESUME);
-			ps.setInt(1, Idresume);
-			ps.setString(2, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild delete translation skill ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public int selectCountResume() throws DAOException, DAODataDoesNotExistException {
+	public int selectCountResume() throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -229,8 +149,6 @@ public class DBResumeDAO implements ResumeDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				countResume = rs.getInt(1);
-			} else {
-				throw new DAODataDoesNotExistException("User not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find count: ", e);
@@ -274,7 +192,7 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public Resume selectResumeById(int idResume, String lang) throws DAOException, DAODataDoesNotExistException {
+	public Resume selectResumeById(int idResume) throws DAOException {
 		Resume resume = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -283,19 +201,11 @@ public class DBResumeDAO implements ResumeDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
-				ps = conn.prepareStatement(SQL_SELECT_RESUME_BY_ID);
-				ps.setInt(1, idResume);
-			} else {
-				ps = conn.prepareStatement(SQL_SELECT_TRANSL_RESUME_BY_ID);
-				ps.setString(1, lang);
-				ps.setInt(2, idResume);
-			}
+			ps = conn.prepareStatement(SQL_SELECT_RESUME_BY_ID);
+			ps.setInt(1, idResume);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				resume = getResumeFromResultSet(rs);
-			} else {
-				throw new DAODataDoesNotExistException("User not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find user: ", e);
@@ -315,10 +225,10 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public List<Resume> selectResumeByApplicant(String applicantEmail, String lang, int pageNum, int amountPerPage)
+	public List<Resume> selectResumeByApplicant(String applicantEmail, int pageNum, int amountPerPage)
 			throws DAOException {
 		logger.debug("DBResumeDAO.selectResumeByApplicant() - applicantEmail = {}, lang={}, pageNum={},amountPerPage",
-				applicantEmail, lang, pageNum, amountPerPage);
+				applicantEmail, pageNum, amountPerPage);
 		List<Resume> resume = new ArrayList<Resume>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -327,18 +237,10 @@ public class DBResumeDAO implements ResumeDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
-				ps = conn.prepareStatement(SQL_SELECT_RESUME_BY_APPLICANT);
-				ps.setString(1, applicantEmail);
-				ps.setInt(2, pageNum);
-				ps.setInt(3, amountPerPage);
-			} else {
-				ps = conn.prepareStatement(SQL_SELECT_TRANSL_RESUME_BY_APPLICANT);
-				ps.setString(1, lang);
-				ps.setString(2, applicantEmail);
-				ps.setInt(3, pageNum);
-				ps.setInt(4, amountPerPage);
-			}
+			ps = conn.prepareStatement(SQL_SELECT_RESUME_BY_APPLICANT);
+			ps.setString(1, applicantEmail);
+			ps.setInt(2, pageNum);
+			ps.setInt(3, amountPerPage);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				resume.add(getResumeFromResultSet(rs));
@@ -361,7 +263,7 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public int selectCountResumeByEmail(String applicantEmail) throws DAOException, DAODataDoesNotExistException {
+	public int selectCountResumeByEmail(String applicantEmail) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -375,8 +277,6 @@ public class DBResumeDAO implements ResumeDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				countVacancy = rs.getInt(1);
-			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find count: ", e);
@@ -408,8 +308,8 @@ public class DBResumeDAO implements ResumeDAO {
 	}
 
 	@Override
-	public List<Resume> selectResumeForVacancy(String applicantEmail, String lang) throws DAOException {
-		logger.debug("DBResumeDAO.selectResumeByApplicant() - applicantEmail = {}, lang={}", applicantEmail, lang);
+	public List<Resume> selectResumeForVacancy(String applicantEmail) throws DAOException {
+		logger.debug("DBResumeDAO.selectResumeByApplicant() - applicantEmail = {}", applicantEmail);
 		List<Resume> resume = new ArrayList<Resume>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -418,14 +318,8 @@ public class DBResumeDAO implements ResumeDAO {
 		try {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
-			if (lang.equals(SQLField.DEFAULT_LANGUAGE)) {
-				ps = conn.prepareStatement(SQL_SELECT_RESUME_FOR_VACANCY);
-				ps.setString(1, applicantEmail);
-			} else {
-				ps = conn.prepareStatement(SQL_SELECT_TRANSL_RESUME_FOR_VACANCY);
-				ps.setString(1, lang);
-				ps.setString(2, applicantEmail);
-			}
+			ps = conn.prepareStatement(SQL_SELECT_RESUME_FOR_VACANCY);
+			ps.setString(1, applicantEmail);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				resume.add(getResumeFromResultSet(rs));
@@ -480,4 +374,41 @@ public class DBResumeDAO implements ResumeDAO {
 		}
 		return resume;
 	}
+
+	@Override
+	public List<Resume> selectLeftResume(int idVacancy, String applicantEmail) throws DAOException {
+		logger.debug("DBResumeDAO.selectleftResume() - idVacancy={}, applicantEmail = {}", idVacancy, applicantEmail);
+		List<Resume> resume = new ArrayList<Resume>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ConnectionPool pool = null;
+		try {
+			pool = ConnectionPool.getInstance();
+			conn = pool.takeConnection();
+			ps = conn.prepareStatement(SQL_SELECT_LEFT_RESUME);
+			ps.setInt(1, idVacancy);
+			ps.setString(2, applicantEmail);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				resume.add(getResumeFromResultSet(rs));
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Faild to find resume: ", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection pool problems!", e);
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				ConnectionPool.getInstance().closeConnection(conn);
+
+			} catch (SQLException | ConnectionPoolException e) {
+				logger.error("Faild to close connection or ps", e);
+			}
+		}
+		return resume;
+
+	}
+
 }

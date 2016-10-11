@@ -29,8 +29,7 @@ public class ToVerifyListCommand implements Command {
 	private static final int VACANCY_PER_PAGE = 1;
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		logger.debug("ToVerifyPageCommand.execute()  start");
 

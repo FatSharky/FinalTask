@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.training.hrsystem.dao.VacancyDAO;
 import by.training.hrsystem.dao.exception.DAOException;
-import by.training.hrsystem.dao.exception.DAODataDoesNotExistException;
 import by.training.hrsystem.dao.pool.ConnectionPool;
 import by.training.hrsystem.dao.pool.exception.ConnectionPoolException;
 import by.training.hrsystem.domain.Vacancy;
@@ -22,6 +21,18 @@ import by.training.hrsystem.domain.type.CurrencyType;
 import by.training.hrsystem.domain.type.EmploymentType;
 import by.training.hrsystem.domain.type.HotType;
 
+/**
+ * Class {@code DBVacancyDAO} implements
+ * {@link by.training.hrsystem.dao.VacancyDAO VacancyDAO} and override all
+ * methods located at the interface.
+ * 
+ * @author Vladislav
+ *
+ * @see by.training.hrsystem.dao.VacancyDAO
+ * @see by.training.hrsystem.domain.Vacancy
+ * 
+ *
+ */
 public class DBVacancyDAO implements VacancyDAO {
 	private static final Logger logger = LogManager.getLogger(DBVacancyDAO.class);
 	private static final String SQL_ADD_VACANCY = "INSERT INTO vacancy (name, salary, currency, description, duties, conditions, employment_type, email) "
@@ -31,7 +42,6 @@ public class DBVacancyDAO implements VacancyDAO {
 	private static final String SQL_DELETE_VACANCY = "DELETE FROM vacancy WHERE id_vacancy=?;";
 	private static final String SQL_ADD_TRANSLATION_VACANCY = "INSERT INTO tvacancy (id_vacancy, lang, name, description, duties, conditions) VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE_TRANSLATION_VACANCY = "UPDATE tvacancy SET name=?, description=?, duties=?, conditions=? WHERE id_vacancy=? and lang=?;";
-	private static final String SQL_DELETE_TRANSLATION_VACANCY = "DELETE FROM tvacancy WHERE id_vacancy=? and lang=?;";
 	private static final String SQL_SELECT_COUNT_VACANCY = "SELECT count(id_vacancy) as vacancy_count FROM vacancy;";
 	private static final String SQL_SELECT_VACANCY_BY_ID = "SELECT * FROM vacancy WHERE id_vacancy=?;";
 	private static final String SQL_SELECT_TRANSLATE_VACANCY_BY_ID = "SELECT v.id_vacancy, coalesce(tv.name, v.name) AS name, "
@@ -66,10 +76,9 @@ public class DBVacancyDAO implements VacancyDAO {
 	private static final String SQL_ACTIVATE_VACANCY = "UPDATE vacancy SET active='active', publish_date=? WHERE id_vacancy=?;";
 	private static final String SQL_HOT_VACANCY = "UPDATE vacancy SET hot='hot' WHERE id_vacancy=?;";
 	private static final String SQL_DEACTIVATE_VACANCY = "UPDATE vacancy SET active='non active', hot='non hot' WHERE id_vacancy=?;";
-	private static final String SQL_TRANSL_EXIST = "SELECT id_vacancy FROM tvacancy WHERE id_vacancy=? and lang='EN';";
 
 	@Override
-	public void addVacancy(Vacancy vacancy) throws DAOException {
+	public void add(Vacancy entity) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -77,14 +86,14 @@ public class DBVacancyDAO implements VacancyDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_ADD_VACANCY);
-			ps.setString(1, vacancy.getName());
-			ps.setInt(2, vacancy.getSalary());
-			ps.setString(3, vacancy.getCurrency().getCurrencyType());
-			ps.setString(4, vacancy.getDescription());
-			ps.setString(5, vacancy.getDuty());
-			ps.setString(6, vacancy.getCondition());
-			ps.setString(7, vacancy.getEmploymentType().getCurrencyType());
-			ps.setString(8, vacancy.getHrEmail());
+			ps.setString(1, entity.getName());
+			ps.setInt(2, entity.getSalary());
+			ps.setString(3, entity.getCurrency().getCurrencyType());
+			ps.setString(4, entity.getDescription());
+			ps.setString(5, entity.getDuty());
+			ps.setString(6, entity.getCondition());
+			ps.setString(7, entity.getEmploymentType().getCurrencyType());
+			ps.setString(8, entity.getHrEmail());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild create Vacancy: ", e);
@@ -93,7 +102,7 @@ public class DBVacancyDAO implements VacancyDAO {
 		} finally {
 			try {
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);	
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -102,7 +111,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void updateVacancy(Vacancy vacancy) throws DAOException {
+	public void update(Vacancy entity) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -110,14 +119,14 @@ public class DBVacancyDAO implements VacancyDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_UPDATE_VACANCY);
-			ps.setString(1, vacancy.getName());
-			ps.setInt(2, vacancy.getSalary());
-			ps.setString(3, vacancy.getCurrency().getCurrencyType());
-			ps.setString(4, vacancy.getDescription());
-			ps.setString(5, vacancy.getDuty());
-			ps.setString(6, vacancy.getCondition());
-			ps.setString(7, vacancy.getEmploymentType().getCurrencyType());
-			ps.setInt(8, vacancy.getIdVacancy());
+			ps.setString(1, entity.getName());
+			ps.setInt(2, entity.getSalary());
+			ps.setString(3, entity.getCurrency().getCurrencyType());
+			ps.setString(4, entity.getDescription());
+			ps.setString(5, entity.getDuty());
+			ps.setString(6, entity.getCondition());
+			ps.setString(7, entity.getEmploymentType().getCurrencyType());
+			ps.setInt(8, entity.getIdVacancy());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild to update Vacancy: ", e);
@@ -135,7 +144,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void deleteVacancy(int idVacancy) throws DAOException {
+	public void delete(int id) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ConnectionPool pool = null;
@@ -143,7 +152,7 @@ public class DBVacancyDAO implements VacancyDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_DELETE_VACANCY);
-			ps.setInt(1, idVacancy);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild delete Vacancy: ", e);
@@ -223,34 +232,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public void deleteTranslateVacancy(int idVacancy, String lang) throws DAOException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_DELETE_TRANSLATION_VACANCY);
-			ps.setInt(1, idVacancy);
-			ps.setString(2, lang);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new DAOException("Faild delete translation of Vacancy: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-
-	}
-
-	@Override
-	public int selectCountVacancy() throws DAOException, DAODataDoesNotExistException {
+	public int selectCountVacancy() throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -263,8 +245,6 @@ public class DBVacancyDAO implements VacancyDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				countVacancy = rs.getInt(1);
-			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find count: ", e);
@@ -284,7 +264,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException, DAODataDoesNotExistException {
+	public Vacancy selectVacancyById(int idVacancy, String lang) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -317,7 +297,7 @@ public class DBVacancyDAO implements VacancyDAO {
 				vacancy.setHrEmail(rs.getString(12));
 				return vacancy;
 			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
+				return null;
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find vacancy: ", e);
@@ -418,7 +398,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public int selectCountVacancyByHrEmail(String hrEmail) throws DAOException, DAODataDoesNotExistException {
+	public int selectCountVacancyByHrEmail(String hrEmail) throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -432,8 +412,6 @@ public class DBVacancyDAO implements VacancyDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				countVacancy = rs.getInt(1);
-			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find count: ", e);
@@ -529,7 +507,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public int selectCountActiveVacancy() throws DAOException, DAODataDoesNotExistException {
+	public int selectCountActiveVacancy() throws DAOException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -542,8 +520,6 @@ public class DBVacancyDAO implements VacancyDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				countActiveVacancy = rs.getInt(1);
-			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find count: ", e);
@@ -583,7 +559,7 @@ public class DBVacancyDAO implements VacancyDAO {
 		} finally {
 			try {
 				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);				
+				ConnectionPool.getInstance().closeConnection(conn);
 			} catch (SQLException | ConnectionPoolException e) {
 				logger.error("Faild to close connection or ps", e);
 			}
@@ -700,7 +676,7 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public Vacancy selectNormalVacancyById(int idVacancy) throws DAOException, DAODataDoesNotExistException {
+	public Vacancy selectNormalVacancyById(int idVacancy) throws DAOException {
 		Vacancy vacancy = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -714,8 +690,6 @@ public class DBVacancyDAO implements VacancyDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				vacancy = getVacacnyFromResultSet(rs);
-			} else {
-				throw new DAODataDoesNotExistException("Vacancy not found!");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Faild to find vacancy: ", e);
@@ -778,40 +752,6 @@ public class DBVacancyDAO implements VacancyDAO {
 	}
 
 	@Override
-	public Vacancy translVacancyExist(int idVacancy) throws DAOException {
-		Connection conn = null;
-		Vacancy vacancy = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		ConnectionPool pool = null;
-		try {
-			pool = ConnectionPool.getInstance();
-			conn = pool.takeConnection();
-			ps = conn.prepareStatement(SQL_TRANSL_EXIST);
-			ps.setInt(1, idVacancy);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				Vacancy vacaExist = new Vacancy();
-				vacaExist.setIdVacancy(rs.getInt(1));
-				vacancy = vacaExist;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("Faild to find vacancy: ", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("Connection pool problems!", e);
-		} finally {
-			try {
-				rs.close();
-				ps.close();
-				ConnectionPool.getInstance().closeConnection(conn);
-			} catch (SQLException | ConnectionPoolException e) {
-				logger.error("Faild to close connection or ps", e);
-			}
-		}
-		return vacancy;
-	}
-
-	@Override
 	public boolean translExist(int idVacancy) throws DAOException {
 
 		Connection conn = null;
@@ -843,4 +783,5 @@ public class DBVacancyDAO implements VacancyDAO {
 			}
 		}
 	}
+
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import by.training.hrsystem.domain.WorkPlace;
 import by.training.hrsystem.service.exeption.ServiceException;
-import by.training.hrsystem.service.exeption.education.EducationServiceException;
 import by.training.hrsystem.service.exeption.workplace.ListWorkPlaceIsEmptyServiceException;
 import by.training.hrsystem.service.exeption.workplace.WrongCompanyNameServiceException;
 import by.training.hrsystem.service.exeption.workplace.WrongDateBeginServiceException;
@@ -13,16 +12,16 @@ import by.training.hrsystem.service.exeption.workplace.WrongDateServiceException
 import by.training.hrsystem.service.exeption.workplace.WrongPositionServiceException;
 
 public interface WorkPlaceService {
-	void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idResume)
+	void addWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idResume)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException;
 
-	void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd, int idWorkPlace)
+	void updateWorkplace(String companyName, String position, String dateBegin, String dateEnd, String idWorkPlace)
 			throws WrongCompanyNameServiceException, WrongPositionServiceException, WrongDateBeginServiceException,
 			WrongDateEndServiceException, WrongDateServiceException, ServiceException;
 
-	void deleteWorkplace(int idWorPlace) throws EducationServiceException;
+	void deleteWorkplace(String idWorPlace) throws ServiceException;
 
-	List<WorkPlace> selectWorkPlaceByIdResume(int idResume, String lang)
+	List<WorkPlace> selectWorkPlaceByIdResume(String idResume)
 			throws ListWorkPlaceIsEmptyServiceException, ServiceException;
 }

@@ -13,12 +13,12 @@ public interface VacancyService {
 	void updateVacancy(String vacancyName, String slary, String currency, String description, String duties,
 			String conditions, String employmentType, String idVacancy) throws ServiceException;
 
-	void deleteVacancy(int idVacancy) throws ServiceException;
+	void deleteVacancy(String idVacancy) throws ServiceException;
 
-	void addTranslVacancy(int idVacancy, String lang, String vacancyName, String description, String duties,
+	void addTranslVacancy(String idVacancy, String lang, String vacancyName, String description, String duties,
 			String conditions) throws ServiceException;
 
-	void updateTranslVacancy(String vacancyName, String description, String duties, String conditions, int idVacancy,
+	void updateTranslVacancy(String vacancyName, String description, String duties, String conditions, String idVacancy,
 			String lang) throws ServiceException;
 
 	List<Vacancy> selectAllVacancy(String lang) throws ServiceException;
@@ -27,11 +27,11 @@ public interface VacancyService {
 
 	int countAllActiveVacancy() throws ServiceException;
 
-	Vacancy selectVacancyById(int idVacancy, String lang) throws ServiceException;
+	Vacancy selectVacancyById(String idVacancy, String lang) throws ServiceException;
 
-	Vacancy selectNormalVacancyById(int idVacancy) throws ServiceException;
+	Vacancy selectNormalVacancyById(String idVacancy) throws ServiceException;
 
-	Vacancy selectTranslVacancyById(int idVacancy) throws ServiceException;
+	Vacancy selectTranslVacancyById(String idVacancy) throws ServiceException;
 
 	List<Vacancy> selectVacancyByHrEmail(String hrEmail, String lang, int first, int perPage) throws ServiceException;
 
@@ -39,13 +39,13 @@ public interface VacancyService {
 
 	int countVacancyByHrEmail(String hrEmail) throws ServiceException;
 
-	void activateVacancy(int idVacancy) throws ServiceException;
+	void activateVacancy(String idVacancy) throws ServiceException;
 
-	void deactivateVacancy(int idVacancy) throws ServiceException;
+	void deactivateVacancy(String idVacancy) throws ServiceException;
 
-	void hotVacancy(int idVacancy) throws ServiceException;
+	void hotVacancy(String idVacancy) throws ServiceException;
 
-	public boolean translExist(int idVacancy) throws ServiceException;
+	public boolean translExist(String idVacancy) throws ServiceException;
 
 	List<Vacancy> selectHotVacancy(String lang) throws ServiceException;
 
