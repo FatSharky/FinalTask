@@ -31,7 +31,7 @@ public class DBUserDAO implements UserDAO {
 	private static final Logger logger = LogManager.getRootLogger();
 	private static final String SQL_ADD_USER = "INSERT INTO user (email, password, surname, name, secondname, photo, skype, contact_phone, birth_date, role) "
 			+ "VALUES (?, md5(?), ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SQL_UPDATE_USER = "UPDATE user SET password=md5(?), surname=?, name=?, secondname=?, skype=?, contact_phone=?, birth_date=? WHERE email=?;";
+	private static final String SQL_UPDATE_USER = "UPDATE user SET surname=?, name=?, secondname=?, skype=?, contact_phone=?, birth_date=? WHERE email=?;";
 	private static final String SQL_GET_USER_BY_EMAIL_PASS = "SELECT * FROM user WHERE email=? and password=md5(?);";
 	private static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?;";
 	private static final String SQL_DELETE_USER = "DELETE FROM user WHERE email=?;";
@@ -87,14 +87,13 @@ public class DBUserDAO implements UserDAO {
 			pool = ConnectionPool.getInstance();
 			conn = pool.takeConnection();
 			ps = conn.prepareStatement(SQL_UPDATE_USER);
-			ps.setString(1, entity.getPassword());
-			ps.setString(2, entity.getSurname());
-			ps.setString(3, entity.getName());
-			ps.setString(4, entity.getSecondName());
-			ps.setString(5, entity.getSkype());
-			ps.setInt(6, entity.getContactPhone());
-			ps.setDate(7, new Date(entity.getBirthDate().getTime()));
-			ps.setString(8, entity.getEmail());
+			ps.setString(1, entity.getSurname());
+			ps.setString(2, entity.getName());
+			ps.setString(3, entity.getSecondName());
+			ps.setString(4, entity.getSkype());
+			ps.setInt(5, entity.getContactPhone());
+			ps.setDate(6, new Date(entity.getBirthDate().getTime()));
+			ps.setString(7, entity.getEmail());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Faild update new User: ", e);

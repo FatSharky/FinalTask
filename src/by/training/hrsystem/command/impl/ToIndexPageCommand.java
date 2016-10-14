@@ -29,9 +29,9 @@ public class ToIndexPageCommand implements Command {
 	private static final int VACANCY_PER_PAGE = 9;
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws  ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("ToIndexPageCommand : execute() - start");
+		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			request.getRequestDispatcher(PageName.ERROR_TIME_OUT_PAGE).forward(request, response);
@@ -45,7 +45,6 @@ public class ToIndexPageCommand implements Command {
 		VacancyService vacancyService = serviceFactory.getVacancyService();
 		UserService userService = serviceFactory.getUserService();
 		ResumeService resumeService = serviceFactory.getResumeService();
-		String lang = (String) request.getSession().getAttribute(Attribute.LOCALE);
 
 		try {
 			List<Vacancy> vacancyList = vacancyService.selectAllActiveVacancy(lang, (pageNumber - 1) * VACANCY_PER_PAGE,

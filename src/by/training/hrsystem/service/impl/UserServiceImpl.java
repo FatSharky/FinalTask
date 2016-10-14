@@ -107,23 +107,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateProfile(String password, String copyPass, String surname, String name, String secondName,
-			String skype, String contcactPhone, String birthDate, String email)
+	public void updateProfile(String surname, String name, String secondName, String skype, String contcactPhone,
+			String birthDate, String email)
 			throws WrongEmailServiceException, WrongPasswordServiceException, PasswordNotEqualsServiceException,
 			WrongSurnameServiceException, WrongNameServiceException, WrongSecondnameServiceException,
 			WrongSkypeServiceException, WrongPhoneServiceException, WrongBirthDateServiceException,
 			UserWithThisEmailExistServiceException, UserServiceException, ServiceException {
 		logger.debug(
-				"UserServiceImpl.updateProfile() : user's data is valid (password = {}, "
+				"UserServiceImpl.updateProfile() : user's data is valid ( "
 						+ "surname = {}, name={}, secondname={}, skype={}, phone={}, birthdate={},email = {})",
-				password, surname, name, secondName, skype, contcactPhone, birthDate, email);
+				surname, name, secondName, skype, contcactPhone, birthDate, email);
 
-		if (!Validation.validatePassword(password)) {
-			throw new WrongPasswordServiceException("Wrong password");
-		}
-		if (!password.equals(copyPass)) {
-			throw new PasswordNotEqualsServiceException("Password not equals");
-		}
 		if (!Validation.validateStringField(surname)) {
 			throw new WrongSurnameServiceException("Wrong surname");
 		}
@@ -147,7 +141,6 @@ public class UserServiceImpl implements UserService {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
 			User updateUser = new User();
-			updateUser.setPassword(password);
 			updateUser.setSurname(surname);
 			updateUser.setName(name);
 			updateUser.setSecondName(secondName);

@@ -30,28 +30,23 @@ public class EditProfileCommand implements Command {
 	private static final Logger logger = LogManager.getLogger(EditProfileCommand.class);
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		logger.debug("ApplicantEditProfileCommand:execute() start");
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute(Attribute.USER);
-
-		String password = (String) session.getAttribute(Attribute.PASSWORD);
-		String copyPassword = (String) session.getAttribute(Attribute.COPY_PASSWORD);
-		String surname = (String) session.getAttribute(Attribute.SURNAME);
-		String name = (String) session.getAttribute(Attribute.NAME);
-		String secondName = (String) session.getAttribute(Attribute.SECOND_NAME);
-		String skype = (String) session.getAttribute(Attribute.SKYPE);
-		String contactPhone = (String) session.getAttribute(Attribute.CONTACT_PHONE);
-		String birthDate = (String) session.getAttribute(Attribute.BIRHT_DATE);
+		String surname = request.getParameter(Attribute.SURNAME);
+		String name = request.getParameter(Attribute.NAME);
+		String secondName = request.getParameter(Attribute.SECOND_NAME);
+		String skype = request.getParameter(Attribute.SKYPE);
+		String contactPhone = request.getParameter(Attribute.CONTACT_PHONE);
+		String birthDate = request.getParameter(Attribute.BIRHT_DATE);
 		String prevQuery = (String) session.getAttribute(Attribute.PREV_QUERY);
 		if (user != null) {
 			try {
 				ServiceFactory serviceFactory = ServiceFactory.getInstance();
 				UserService userService = serviceFactory.getUserService();
-				userService.updateProfile(password, copyPassword, surname, name, secondName, skype, contactPhone,
-						birthDate, user.getEmail());
+				userService.updateProfile(surname, name, secondName, skype, contactPhone, birthDate, user.getEmail());
 				response.sendRedirect(prevQuery);
 			} catch (WrongPasswordServiceException e) {
 				request.setAttribute(Attribute.ERROR_PASSWORD, true);

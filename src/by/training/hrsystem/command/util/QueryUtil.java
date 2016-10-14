@@ -4,6 +4,14 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class {@code QueryUtil} is a helper class for command layer. An instance can
+ * not be created, as have a constructor is private. It represents the method
+ * for save user-http request in the context of the request.
+ * 
+ * @author Vladislav
+ *
+ */
 public class QueryUtil {
 	private static final String PREV_QUERY_ATTR = "prev-query";
 	private static final String EMPTY_STRING = "";
@@ -14,6 +22,12 @@ public class QueryUtil {
 	private QueryUtil() {
 	}
 
+	/**
+	 * The method preserves the http-request in the context of the request.
+	 * 
+	 * @param request
+	 *            http-request.
+	 */
 	public static void saveHttpQuery(HttpServletRequest request) {
 
 		Enumeration<String> params = request.getParameterNames();

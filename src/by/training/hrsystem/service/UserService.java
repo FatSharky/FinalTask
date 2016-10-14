@@ -9,7 +9,7 @@ public interface UserService {
 	User registration(String email, String password, String copyPass, String surname, String name, String secondName,
 			String skype, String contcactPhone, String birthDate, String role) throws ServiceException;
 
-	void updateProfile(String password, String copyPass, String surname, String name, String secondName, String skype,
+	void updateProfile(String surname, String name, String secondName, String skype,
 			String contcactPhone, String birthDate, String email) throws ServiceException;
 
 	User selectUserByEmail(String email) throws ServiceException;

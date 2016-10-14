@@ -43,7 +43,6 @@ public abstract class DAOFactory {
 
 	public static DAOFactory getInstance() throws DAOException {
 		int factoryType = readConfig();
-
 		switch (factoryType) {
 		case MY_SQL:
 			return MY_SQL_DAOFACTORY;

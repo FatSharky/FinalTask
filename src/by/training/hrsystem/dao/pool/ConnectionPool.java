@@ -40,7 +40,7 @@ public class ConnectionPool {
 	private String driver;
 	private int poolSize;
 
-	public static ConnectionPool getInstance() throws ConnectionPoolException {
+	public static synchronized ConnectionPool getInstance() throws ConnectionPoolException {
 		if (connectionPool == null) {
 			synchronized (ConnectionPool.class) {
 				if (connectionPool == null) {
